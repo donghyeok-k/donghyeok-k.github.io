@@ -6,122 +6,169 @@ const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 
-const base = import.meta.env.BASE_URL;
-const formatDate = (date: Date) =>
-  new Intl.DateTimeFormat("ko-KR", {
+const postsByYear = new Map<string, typeof posts>();
+
+for (const post of posts) {
+  const year = new Intl.DateTimeFormat("en", {
     year: "numeric",
+    timeZone: "Asia/Seoul",
+  }).format(post.data.pubDate);
+  const group = postsByYear.get(year) ?? [];
+  group.push(post);
+  postsByYear.set(year, group);
+}
+
+const base = import.meta.env.BASE_URL;
+const showSearch = posts.length >= 8;
+const formatShortDate = (date: Date) =>
+  new Intl.DateTimeFormat("ko-KR", {
     month: "2-digit",
     day: "2-digit",
     timeZone: "Asia/Seoul",
-  }).format(date);
+  })
+    .format(date)
+    .replace(/\s/g, "");
 ---
 
 <SiteLayout
-  title="Journal — Donghyeok Kim"
-  description="AI, 연구, 사고법을 편집하고 연결하는 김동혁의 기록."
+  title="Writing — Donghyeok Kim"
+  description="AI, 연구, 사고법을 편집하고 연결하는 김동혁의 글."
   bodyClass="journal-page"
 >
   <main id="content" class="journal page-shell">
-    <section class="journal-intro" aria-labelledby="journal-title">
-      <p class="page-index">01 / JOURNAL</p>
-      <div class="title-group">
-        <p class="eyebrow">WRITING &amp; NOTES</p>
-        <h1 id="journal-title">생각을 편집하는<br />기록.</h1>
-      </div>
-      <p class="intro-copy">
-        완성된 답보다 질문이 변해가는 과정을 기록합니다. AI, 연구, 그리고
-        서로 다른 지식을 연결하는 방법에 관하여.
-      </p>
-    </section>
-
-    <section class="entries" aria-labelledby="entries-title">
-      <header class="entries-header">
-        <h2 id="entries-title">ALL ENTRIES</h2>
-        <p>{String(posts.length).padStart(2, "0")} NOTES</p>
+    <div class="journal-inner">
+      <header class="journal-header">
+        <p class="eyebrow">WRITING / {String(posts.length).padStart(2, "0")}</p>
+        <h1>Writing</h1>
+        <p class="journal-description">
+          AI, 연구, 그리고 서로 다른 지식을 연결하는 방법에 관한 기록.
+        </p>
       </header>
 
-      <div class="post-list">
+      {
+        showSearch && (
+          <div class="archive-tools">
+            <label for="post-search">글 찾기</label>
+            <div class="search-field">
+              <input
+                id="post-search"
+                type="search"
+                placeholder="제목이나 주제 검색"
+                autocomplete="off"
+                data-post-search
+              />
+              <span aria-hidden="true">⌕</span>
+            </div>
+            <p class="search-status" aria-live="polite" data-search-status />
+          </div>
+        )
+      }
+
+      <div class="archive" data-post-archive>
         {
-          posts.map((post, index) => {
-            const postUrl = `${base}blog/${post.id}/`;
+          Array.from(postsByYear).map(([year, yearPosts]) => (
+            <section class="year-group" data-year-group aria-labelledby={`year-${year}`}>
+              <h2 id={`year-${year}`}>{year}</h2>
 
-            return (
-              <article class="post-row">
-                <p class="post-number">{String(index + 1).padStart(2, "0")}</p>
+              <ol class="post-list">
+                {yearPosts.map((post) => {
+                  const postUrl = `${base}blog/${post.id}/`;
+                  const searchableText = [
+                    post.data.title,
+                    post.data.description,
+                    ...post.data.tags,
+                  ]
+                    .join(" ")
+                    .toLocaleLowerCase("ko");
 
-                <div class="post-meta">
-                  <time datetime={post.data.pubDate.toISOString()}>
-                    {formatDate(post.data.pubDate)}
-                  </time>
-                  <p>{post.data.tags.slice(0, 3).join(" · ")}</p>
-                </div>
-
-                <div class="post-copy">
-                  <h3><a href={postUrl}>{post.data.title}</a></h3>
-                  <p>{post.data.description}</p>
-                </div>
-
-                <a class="read-link" href={postUrl} aria-label={`${post.data.title} 읽기`}>
-                  <span>READ</span>
-                  <b aria-hidden="true">→</b>
-                </a>
-              </article>
-            );
-          })
+                  return (
+                    <li class="post-item" data-post-row data-search={searchableText}>
+                      <a href={postUrl}>
+                        <time datetime={post.data.pubDate.toISOString()}>
+                          {formatShortDate(post.data.pubDate)}
+                        </time>
+                        <h3 class="post-title">{post.data.title}</h3>
+                        <span class="post-arrow" aria-hidden="true">↗</span>
+                      </a>
+                    </li>
+                  );
+                })}
+              </ol>
+            </section>
+          ))
         }
       </div>
-    </section>
 
-    <aside class="journal-note" aria-label="Journal note">
-      <p>ABOUT THIS JOURNAL</p>
-      <blockquote>
-        생성된 것의 양보다,<br />끝까지 남겨진 것의 이유를 묻습니다.
-      </blockquote>
-    </aside>
+      <p class="empty-state" hidden data-empty-state>
+        일치하는 글이 없습니다.
+      </p>
+    </div>
   </main>
 </SiteLayout>
 
+<script is:inline>
+  const searchInput = document.querySelector("[data-post-search]");
+
+  if (searchInput instanceof HTMLInputElement) {
+    const rows = Array.from(document.querySelectorAll("[data-post-row]"));
+    const groups = Array.from(document.querySelectorAll("[data-year-group]"));
+    const status = document.querySelector("[data-search-status]");
+    const emptyState = document.querySelector("[data-empty-state]");
+
+    searchInput.addEventListener("input", () => {
+      const query = searchInput.value.trim().toLocaleLowerCase("ko");
+      let visibleCount = 0;
+
+      for (const row of rows) {
+        if (!(row instanceof HTMLElement)) continue;
+        const matches = !query || (row.dataset.search ?? "").includes(query);
+        row.hidden = !matches;
+        if (matches) visibleCount += 1;
+      }
+
+      for (const group of groups) {
+        if (!(group instanceof HTMLElement)) continue;
+        group.hidden = !group.querySelector("[data-post-row]:not([hidden])");
+      }
+
+      if (status) {
+        status.textContent = query ? `${visibleCount}개의 글` : "";
+      }
+      if (emptyState instanceof HTMLElement) {
+        emptyState.hidden = visibleCount !== 0;
+      }
+    });
+  }
+</script>
+
 <style>
   .journal {
-    padding: clamp(72px, 9vw, 120px) 0 clamp(88px, 11vw, 144px);
+    min-height: calc(100svh - 180px);
+    padding: clamp(64px, 8vw, 104px) 0 clamp(96px, 12vw, 152px);
   }
 
-  .journal-intro {
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    column-gap: clamp(16px, 2.2vw, 32px);
-    align-items: end;
-    padding-bottom: clamp(80px, 10vw, 128px);
+  .journal-inner {
+    width: min(100%, 860px);
+    margin-inline: auto;
   }
 
-  .page-index,
+  .journal-header {
+    max-width: 680px;
+    padding-bottom: clamp(48px, 6vw, 72px);
+  }
+
   .eyebrow,
-  .intro-copy,
-  .entries-header,
-  .post-number,
-  .post-meta,
-  .read-link,
-  .journal-note > p {
+  .journal-description,
+  .archive-tools,
+  .year-group h2,
+  .post-item,
+  .empty-state {
     font-family: var(--sans);
   }
 
-  .page-index {
-    grid-column: 1 / 3;
-    align-self: start;
-    margin: 4px 0 0;
-    color: var(--accent);
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.16em;
-  }
-
-  .title-group {
-    grid-column: 3 / 9;
-  }
-
   .eyebrow {
-    margin: 0 0 22px;
-    color: var(--ink-faint);
+    margin: 0 0 18px;
+    color: var(--accent);
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 0.18em;
@@ -129,262 +176,258 @@ const formatDate = (date: Date) =>
 
   h1 {
     margin: 0;
-    font-size: clamp(48px, 5.5vw, 68px);
+    font-size: clamp(48px, 5.5vw, 64px);
     font-weight: 600;
-    letter-spacing: -0.05em;
-    line-height: 1.06;
-    word-break: keep-all;
+    letter-spacing: -0.045em;
+    line-height: 1;
   }
 
-  .intro-copy {
-    grid-column: 9 / 13;
-    max-width: 360px;
-    margin: 0;
-    padding-top: 20px;
-    border-top: 1px solid var(--ink);
+  .journal-description {
+    max-width: 540px;
+    margin: 22px 0 0;
     color: var(--ink-soft);
-    font-size: 14px;
-    line-height: 1.8;
-    word-break: keep-all;
-  }
-
-  .entries {
-    border-top: 1px solid var(--ink);
-  }
-
-  .entries-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    min-height: 72px;
-    color: var(--ink-faint);
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-  }
-
-  .entries-header h2,
-  .entries-header p {
-    margin: 0;
-    font: inherit;
-  }
-
-  .post-list {
-    border-top: 1px solid var(--rule);
-  }
-
-  .post-row {
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    column-gap: clamp(16px, 2.2vw, 32px);
-    align-items: start;
-    padding: clamp(32px, 4.5vw, 56px) 0;
-    border-bottom: 1px solid var(--rule);
-  }
-
-  .post-number {
-    grid-column: 1;
-    margin: 4px 0 0;
-    color: var(--accent);
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-  }
-
-  .post-meta {
-    grid-column: 2 / 4;
-    margin: 4px 0 0;
-    color: var(--ink-faint);
-    font-size: 10px;
-    font-weight: 600;
-    line-height: 1.6;
-    letter-spacing: 0.05em;
-  }
-
-  .post-meta p {
-    margin: 10px 0 0;
-  }
-
-  .post-copy {
-    grid-column: 4 / 11;
-    max-width: 680px;
-  }
-
-  .post-copy h3 {
-    margin: 0;
-    font-size: clamp(31px, 3.6vw, 44px);
-    font-weight: 600;
-    letter-spacing: -0.04em;
-    line-height: 1.28;
-    word-break: keep-all;
-  }
-
-  .post-copy h3 a {
-    text-decoration: none;
-  }
-
-  .post-copy h3 a:hover {
-    color: var(--accent);
-  }
-
-  .post-copy > p {
-    margin: 20px 0 0;
-    color: var(--ink-soft);
-    font-family: var(--sans);
     font-size: 14px;
     line-height: 1.75;
     word-break: keep-all;
   }
 
-  .read-link {
-    grid-column: 11 / 13;
-    justify-self: end;
-    display: inline-flex;
-    gap: 12px;
-    align-items: center;
-    min-height: 44px;
-    margin-top: -9px;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-decoration: none;
-  }
-
-  .read-link b {
-    color: var(--accent);
-    font-size: 14px;
-    transition: transform 160ms ease;
-  }
-
-  .read-link:hover b {
-    transform: translateX(4px);
-  }
-
-  .journal-note {
+  .archive-tools {
     display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    column-gap: clamp(16px, 2.2vw, 32px);
-    padding-top: clamp(72px, 9vw, 112px);
+    grid-template-columns: 96px minmax(0, 1fr);
+    align-items: center;
+    padding: 18px 0;
+    border-top: 1px solid var(--ink);
   }
 
-  .journal-note > p {
-    grid-column: 1 / 4;
-    margin: 5px 0 0;
-    color: var(--accent);
+  .archive-tools label {
+    color: var(--ink-faint);
     font-size: 10px;
     font-weight: 700;
-    letter-spacing: 0.16em;
+    letter-spacing: 0.08em;
   }
 
-  .journal-note blockquote {
-    grid-column: 4 / 11;
+  .search-field {
+    position: relative;
+  }
+
+  .search-field input {
+    width: 100%;
+    height: 44px;
+    padding: 0 34px 0 0;
+    border: 0;
+    border-bottom: 1px solid var(--rule);
+    border-radius: 0;
+    outline: 0;
+    background: transparent;
+    color: var(--ink);
+    font: 14px/1 var(--sans);
+  }
+
+  .search-field input:focus {
+    border-color: var(--accent);
+  }
+
+  .search-field span {
+    position: absolute;
+    top: 50%;
+    right: 4px;
+    color: var(--ink-faint);
+    font-size: 18px;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
+  .search-status {
+    grid-column: 2;
+    min-height: 1em;
+    margin: 8px 0 0;
+    color: var(--ink-faint);
+    font-size: 10px;
+  }
+
+  .archive {
+    border-top: 1px solid var(--ink);
+  }
+
+  .year-group {
+    display: grid;
+    grid-template-columns: 96px minmax(0, 1fr);
+    border-bottom: 1px solid var(--ink);
+  }
+
+  .year-group h2 {
+    position: sticky;
+    top: 92px;
+    align-self: start;
     margin: 0;
-    font-size: clamp(29px, 3.7vw, 46px);
-    font-style: italic;
-    letter-spacing: -0.035em;
-    line-height: 1.45;
+    padding: 22px 0;
+    color: var(--ink-faint);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    line-height: 1;
+  }
+
+  .post-list {
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .post-item {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .post-item:last-child {
+    border-bottom: 0;
+  }
+
+  .post-item a {
+    display: grid;
+    grid-template-columns: 58px minmax(0, 1fr) 22px;
+    gap: 18px;
+    align-items: baseline;
+    min-height: 62px;
+    padding: 18px 4px;
+    color: var(--ink);
+    text-decoration: none;
+    transition: background-color 160ms ease, box-shadow 160ms ease;
+  }
+
+  .post-item time {
+    color: var(--ink-faint);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+
+  .post-title {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: clamp(20px, 2.1vw, 25px);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.35;
     word-break: keep-all;
+    overflow-wrap: anywhere;
+    transition: color 160ms ease;
   }
 
-  @media (max-width: 1024px) {
-    .journal-intro {
-      grid-template-columns: repeat(8, minmax(0, 1fr));
+  .post-arrow {
+    justify-self: end;
+    color: transparent;
+    font-size: 13px;
+    transition: color 160ms ease, transform 160ms ease;
+  }
+
+  .post-item a:focus-visible {
+    background: var(--paper-deep);
+    box-shadow: inset 2px 0 var(--accent);
+  }
+
+  .post-item a:focus-visible .post-title,
+  .post-item a:focus-visible .post-arrow {
+    color: var(--accent);
+  }
+
+  .post-item a:focus-visible .post-arrow {
+    transform: translate(2px, -2px);
+  }
+
+  @media (hover: hover) {
+    .post-item a:hover {
+      background: var(--paper-deep);
+      box-shadow: inset 2px 0 var(--accent);
     }
 
-    .page-index {
-      grid-column: 1;
+    .post-item a:hover .post-title,
+    .post-item a:hover .post-arrow {
+      color: var(--accent);
     }
 
-    .title-group {
-      grid-column: 2 / 6;
-    }
-
-    .intro-copy {
-      grid-column: 6 / 9;
-    }
-
-    .post-number {
-      grid-column: 1;
-    }
-
-    .post-meta {
-      grid-column: 2 / 5;
-    }
-
-    .post-copy {
-      grid-column: 5 / 11;
+    .post-item a:hover .post-arrow {
+      transform: translate(2px, -2px);
     }
   }
 
-  @media (max-width: 760px) {
+  .empty-state {
+    margin: 0;
+    padding: 44px 0;
+    border-bottom: 1px solid var(--ink);
+    color: var(--ink-faint);
+    font-size: 13px;
+  }
+
+  [hidden] {
+    display: none !important;
+  }
+
+  @media (max-width: 640px) {
     .journal {
-      padding: 56px 0 88px;
+      min-height: calc(100svh - 160px);
+      padding: 54px 0 96px;
     }
 
-    .journal-intro {
-      display: block;
-      padding-bottom: 72px;
-    }
-
-    .page-index {
-      margin-bottom: 42px;
-    }
-
-    .eyebrow {
-      margin-bottom: 16px;
+    .journal-header {
+      padding-bottom: 48px;
     }
 
     h1 {
-      font-size: clamp(42px, 12vw, 54px);
+      font-size: clamp(44px, 13vw, 54px);
     }
 
-    .intro-copy {
-      max-width: 520px;
-      margin-top: 42px;
+    .journal-description {
+      margin-top: 18px;
+      font-size: 13px;
     }
 
-    .entries-header {
-      min-height: 62px;
-    }
-
-    .post-row {
+    .archive-tools {
       display: block;
-      padding: 30px 0 36px;
     }
 
-    .post-number {
-      margin-bottom: 18px;
-    }
-
-    .post-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px 14px;
-      margin: 0 0 20px;
-    }
-
-    .post-meta p {
-      margin: 0;
-    }
-
-    .post-copy h3 {
-      font-size: clamp(28px, 8.5vw, 36px);
-    }
-
-    .read-link {
-      justify-self: start;
-      margin: 18px 0 0;
-    }
-
-    .journal-note {
+    .archive-tools label {
       display: block;
-      padding-top: 72px;
+      margin-bottom: 8px;
     }
 
-    .journal-note blockquote {
-      margin-top: 28px;
-      font-size: clamp(28px, 8.5vw, 36px);
+    .search-status {
+      min-height: 0;
     }
+
+    .year-group {
+      display: block;
+    }
+
+    .year-group h2 {
+      position: static;
+      padding: 18px 4px 12px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .post-item a {
+      grid-template-columns: 52px minmax(0, 1fr) 18px;
+      gap: 12px;
+      min-height: 68px;
+      padding: 18px 4px;
+    }
+
+    .post-title {
+      font-size: clamp(20px, 5.8vw, 23px);
+    }
+
+    .post-arrow {
+      color: var(--ink-faint);
+    }
+
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    .post-item a,
+    .post-title,
+    .post-arrow {
+      transition: none;
+    }
+  }
 </style>
