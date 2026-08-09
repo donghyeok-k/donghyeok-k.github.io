@@ -18,7 +18,10 @@ const {
 const base = import.meta.env.BASE_URL;
 const homeUrl = base;
 const blogUrl = `${base}blog/`;
-const isBlog = Astro.url.pathname.includes("/blog");
+const archiveUrl = `${base}archive/`;
+const isBlog = Astro.url.pathname.startsWith(blogUrl);
+const isArchive = Astro.url.pathname.startsWith(archiveUrl);
+const isHome = !isBlog && !isArchive;
 ---
 
 <!doctype html>
@@ -49,8 +52,9 @@ const isBlog = Astro.url.pathname.includes("/blog");
       </a>
 
       <nav class="site-nav" aria-label="Primary navigation">
-        <a href={homeUrl} aria-current={!isBlog ? "page" : undefined}>INDEX</a>
+        <a href={homeUrl} aria-current={isHome ? "page" : undefined}>INDEX</a>
         <a href={blogUrl} aria-current={isBlog ? "page" : undefined}>BLOG</a>
+        <a href={archiveUrl} aria-current={isArchive ? "page" : undefined}>ARCHIVE</a>
       </nav>
     </header>
 
@@ -241,7 +245,8 @@ const isBlog = Astro.url.pathname.includes("/blog");
 
     .site-nav a {
       padding-inline: 5px;
-      font-size: 9px;
+      font-size: 8px;
+      letter-spacing: 0.1em;
     }
   }
 
