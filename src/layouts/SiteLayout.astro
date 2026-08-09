@@ -48,8 +48,6 @@ const isBlog = Astro.url.pathname.includes("/blog");
         DONGHYEOK KIM
       </a>
 
-      <p class="site-context">PERSONAL INDEX <span>/</span> 2026</p>
-
       <nav class="site-nav" aria-label="Primary navigation">
         <a href={homeUrl} aria-current={!isBlog ? "page" : undefined}>INDEX</a>
         <a href={blogUrl} aria-current={isBlog ? "page" : undefined}>BLOG</a>
@@ -60,7 +58,6 @@ const isBlog = Astro.url.pathname.includes("/blog");
 
     <footer class="site-footer page-shell">
       <p>© 2026 DONGHYEOK KIM</p>
-      <p>NOTES ON AI, RESEARCH &amp; CONNECTIONS.</p>
       <a href="#top" aria-label="페이지 맨 위로">BACK TO TOP ↑</a>
     </footer>
   </body>
@@ -142,7 +139,7 @@ const isBlog = Astro.url.pathname.includes("/blog");
 
   .site-header {
     display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    grid-template-columns: 1fr auto;
     gap: 24px;
     align-items: center;
     min-height: 76px;
@@ -156,19 +153,6 @@ const isBlog = Astro.url.pathname.includes("/blog");
     font-weight: 700;
     letter-spacing: 0.2em;
     text-decoration: none;
-  }
-
-  .site-context {
-    margin: 0;
-    color: var(--ink-faint);
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.16em;
-  }
-
-  .site-context span {
-    margin-inline: 5px;
-    color: var(--accent);
   }
 
   .site-nav {
@@ -207,7 +191,7 @@ const isBlog = Astro.url.pathname.includes("/blog");
 
   .site-footer {
     display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    grid-template-columns: 1fr auto;
     gap: 24px;
     align-items: center;
     min-height: 104px;
@@ -221,10 +205,6 @@ const isBlog = Astro.url.pathname.includes("/blog");
 
   .site-footer p {
     margin: 0;
-  }
-
-  .site-footer p:nth-child(2) {
-    text-align: center;
   }
 
   .site-footer a {
@@ -241,21 +221,11 @@ const isBlog = Astro.url.pathname.includes("/blog");
 
   @media (max-width: 800px) {
     .site-header {
-      grid-template-columns: 1fr auto;
       min-height: 68px;
     }
 
-    .site-context {
-      display: none;
-    }
-
     .site-footer {
-      grid-template-columns: 1fr auto;
       min-height: 92px;
-    }
-
-    .site-footer p:nth-child(2) {
-      display: none;
     }
   }
 
