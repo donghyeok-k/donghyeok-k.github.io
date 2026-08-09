@@ -46,6 +46,7 @@ export interface ArchiveItem {
   category: string;
   title: string;
   summary: string;
+  roleLead: string;
   role: string;
   media: ArchiveMedia;
   sources: ArchiveSource[];
@@ -56,11 +57,12 @@ export const archiveItems: ArchiveItem[] = [
     id: "stadium-2023",
     date: "2023-11-18",
     category: "LEADERSHIP",
-    title: "KENTECH의 STadium 합류를 준비하다",
+    title: "STadium 참관과 정식 참여 준비",
     summary:
-      "다섯 과학기술특성화대 체육 교류전 STadium을 KENTECH 총학생회와 학생 20여 명이 참관하며 향후 정식 참여를 준비했다.",
+      "다섯 과학기술특성화대가 모인 체육 교류전 STadium을 KENTECH 총학생회와 학생 20여 명이 참관했다. 이 방문을 계기로 정식 참여를 준비했다.",
+    roleLead: "제2대 총학생회장 때",
     role:
-      "김동혁은 제2대 총학생회장으로 교류전의 취지에 공감하고, 3기 신입생이 입학하는 2024년부터 정식 참여하겠다는 목표를 제시했다.",
+      "제2대 총학생회장 때 STadium 현장을 찾았다. 2024년부터 KENTECH가 정식으로 참여할 수 있도록 준비했다.",
     // Keep this image unmodified and non-commercial under CC BY-NC-ND 4.0.
     media: {
       kind: "image",
@@ -90,11 +92,12 @@ export const archiveItems: ArchiveItem[] = [
     id: "renew-art-2023",
     date: "2023-09-26",
     category: "ART",
-    title: "에너지의 시간을 벽화로 만들다",
+    title: "Renew ART 벽화 프로젝트",
     summary:
-      "교수·학생·작가가 테슬라커뮤니티센터 지하 벙커에 에너지 연구 분야와 협업의 의미를 담은 ‘Energyverse Timepiece’ 벽화를 완성했다.",
+      "교수·학생·작가가 테슬라커뮤니티센터 지하 벙커에 ‘Energyverse Timepiece’ 벽화를 함께 만들었다. 에너지 연구 분야와 협업의 의미를 담은 작업이다.",
+    roleLead: "학부 1기 때",
     role:
-      "김동혁은 학부 1기 참여자로 교수·학생·작가와 협업해, KENTECH의 다섯 연구 트랙과 함께 만드는 역사를 공간에 표현했다.",
+      "학부 1기 때 교수·학생·작가와 벽화를 함께 만들었다. KENTECH의 다섯 연구 트랙과 학교의 시작을 공간에 담았다.",
     media: {
       kind: "youtube",
       videos: [
@@ -119,11 +122,12 @@ export const archiveItems: ArchiveItem[] = [
     id: "naju-pear-2023",
     date: "2023-09-25",
     category: "LEADERSHIP",
-    title: "129상자의 나주배, 지역과 대학을 잇다",
+    title: "나주배 129상자 공동구매",
     summary:
-      "KENTECH 제2대 총학생회가 나주배 공동구매 129상자를 성사시켜 지역 농가의 판로 확보와 소득 증대를 지원한 상생 프로젝트다.",
+      "KENTECH 제2대 총학생회가 나주배 129상자를 공동구매해 지역 농가의 판로를 도왔다.",
+    roleLead: "총학생회장 때",
     role:
-      "김동혁은 총학생회장으로 대학과 지역사회의 상생을 목표로 공동구매를 기획하고, 교육·축제·문화 활동으로 협력을 넓히겠다고 밝혔다.",
+      "총학생회장 때 나주배 공동구매를 기획했다. 대학과 지역이 함께할 수 있는 일을 더 만들고 싶었다.",
     media: {
       kind: "stat",
       eyebrow: "LOCAL PARTNERSHIP",
@@ -159,11 +163,12 @@ export const archiveItems: ArchiveItem[] = [
     id: "specialized-university-interview-2023",
     date: "2023-09-13",
     category: "PROFILE",
-    title: "최적화에서 환경·에너지 창업까지",
+    title: "KENTECH를 선택한 이유와 앞으로의 계획",
     summary:
-      "과학기술특성화대 재학생들이 대학 선택, 합격 전략, 수업 경험과 진로 계획을 문답 형식으로 들려주는 장문 인터뷰다.",
+      "과학기술특성화대 재학생들이 대학을 선택한 이유, 입시 경험, 수업과 앞으로의 진로에 관해 답한 인터뷰다.",
+    roleLead: "KENTECH 1기로",
     role:
-      "김동혁은 1기로 KENTECH를 택한 이유, 게임이론·최적화 면접, 전력망 프로젝트와 환경·에너지 창업 구상을 밝혔다.",
+      "KENTECH 1기로 학교를 선택한 이유와 면접 경험, 전력망 프로젝트, 앞으로 해보고 싶은 환경·에너지 창업 이야기를 나눴다.",
     media: {
       kind: "image",
       images: [
@@ -194,11 +199,12 @@ export const archiveItems: ArchiveItem[] = [
     id: "summer-campus-2023",
     date: "2023-08-29",
     category: "LEADERSHIP",
-    title: "방학에도 움직이는 캠퍼스의 목소리",
+    title: "여름방학, 학생 84%가 학교에 남았다",
     summary:
-      "여름방학에도 학생 84%가 기숙사에 머물며 학부연구·계절학기·창업·RC 등 20여 개 교육 프로그램에 참여한 캠퍼스 기록이다.",
+      "여름방학에도 학생 84%가 기숙사에 머물렀다. 학생들은 학부연구·계절학기·창업·RC 등 20여 개 프로그램에 참여했다.",
+    roleLead: "2학년 총학생회장 때",
     role:
-      "김동혁은 2학년 총학생회장으로 학생들이 방학에도 나주에서 배우고 즐기며 알차게 지낸 학교생활의 분위기를 대표해 전했다.",
+      "2학년 총학생회장 때 방학에도 학교에 남아 연구하고 활동하던 학생들의 모습을 전했다.",
     media: {
       kind: "stat",
       eyebrow: "THE CAMPUS IN SUMMER",
@@ -239,11 +245,12 @@ export const archiveItems: ArchiveItem[] = [
     id: "plogging-marathon-2023",
     date: "2023-04-04",
     category: "COMMUNITY",
-    title: "달리기와 봉사를 연결한 플로깅 프로젝트",
+    title: "아침 운동에서 플로깅 마라톤까지",
     summary:
-      "KENTECH 재학생 20여 명이 나주영산강마라톤에 참가해 달리는 동안 쓰레기를 줍는 플로깅 봉사와 공동체 활동을 함께 진행했다.",
+      "KENTECH 학생 20여 명이 나주영산강마라톤에 참가했다. 달리면서 쓰레기를 줍는 플로깅 봉사도 함께했다.",
+    roleLead: "황의현 학생과",
     role:
-      "김동혁은 황의현 학생과 공대생의 생활 습관 개선과 활력을 위한 아침 운동 프로그램을 기획하고, 마라톤 참가를 목표로 세웠다.",
+      "황의현 학생과 아침 운동 프로그램을 만들었다. 학생들과 마라톤에 참가하고 플로깅 봉사도 했다.",
     media: {
       kind: "stat",
       eyebrow: "RUN · PICK · CONNECT",
@@ -269,11 +276,12 @@ export const archiveItems: ArchiveItem[] = [
     id: "energyverse-2023",
     date: "2023-01-16",
     category: "EDUCATION",
-    title: "Energyverse를 1.0에서 2.0으로",
+    title: "Energyverse 1.0에서 2.0까지",
     summary:
-      "에너지 5개 트랙과 기술 간 연관성을 보드게임으로 익히는 KENTECH 고유 교육 프로젝트가 버전 1.5와 2.0으로 발전한 과정이다.",
+      "에너지 5개 트랙과 기술의 연결을 보드게임으로 배우는 KENTECH 수업 프로젝트다. 1기 학생들이 버전 1.5와 2.0을 만들며 내용을 보완했다.",
+    roleLead: "1기 학생 6명과",
     role:
-      "김동혁은 1기 학생 6인 팀의 일원으로, 교수진이 만든 Energyverse 1.0을 방학 동안 두 차례 개선해 2.0까지 발전시켰다.",
+      "1기 학생 6명과 Energyverse 1.0을 고쳤다. 특히 없던 스토리를 새로 만들었고, 프로젝트는 2.0까지 이어졌다.",
     media: {
       kind: "youtube",
       videos: [
@@ -308,11 +316,12 @@ export const archiveItems: ArchiveItem[] = [
     id: "kentech-opening-2022",
     date: "2022-03-03",
     category: "INTERVIEW",
-    title: "KENTECH 1기 신입생으로 시작",
+    title: "KENTECH 1기 신입생 인터뷰",
     summary:
-      "한국에너지공대가 첫 학부생 107명과 함께 개교하고, 에너지 분야 세계 10위 대학이라는 목표와 초기 과제를 알린 현장 보도다.",
+      "한국에너지공대가 문을 연 날, 1기 신입생의 기대와 대학이 풀어야 할 과제를 함께 담은 연합뉴스TV 보도다.",
+    roleLead: "1기 신입생으로",
     role:
-      "김동혁은 1기 신입생 인터뷰에서 에너지 산업의 미래를 낙관하며, 학생들과 함께 좋은 학교를 만들겠다는 포부를 밝혔다.",
+      "1기 신입생으로 인터뷰에 참여해 에너지 산업의 미래와 학생들이 함께 만들어갈 학교에 대한 기대를 이야기했다.",
     media: {
       kind: "youtube",
       videos: [
