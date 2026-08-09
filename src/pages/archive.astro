@@ -1,0 +1,911 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import { archiveItems, type ArchiveImage } from "../data/archive";
+
+const base = import.meta.env.BASE_URL;
+const itemsByYear = new Map<string, typeof archiveItems>();
+
+for (const item of archiveItems) {
+  const year = item.date.slice(0, 4);
+  const group = itemsByYear.get(year) ?? [];
+  group.push(item);
+  itemsByYear.set(year, group);
+}
+
+const formatDate = (date: string) => date.slice(5).replace("-", ".");
+const localImageUrl = (image: ArchiveImage) =>
+  image.local ? `${base}${image.src.replace(/^\//, "")}` : image.src;
+---
+
+<SiteLayout
+  title="Archive — Donghyeok Kim"
+  description="김동혁이 참여하고 기획하고 말한 장면을 기사, 영상, 프로젝트 기록으로 모은 공개 아카이브."
+  bodyClass="archive-page"
+>
+  <main id="content" class="archive-page-main page-shell">
+    <div class="archive-inner">
+      <header class="archive-header">
+        <p class="eyebrow">PUBLIC RECORD / {String(archiveItems.length).padStart(2, "0")}</p>
+        <h1>Archive</h1>
+        <p class="archive-description">
+          기사 전체보다 그 안에서 제가 무엇을 시작하고, 만들고, 말했는지 먼저
+          기록합니다.
+        </p>
+      </header>
+
+      <div class="archive-list">
+        {
+          Array.from(itemsByYear).map(([year, yearItems]) => (
+            <section class="year-group" aria-labelledby={`archive-year-${year}`}>
+              <h2 id={`archive-year-${year}`}>{year}</h2>
+
+              <div class="year-records">
+                {yearItems.map((item, itemIndex) => {
+                  const globalIndex = archiveItems.indexOf(item) + 1;
+                  const [roleBefore, roleAfter = ""] = item.role.split("김동혁");
+                  const primarySource =
+                    item.sources.find((source) => source.primary) ?? item.sources[0];
+                  const previewImage =
+                    item.media.kind === "youtube"
+                      ? `https://i.ytimg.com/vi/${item.media.videos[0].id}/hqdefault.jpg`
+                      : item.media.kind === "image"
+                        ? localImageUrl(item.media.images[0])
+                        : null;
+
+                  return (
+                    <details
+                      class="record"
+                      data-record
+                      id={item.id}
+                      style={`--record-delay: ${itemIndex * 35}ms`}
+                    >
+                      <summary>
+                        <span class="record-number" aria-hidden="true">
+                          {String(globalIndex).padStart(2, "0")}
+                        </span>
+
+                        <div class="record-heading">
+                          <p class="record-meta">
+                            <time datetime={item.date}>{formatDate(item.date)}</time>
+                            <span>{item.category}</span>
+                            <span>{primarySource.publisher}</span>
+                          </p>
+                          <h3>{item.title}</h3>
+                          <p class="role-preview">
+                            {roleBefore}<strong>김동혁</strong>{roleAfter}
+                          </p>
+                        </div>
+
+                        <div
+                          class:list={[
+                            "record-preview",
+                            item.media.kind === "image" &&
+                              item.media.contain &&
+                              "is-contained",
+                          ]}
+                          aria-hidden="true"
+                        >
+                          {previewImage ? (
+                            <img
+                              src={previewImage}
+                              alt=""
+                              loading="lazy"
+                              decoding="async"
+                              referrerpolicy="strict-origin-when-cross-origin"
+                            />
+                          ) : (
+                            <div class="stat-preview">
+                              <strong>{item.media.kind === "stat" && item.media.value}</strong>
+                              <span>RECORD</span>
+                            </div>
+                          )}
+                          {item.media.kind === "youtube" && (
+                            <span class="play-mark">PLAY</span>
+                          )}
+                        </div>
+
+                        <span class="record-action" aria-hidden="true">
+                          <span class="action-open">VIEW</span>
+                          <span class="action-close">CLOSE</span>
+                          <b>＋</b>
+                        </span>
+                      </summary>
+
+                      <div class="record-body">
+                        <section class="record-media" aria-label={`${item.title} 미디어`}>
+                          {item.media.kind === "youtube" && (
+                            <div class="video-player" data-video-player>
+                              {item.media.videos.length > 1 && (
+                                <div class="media-switcher" aria-label="영상 선택">
+                                  {item.media.videos.map((video, videoIndex) => (
+                                    <button
+                                      type="button"
+                                      data-video-choice
+                                      data-video-id={video.id}
+                                      data-video-start={video.start ?? 0}
+                                      aria-pressed={videoIndex === 0 ? "true" : "false"}
+                                    >
+                                      {video.label}
+                                    </button>
+                                  ))}
+                                </div>
+                              )}
+                              <div class="video-frame">
+                                <iframe
+                                  title={`${item.title} 영상`}
+                                  data-video-frame
+                                  data-video-id={item.media.videos[0].id}
+                                  data-video-start={item.media.videos[0].start ?? 0}
+                                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                  allowfullscreen
+                                />
+                              </div>
+                              <p class="media-credit">영상 · {item.media.credit}</p>
+                              <noscript>
+                                <a href={primarySource.url}>영상 원문 열기</a>
+                              </noscript>
+                            </div>
+                          )}
+
+                          {item.media.kind === "image" && (
+                            <div
+                              class:list={[
+                                "image-gallery",
+                                item.media.images.length > 1 && "is-multiple",
+                                item.media.contain && "is-contained",
+                              ]}
+                            >
+                              {item.media.images.map((image) => (
+                                <figure>
+                                  <img
+                                    src={localImageUrl(image)}
+                                    alt={image.alt}
+                                    loading="lazy"
+                                    decoding="async"
+                                    referrerpolicy="strict-origin-when-cross-origin"
+                                  />
+                                </figure>
+                              ))}
+                              <p class="media-credit">
+                                {item.media.creditUrl ? (
+                                  <a href={item.media.creditUrl} target="_blank" rel="noreferrer">
+                                    {item.media.credit}
+                                  </a>
+                                ) : (
+                                  item.media.credit
+                                )}
+                                {item.media.license && (
+                                  <span>
+                                    {" · "}
+                                    {item.media.licenseUrl ? (
+                                      <a
+                                        href={item.media.licenseUrl}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                      >
+                                        {item.media.license}
+                                      </a>
+                                    ) : (
+                                      item.media.license
+                                    )}
+                                  </span>
+                                )}
+                              </p>
+                            </div>
+                          )}
+
+                          {item.media.kind === "stat" && (
+                            <div class="stat-visual" aria-label={`${item.media.value} ${item.media.label}`}>
+                              <p>{item.media.eyebrow}</p>
+                              <strong>{item.media.value}</strong>
+                              <h4>{item.media.label}</h4>
+                              <span>{item.media.note}</span>
+                            </div>
+                          )}
+                        </section>
+
+                        <section class="record-narrative" aria-label={`${item.title} 요약`}>
+                          <p class="section-label">MY PART</p>
+                          <p class="role-statement">
+                            {roleBefore}<strong>김동혁</strong>{roleAfter}
+                          </p>
+
+                          <p class="section-label context-label">CONTEXT</p>
+                          <p class="record-summary">{item.summary}</p>
+
+                          <div class="source-list" aria-label="원문과 관련 보도">
+                            {item.sources.map((source) => (
+                              <a href={source.url} target="_blank" rel="noreferrer">
+                                <span>{source.label}</span>
+                                <strong>{source.publisher}</strong>
+                                <b aria-hidden="true">↗</b>
+                              </a>
+                            ))}
+                          </div>
+                        </section>
+                      </div>
+                    </details>
+                  );
+                })}
+              </div>
+            </section>
+          ))
+        }
+      </div>
+    </div>
+  </main>
+</SiteLayout>
+
+<script is:inline>
+  const records = Array.from(document.querySelectorAll("[data-record]"));
+
+  const unloadVideo = (record) => {
+    const frame = record.querySelector("[data-video-frame]");
+    if (frame instanceof HTMLIFrameElement) frame.removeAttribute("src");
+  };
+
+  const loadVideo = (record, id, start = "0") => {
+    const frame = record.querySelector("[data-video-frame]");
+    if (!(frame instanceof HTMLIFrameElement) || !id) return;
+    const startQuery = Number(start) > 0 ? `&start=${Number(start)}` : "";
+    frame.src = `https://www.youtube-nocookie.com/embed/${id}?rel=0${startQuery}`;
+  };
+
+  for (const record of records) {
+    if (!(record instanceof HTMLDetailsElement)) continue;
+
+    record.addEventListener("toggle", () => {
+      if (record.open) {
+        for (const other of records) {
+          if (other !== record && other instanceof HTMLDetailsElement) {
+            other.open = false;
+          }
+        }
+
+        const frame = record.querySelector("[data-video-frame]");
+        if (frame instanceof HTMLIFrameElement) {
+          loadVideo(record, frame.dataset.videoId, frame.dataset.videoStart);
+        }
+      } else {
+        unloadVideo(record);
+      }
+    });
+
+    const choices = record.querySelectorAll("[data-video-choice]");
+    for (const choice of choices) {
+      if (!(choice instanceof HTMLButtonElement)) continue;
+      choice.addEventListener("click", () => {
+        for (const button of choices) {
+          button.setAttribute("aria-pressed", String(button === choice));
+        }
+        loadVideo(record, choice.dataset.videoId, choice.dataset.videoStart);
+      });
+    }
+  }
+</script>
+
+<style>
+  .archive-page-main {
+    min-height: calc(100svh - 180px);
+    padding: clamp(64px, 8vw, 104px) 0 clamp(96px, 12vw, 152px);
+  }
+
+  .archive-inner {
+    width: min(100%, 1000px);
+    margin-inline: auto;
+  }
+
+  .archive-header {
+    max-width: 720px;
+    padding-bottom: clamp(48px, 7vw, 80px);
+  }
+
+  .eyebrow,
+  .archive-description,
+  .year-group > h2,
+  .record,
+  .section-label,
+  .media-credit {
+    font-family: var(--sans);
+  }
+
+  .eyebrow {
+    margin: 0 0 18px;
+    color: var(--accent);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: clamp(48px, 5.5vw, 64px);
+    font-weight: 600;
+    letter-spacing: -0.045em;
+    line-height: 1;
+  }
+
+  .archive-description {
+    max-width: 590px;
+    margin: 22px 0 0;
+    color: var(--ink-soft);
+    font-size: 14px;
+    line-height: 1.75;
+    word-break: keep-all;
+  }
+
+  .archive-list {
+    border-top: 1px solid var(--ink);
+  }
+
+  .year-group {
+    display: grid;
+    grid-template-columns: 88px minmax(0, 1fr);
+    border-bottom: 1px solid var(--ink);
+  }
+
+  .year-group > h2 {
+    position: sticky;
+    top: 92px;
+    align-self: start;
+    margin: 0;
+    padding: 27px 0;
+    color: var(--ink-faint);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    line-height: 1;
+  }
+
+  .year-records {
+    min-width: 0;
+  }
+
+  .record {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .record:last-child {
+    border-bottom: 0;
+  }
+
+  .record summary {
+    display: grid;
+    grid-template-columns: 28px minmax(0, 1fr) 148px 44px;
+    gap: 18px;
+    align-items: center;
+    min-height: 126px;
+    padding: 18px 0;
+    cursor: pointer;
+    list-style: none;
+    transition: background-color 160ms ease, box-shadow 160ms ease;
+  }
+
+  .record summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .record summary:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: -2px;
+  }
+
+  .record-number {
+    align-self: start;
+    padding-top: 4px;
+    color: var(--ink-faint);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+
+  .record-heading {
+    min-width: 0;
+  }
+
+  .record-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px 12px;
+    margin: 0 0 9px;
+    color: var(--ink-faint);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.11em;
+  }
+
+  .record-meta span + span::before,
+  .record-meta time + span::before {
+    margin-right: 12px;
+    color: var(--rule);
+    content: "/";
+  }
+
+  .record-heading h3 {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: clamp(20px, 2.2vw, 27px);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.16;
+    word-break: keep-all;
+    transition: color 160ms ease;
+  }
+
+  .role-preview {
+    display: -webkit-box;
+    max-width: 580px;
+    margin: 10px 0 0;
+    overflow: hidden;
+    color: var(--ink-soft);
+    font-size: 11px;
+    line-height: 1.55;
+    word-break: keep-all;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .role-preview strong {
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .record-preview {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: var(--paper-deep);
+  }
+
+  .record-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(0.72) contrast(0.96);
+    transition: filter 180ms ease, transform 220ms ease;
+  }
+
+  .record-preview.is-contained img {
+    object-fit: contain;
+    filter: none;
+  }
+
+  .play-mark {
+    position: absolute;
+    right: 6px;
+    bottom: 6px;
+    padding: 5px 7px;
+    background: rgba(23, 24, 20, 0.88);
+    color: var(--paper);
+    font-size: 7px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+  }
+
+  .stat-preview {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 12px;
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .stat-preview strong {
+    font-family: var(--serif);
+    font-size: 34px;
+    font-weight: 500;
+    letter-spacing: -0.05em;
+    line-height: 0.9;
+  }
+
+  .stat-preview span {
+    margin-top: 8px;
+    color: #b8b8b0;
+    font-size: 7px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+  }
+
+  .record-action {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+    color: var(--ink-faint);
+    font-size: 7px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+  }
+
+  .record-action b {
+    color: var(--accent);
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 1;
+    transition: transform 180ms ease;
+  }
+
+  .action-close {
+    display: none;
+  }
+
+  .record[open] .action-open {
+    display: none;
+  }
+
+  .record[open] .action-close {
+    display: inline;
+  }
+
+  .record[open] .record-action b {
+    transform: rotate(45deg);
+  }
+
+  @media (hover: hover) {
+    .record summary:hover {
+      background: var(--paper-deep);
+      box-shadow: inset 2px 0 var(--accent);
+    }
+
+    .record summary:hover .record-heading h3 {
+      color: var(--accent);
+    }
+
+    .record summary:hover .record-preview img {
+      filter: saturate(1) contrast(1);
+      transform: scale(1.025);
+    }
+
+    .record summary:hover .record-preview.is-contained img {
+      filter: none;
+      transform: none;
+    }
+  }
+
+  .record-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1.12fr) minmax(280px, 0.88fr);
+    gap: clamp(28px, 4vw, 48px);
+    padding: 10px 44px 42px 46px;
+  }
+
+  .record-media,
+  .record-narrative {
+    min-width: 0;
+  }
+
+  .video-frame {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: var(--ink);
+  }
+
+  .video-frame iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .media-switcher {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+
+  .media-switcher button {
+    min-height: 34px;
+    padding: 0 10px;
+    border: 1px solid var(--rule);
+    background: transparent;
+    color: var(--ink-faint);
+    font: 700 8px/1 var(--sans);
+    letter-spacing: 0.09em;
+    cursor: pointer;
+  }
+
+  .media-switcher button[aria-pressed="true"] {
+    border-color: var(--ink);
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .media-switcher button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .image-gallery {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .image-gallery.is-multiple {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .image-gallery figure {
+    aspect-ratio: 4 / 3;
+    margin: 0;
+    overflow: hidden;
+    background: var(--paper-deep);
+  }
+
+  .image-gallery img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .image-gallery.is-contained figure {
+    aspect-ratio: 16 / 10;
+  }
+
+  .image-gallery.is-contained img {
+    object-fit: contain;
+  }
+
+  .media-credit {
+    grid-column: 1 / -1;
+    margin: 8px 0 0;
+    color: var(--ink-faint);
+    font-size: 8px;
+    line-height: 1.5;
+  }
+
+  .media-credit a {
+    text-underline-offset: 3px;
+  }
+
+  .stat-visual {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    aspect-ratio: 16 / 10;
+    min-height: 250px;
+    padding: clamp(22px, 4vw, 42px);
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .stat-visual p {
+    margin: 0 auto auto 0;
+    color: #aaa99f;
+    font: 700 8px/1 var(--sans);
+    letter-spacing: 0.16em;
+  }
+
+  .stat-visual strong {
+    font-family: var(--serif);
+    font-size: clamp(76px, 10vw, 116px);
+    font-weight: 400;
+    letter-spacing: -0.07em;
+    line-height: 0.75;
+  }
+
+  .stat-visual h4 {
+    margin: 18px 0 0;
+    font: 600 15px/1.3 var(--sans);
+  }
+
+  .stat-visual span {
+    max-width: 320px;
+    margin-top: 8px;
+    color: #bbb9b0;
+    font: 400 10px/1.5 var(--sans);
+  }
+
+  .section-label {
+    margin: 0 0 11px;
+    color: var(--accent);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+  }
+
+  .role-statement {
+    margin: 0;
+    padding: 0 0 0 16px;
+    border-left: 2px solid var(--accent);
+    font-family: var(--serif);
+    font-size: clamp(18px, 2vw, 23px);
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    line-height: 1.46;
+    word-break: keep-all;
+  }
+
+  .role-statement strong {
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .context-label {
+    margin-top: 30px;
+    color: var(--ink-faint);
+  }
+
+  .record-summary {
+    margin: 0;
+    color: var(--ink-soft);
+    font-family: var(--serif);
+    font-size: 14px;
+    line-height: 1.72;
+    word-break: keep-all;
+  }
+
+  .source-list {
+    margin-top: 30px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .source-list a {
+    display: grid;
+    grid-template-columns: 72px minmax(0, 1fr) 16px;
+    gap: 10px;
+    align-items: center;
+    min-height: 42px;
+    border-bottom: 1px solid var(--rule);
+    color: var(--ink-soft);
+    font: 600 9px/1.3 var(--sans);
+    text-decoration: none;
+  }
+
+  .source-list a span {
+    color: var(--ink-faint);
+    font-size: 8px;
+    letter-spacing: 0.05em;
+  }
+
+  .source-list a strong {
+    overflow: hidden;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .source-list a b {
+    justify-self: end;
+    color: var(--accent);
+    font-size: 12px;
+  }
+
+  .source-list a:hover,
+  .source-list a:focus-visible {
+    color: var(--accent);
+  }
+
+  @media (max-width: 900px) {
+    .record summary {
+      grid-template-columns: 26px minmax(0, 1fr) 116px 38px;
+      gap: 14px;
+    }
+
+    .record-body {
+      grid-template-columns: 1fr;
+      padding-left: 40px;
+    }
+
+    .record-narrative {
+      max-width: 620px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .archive-page-main {
+      min-height: calc(100svh - 160px);
+      padding: 54px 0 96px;
+    }
+
+    .archive-header {
+      padding-bottom: 48px;
+    }
+
+    h1 {
+      font-size: clamp(44px, 13vw, 54px);
+    }
+
+    .archive-description {
+      margin-top: 18px;
+      font-size: 13px;
+    }
+
+    .year-group {
+      display: block;
+    }
+
+    .year-group > h2 {
+      position: static;
+      padding: 18px 4px 12px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .record summary {
+      grid-template-columns: 24px minmax(0, 1fr) 26px;
+      gap: 10px;
+      min-height: 104px;
+      padding: 16px 4px;
+    }
+
+    .record-preview {
+      display: none;
+    }
+
+    .record-heading h3 {
+      font-size: clamp(19px, 5.4vw, 23px);
+      line-height: 1.28;
+    }
+
+    .role-preview {
+      margin-top: 8px;
+      font-size: 10px;
+      -webkit-line-clamp: 2;
+    }
+
+    .record-action {
+      gap: 6px;
+    }
+
+    .record-action > span {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+    }
+
+    .record-body {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      padding: 8px 4px 34px 38px;
+    }
+
+    .image-gallery.is-multiple {
+      grid-template-columns: 1fr;
+    }
+
+    .image-gallery figure,
+    .image-gallery.is-contained figure {
+      aspect-ratio: 4 / 3;
+    }
+
+    .stat-visual {
+      min-height: 230px;
+    }
+
+    .role-statement {
+      font-size: 19px;
+    }
+  }
+
+  @media (max-width: 380px) {
+    .record-meta span:last-child {
+      display: none;
+    }
+
+    .record-body {
+      padding-left: 4px;
+    }
+
+    .source-list a {
+      grid-template-columns: 64px minmax(0, 1fr) 14px;
+      gap: 7px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .record summary,
+    .record-heading h3,
+    .record-preview img,
+    .record-action b {
+      transition: none;
+    }
+  }
+</style>
