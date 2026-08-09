@@ -52,7 +52,7 @@ const isBlog = Astro.url.pathname.includes("/blog");
 
       <nav class="site-nav" aria-label="Primary navigation">
         <a href={homeUrl} aria-current={!isBlog ? "page" : undefined}>INDEX</a>
-        <a href={blogUrl} aria-current={isBlog ? "page" : undefined}>JOURNAL</a>
+        <a href={blogUrl} aria-current={isBlog ? "page" : undefined}>BLOG</a>
       </nav>
     </header>
 
