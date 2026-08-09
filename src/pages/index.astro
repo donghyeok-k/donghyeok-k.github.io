@@ -1,132 +1,54 @@
 ---
+import SiteLayout from "../layouts/SiteLayout.astro";
+
 const title = "Donghyeok Kim — Editological Thinking";
-const description = "Editological Thinking in the Era of AI — a personal monograph by Donghyeok Kim.";
+const description =
+  "Editological Thinking in the Era of AI — a personal monograph by Donghyeok Kim.";
+const base = import.meta.env.BASE_URL;
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="description" content={description} />
-    <meta name="theme-color" content="#FAF7F1" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,700;6..72,800&display=swap"
-      rel="stylesheet"
+<SiteLayout
+  title={title}
+  description={description}
+  lang="en"
+  bodyClass="home-page"
+>
+  <main class="cover page-shell" aria-labelledby="main-title">
+    <img
+      class="connection-field"
+      src={`${base}images/editological-thinking.webp`}
+      width="1536"
+      height="1024"
+      alt=""
+      aria-hidden="true"
     />
-    <title>{title}</title>
-  </head>
-  <body>
-    <header class="masthead page-shell">
-      <a class="wordmark" href="/" aria-label="Donghyeok Kim home">DONGHYEOK KIM</a>
-      <p class="edition">A PERSONAL MONOGRAPH · 2026</p>
-    </header>
 
-    <main class="cover page-shell" aria-labelledby="main-title">
-      <img
-        class="connection-field"
-        src="/images/editological-thinking.webp"
-        width="1536"
-        height="1024"
-        alt=""
-        aria-hidden="true"
-      />
+    <section class="statement">
+      <p class="kicker">EDITORIAL POSITION</p>
+      <h1 id="main-title">
+        Editological Thinking
+        <span>in the Era of AI</span>
+      </h1>
+      <p class="dek">Connections are remade.<br />A point of view is chosen.</p>
+      <p class="thesis">
+        AI can rearrange the field of information. Editing is the human act of
+        deciding what belongs together—and from where to look.
+      </p>
+    </section>
 
-      <section class="statement">
-        <p class="kicker">EDITORIAL POSITION</p>
-        <h1 id="main-title">
-          Editological Thinking
-          <span>in the Era of AI</span>
-        </h1>
-        <p class="dek">Connections are remade.<br />A point of view is chosen.</p>
-        <p class="thesis">
-          AI can rearrange the field of information. Editing is the human act of
-          deciding what belongs together—and from where to look.
-        </p>
-      </section>
-
-      <footer class="colophon" aria-label="Profile">
-        <p><span>NAME</span> Donghyeok Kim</p>
-        <p><span>AGE</span> 24</p>
-      </footer>
-    </main>
-  </body>
-</html>
+    <footer class="colophon" aria-label="Profile">
+      <p><span>NAME</span> Donghyeok Kim</p>
+      <p><span>AGE</span> 24</p>
+      <a class="journal-link" href={`${base}blog/`}>
+        OPEN JOURNAL <b aria-hidden="true">→</b>
+      </a>
+    </footer>
+  </main>
+</SiteLayout>
 
 <style>
-  :root {
-    --paper: #faf7f1;
-    --ink: #191817;
-    --ink-soft: #4c4a46;
-    --ink-faint: #8a867e;
-    --crimson: #a51c30;
-    --rule: #dcd6ca;
-    --page: 1240px;
-  }
-
-  :global(*) {
-    box-sizing: border-box;
-  }
-
-  :global(html) {
-    background: var(--paper);
-    color: var(--ink);
-  }
-
-  :global(body) {
-    margin: 0;
-    min-width: 320px;
-    min-height: 100svh;
+  :global(body.home-page) {
     overflow: hidden;
-    background: var(--paper);
-    color: var(--ink);
-    font-family: "Newsreader", Georgia, serif;
-    text-rendering: optimizeLegibility;
-    font-optical-sizing: auto;
-  }
-
-  :global(a) {
-    color: inherit;
-  }
-
-  :global(a:focus-visible) {
-    outline: 2px solid var(--crimson);
-    outline-offset: 5px;
-  }
-
-  .page-shell {
-    width: min(calc(100% - 56px), var(--page));
-    margin-inline: auto;
-  }
-
-  .masthead {
-    position: relative;
-    z-index: 10;
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 24px;
-    height: 68px;
-    padding-top: 27px;
-    border-bottom: 2px solid var(--ink);
-    font-family: "Inter", Arial, sans-serif;
-  }
-
-  .wordmark {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.22em;
-    text-decoration: none;
-  }
-
-  .edition {
-    margin: 0;
-    color: var(--ink-faint);
-    font-size: 9px;
-    font-weight: 600;
-    letter-spacing: 0.18em;
   }
 
   .cover {
@@ -145,7 +67,7 @@ const description = "Editological Thinking in the Era of AI — a personal monog
 
   .kicker,
   .colophon {
-    font-family: "Inter", Arial, sans-serif;
+    font-family: var(--sans);
   }
 
   .kicker {
@@ -190,12 +112,12 @@ const description = "Editological Thinking in the Era of AI — a personal monog
   }
 
   .thesis::before {
-    content: "";
     display: inline-block;
     width: 24px;
     height: 2px;
     margin: 0 10px 0.28em 0;
     background: var(--crimson);
+    content: "";
   }
 
   .connection-field {
@@ -213,10 +135,11 @@ const description = "Editological Thinking in the Era of AI — a personal monog
   .colophon {
     position: absolute;
     z-index: 5;
-    left: 0;
     bottom: 24px;
+    left: 0;
     display: flex;
     gap: 34px;
+    align-items: center;
     margin: 0;
     color: var(--ink-soft);
     font-size: 10px;
@@ -234,6 +157,23 @@ const description = "Editological Thinking in the Era of AI — a personal monog
     font-size: 9px;
     font-weight: 700;
     letter-spacing: 0.16em;
+  }
+
+  .journal-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+    padding-block: 5px;
+    color: var(--ink);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-decoration: none;
+  }
+
+  .journal-link b {
+    margin-left: 6px;
+    color: var(--crimson);
   }
 
   @media (max-height: 730px) and (min-width: 761px) {
@@ -254,27 +194,9 @@ const description = "Editological Thinking in the Era of AI — a personal monog
       padding-top: 14px;
       font-size: 14px;
     }
-
   }
 
   @media (max-width: 760px) {
-    :global(body) {
-      overflow: hidden;
-    }
-
-    .page-shell {
-      width: min(calc(100% - 36px), var(--page));
-    }
-
-    .masthead {
-      height: 58px;
-      padding-top: 21px;
-    }
-
-    .edition {
-      display: none;
-    }
-
     .cover {
       min-height: calc(100svh - 58px);
     }
@@ -318,6 +240,10 @@ const description = "Editological Thinking in the Era of AI — a personal monog
       gap: 20px;
       font-size: 9px;
     }
+
+    .colophon p:nth-child(2) {
+      display: none;
+    }
   }
 
   @media (max-width: 420px), (max-height: 650px) {
@@ -326,19 +252,13 @@ const description = "Editological Thinking in the Era of AI — a personal monog
       font-size: 12px;
     }
 
-    .colophon {
+    .colophon p {
       display: none;
     }
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    :global(*) {
-      scroll-behavior: auto !important;
-    }
-  }
-
   @media print {
-    :global(body) {
+    :global(body.home-page) {
       overflow: visible;
       background: #fff;
     }
