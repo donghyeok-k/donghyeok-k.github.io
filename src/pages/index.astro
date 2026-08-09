@@ -1,350 +1,538 @@
 ---
+import { getCollection } from "astro:content";
+import SiteLayout from "../layouts/SiteLayout.astro";
+
 const title = "Donghyeok Kim — Editological Thinking";
-const description = "Editological Thinking in the Era of AI — a personal monograph by Donghyeok Kim.";
+const description =
+  "AI, 연구, 그리고 서로 다른 지식의 연결을 탐색하는 김동혁의 개인 공간.";
+const base = import.meta.env.BASE_URL;
+const [latestPost] = (await getCollection("blog", ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+const latestPostUrl = latestPost ? `${base}blog/${latestPost.id}/` : `${base}blog/`;
+const formatDate = (date: Date) =>
+  new Intl.DateTimeFormat("ko-KR", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    timeZone: "Asia/Seoul",
+  }).format(date);
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="description" content={description} />
-    <meta name="theme-color" content="#FAF7F1" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,700;6..72,800&display=swap"
-      rel="stylesheet"
-    />
-    <title>{title}</title>
-  </head>
-  <body>
-    <header class="masthead page-shell">
-      <a class="wordmark" href="/" aria-label="Donghyeok Kim home">DONGHYEOK KIM</a>
-      <p class="edition">A PERSONAL MONOGRAPH · 2026</p>
-    </header>
+<SiteLayout
+  title={title}
+  description={description}
+  lang="ko"
+  bodyClass="home-page"
+>
+  <main id="content" class="home page-shell">
+    <section class="hero" aria-labelledby="main-title">
+      <div class="section-mark" aria-hidden="true">
+        <span>01</span>
+        <i></i>
+      </div>
 
-    <main class="cover page-shell" aria-labelledby="main-title">
-      <img
-        class="connection-field"
-        src="/images/editological-thinking.webp"
-        width="1536"
-        height="1024"
-        alt=""
-        aria-hidden="true"
-      />
+      <div class="hero-heading">
+        <p class="eyebrow">EDITORIAL POSITION</p>
+        <h1 id="main-title">Editological<br />Thinking</h1>
+        <p class="title-tail">in the era of AI</p>
+      </div>
 
-      <section class="statement">
-        <p class="kicker">EDITORIAL POSITION</p>
-        <h1 id="main-title">
-          Editological Thinking
-          <span>in the Era of AI</span>
-        </h1>
-        <p class="dek">Connections are remade.<br />A point of view is chosen.</p>
-        <p class="thesis">
-          AI can rearrange the field of information. Editing is the human act of
-          deciding what belongs together—and from where to look.
+      <div class="hero-note">
+        <p class="note-lead">생성보다, <br />무엇을 남길지.</p>
+        <p class="note-copy">
+          AI가 정보를 펼쳐 놓는다면, 편집은 그중 무엇을 연결하고 어디에서
+          바라볼지 선택하는 인간의 일입니다.
         </p>
-      </section>
+        <a href={`${base}blog/`}>
+          JOURNAL 읽기 <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </section>
 
-      <footer class="colophon" aria-label="Profile">
-        <p><span>NAME</span> Donghyeok Kim</p>
-        <p><span>AGE</span> 24</p>
-      </footer>
-    </main>
-  </body>
-</html>
+    <section class="questions" aria-labelledby="questions-title">
+      <header class="section-heading">
+        <p>02 / WORKING QUESTIONS</p>
+        <h2 id="questions-title">생각을 다루는 세 가지 기준</h2>
+      </header>
+
+      <div class="question-grid">
+        <article>
+          <p class="question-number">01</p>
+          <h3>What is true?</h3>
+          <p>그럴듯한 표현과 확인된 사실을 구분합니다.</p>
+        </article>
+        <article>
+          <p class="question-number">02</p>
+          <h3>What belongs?</h3>
+          <p>많이 넣기보다 지금 필요한 것을 남깁니다.</p>
+        </article>
+        <article>
+          <p class="question-number">03</p>
+          <h3>Where to look?</h3>
+          <p>정보를 어떤 맥락에 놓을지 시점을 선택합니다.</p>
+        </article>
+      </div>
+    </section>
+
+    {
+      latestPost && (
+        <section class="latest" aria-labelledby="latest-title">
+          <header class="section-heading">
+            <p>03 / LATEST JOURNAL</p>
+            <h2 id="latest-title">최근 기록</h2>
+          </header>
+
+          <article class="latest-entry">
+            <div class="latest-meta">
+              <time datetime={latestPost.data.pubDate.toISOString()}>
+                {formatDate(latestPost.data.pubDate)}
+              </time>
+              <p>{latestPost.data.tags.slice(0, 3).join(" · ")}</p>
+            </div>
+
+            <div class="latest-copy">
+              <h3><a href={latestPostUrl}>{latestPost.data.title}</a></h3>
+              <p>{latestPost.data.description}</p>
+            </div>
+
+            <a class="entry-link" href={latestPostUrl} aria-label={`${latestPost.data.title} 읽기`}>
+              READ ENTRY <span aria-hidden="true">→</span>
+            </a>
+          </article>
+        </section>
+      )
+    }
+
+    <section class="about" aria-labelledby="about-title">
+      <p class="about-label">04 / ABOUT</p>
+      <h2 id="about-title">김동혁</h2>
+      <p class="about-copy">
+        AI, 연구, 그리고 서로 다른 지식 사이의 연결을 탐색합니다. 완성된
+        답보다 질문이 변해가는 과정을 기록합니다.
+      </p>
+    </section>
+  </main>
+</SiteLayout>
 
 <style>
-  :root {
-    --paper: #faf7f1;
-    --ink: #191817;
-    --ink-soft: #4c4a46;
-    --ink-faint: #8a867e;
-    --crimson: #a51c30;
-    --rule: #dcd6ca;
-    --page: 1240px;
+  .home {
+    padding-bottom: clamp(80px, 11vw, 144px);
   }
 
-  :global(*) {
-    box-sizing: border-box;
+  .hero {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: clamp(16px, 2.2vw, 32px);
+    padding: clamp(72px, 9vw, 120px) 0 clamp(88px, 11vw, 144px);
   }
 
-  :global(html) {
-    background: var(--paper);
-    color: var(--ink);
-  }
-
-  :global(body) {
-    margin: 0;
-    min-width: 320px;
-    min-height: 100svh;
-    overflow: hidden;
-    background: var(--paper);
-    color: var(--ink);
-    font-family: "Newsreader", Georgia, serif;
-    text-rendering: optimizeLegibility;
-    font-optical-sizing: auto;
-  }
-
-  :global(a) {
-    color: inherit;
-  }
-
-  :global(a:focus-visible) {
-    outline: 2px solid var(--crimson);
-    outline-offset: 5px;
-  }
-
-  .page-shell {
-    width: min(calc(100% - 56px), var(--page));
-    margin-inline: auto;
-  }
-
-  .masthead {
-    position: relative;
-    z-index: 10;
+  .section-mark {
+    grid-column: 1;
     display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 24px;
-    height: 68px;
-    padding-top: 27px;
-    border-bottom: 2px solid var(--ink);
-    font-family: "Inter", Arial, sans-serif;
-  }
-
-  .wordmark {
-    font-size: 11px;
+    gap: 12px;
+    align-items: flex-start;
+    padding-top: 4px;
+    color: var(--accent);
+    font-family: var(--sans);
+    font-size: 10px;
+    font-style: normal;
     font-weight: 700;
-    letter-spacing: 0.22em;
-    text-decoration: none;
+    letter-spacing: 0.14em;
   }
 
-  .edition {
-    margin: 0;
+  .section-mark i {
+    width: 28px;
+    height: 1px;
+    margin-top: 6px;
+    background: var(--accent);
+  }
+
+  .hero-heading {
+    grid-column: 2 / 9;
+  }
+
+  .eyebrow,
+  .section-heading,
+  .hero-note,
+  .latest-meta,
+  .entry-link,
+  .about-label,
+  .about-copy {
+    font-family: var(--sans);
+  }
+
+  .eyebrow {
+    margin: 0 0 24px;
     color: var(--ink-faint);
-    font-size: 9px;
-    font-weight: 600;
-    letter-spacing: 0.18em;
-  }
-
-  .cover {
-    position: relative;
-    isolation: isolate;
-    min-height: calc(100svh - 68px);
-    overflow: hidden;
-  }
-
-  .statement {
-    position: relative;
-    z-index: 4;
-    width: min(61%, 730px);
-    padding-top: clamp(46px, 8.5vh, 86px);
-  }
-
-  .kicker,
-  .colophon {
-    font-family: "Inter", Arial, sans-serif;
-  }
-
-  .kicker {
-    margin: 0 0 clamp(16px, 2.4vh, 24px);
-    color: var(--crimson);
     font-size: 10px;
     font-weight: 700;
-    letter-spacing: 0.24em;
+    letter-spacing: 0.2em;
   }
 
   h1 {
     margin: 0;
-    font-size: clamp(52px, 6.2vw, 84px);
-    font-weight: 800;
-    letter-spacing: -0.027em;
-    line-height: 0.92;
+    font-size: clamp(54px, 6vw, 80px);
+    font-weight: 600;
+    letter-spacing: -0.045em;
+    line-height: 0.91;
   }
 
-  h1 span {
-    display: block;
-    margin-top: 0.13em;
-    font-size: 0.72em;
-    font-weight: 400;
-    letter-spacing: -0.018em;
-  }
-
-  .dek {
-    margin: clamp(22px, 3.4vh, 34px) 0 0;
+  .title-tail {
+    margin: 14px 0 0;
     color: var(--ink-soft);
-    font-size: clamp(19px, 1.8vw, 25px);
-    line-height: 1.45;
+    font-size: clamp(24px, 2.8vw, 36px);
+    font-style: italic;
+    line-height: 1.1;
   }
 
-  .thesis {
-    max-width: 510px;
-    margin: clamp(20px, 3.2vh, 32px) 0 0;
-    padding-top: clamp(16px, 2.2vh, 22px);
-    border-top: 1px solid var(--rule);
-    color: var(--ink-soft);
-    font-size: clamp(14px, 1.2vw, 17px);
-    line-height: 1.62;
+  .hero-note {
+    grid-column: 9 / 13;
+    align-self: end;
+    max-width: 350px;
+    padding-top: 22px;
+    border-top: 1px solid var(--ink);
   }
 
-  .thesis::before {
-    content: "";
-    display: inline-block;
-    width: 24px;
-    height: 2px;
-    margin: 0 10px 0.28em 0;
-    background: var(--crimson);
-  }
-
-  .connection-field {
-    position: absolute;
-    z-index: 1;
-    right: -8%;
-    bottom: -6%;
-    width: min(82vw, 1080px);
-    height: auto;
-    opacity: 0.5;
-    mix-blend-mode: multiply;
-    pointer-events: none;
-  }
-
-  .colophon {
-    position: absolute;
-    z-index: 5;
-    left: 0;
-    bottom: 24px;
-    display: flex;
-    gap: 34px;
+  .note-lead {
     margin: 0;
+    font-family: var(--serif);
+    font-size: clamp(25px, 2.6vw, 34px);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 1.35;
+  }
+
+  .note-copy {
+    margin: 22px 0 24px;
     color: var(--ink-soft);
+    font-size: 14px;
+    line-height: 1.75;
+    word-break: keep-all;
+  }
+
+  .hero-note a,
+  .entry-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding-block: 8px;
     font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.05em;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-decoration: none;
   }
 
-  .colophon p {
+  .hero-note a span,
+  .entry-link span {
+    margin-left: 8px;
+    color: var(--accent);
+  }
+
+  .questions,
+  .latest {
+    border-top: 1px solid var(--ink);
+  }
+
+  .section-heading {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 24px;
+    align-items: baseline;
+    padding: 24px 0 48px;
+  }
+
+  .section-heading p {
     margin: 0;
-  }
-
-  .colophon span {
-    margin-right: 8px;
-    color: var(--ink-faint);
-    font-size: 9px;
+    color: var(--accent);
+    font-size: 10px;
     font-weight: 700;
     letter-spacing: 0.16em;
   }
 
-  @media (max-height: 730px) and (min-width: 761px) {
-    .statement {
-      padding-top: 34px;
+  .section-heading h2 {
+    margin: 0;
+    color: var(--ink-soft);
+    font-family: var(--serif);
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: -0.015em;
+  }
+
+  .question-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-bottom: clamp(88px, 11vw, 144px);
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .question-grid article {
+    min-height: 250px;
+    padding: 24px clamp(20px, 2.4vw, 32px) 32px;
+    border-left: 1px solid var(--rule);
+  }
+
+  .question-grid article:first-child {
+    border-left: 0;
+  }
+
+  .question-number {
+    margin: 0 0 clamp(48px, 5vw, 72px);
+    color: var(--ink-faint);
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+  }
+
+  .question-grid h3 {
+    margin: 0 0 14px;
+    font-size: clamp(26px, 2.6vw, 34px);
+    font-style: italic;
+    font-weight: 500;
+    letter-spacing: -0.025em;
+  }
+
+  .question-grid article > p:last-child {
+    max-width: 270px;
+    margin: 0;
+    color: var(--ink-soft);
+    font-family: var(--sans);
+    font-size: 13px;
+    line-height: 1.7;
+    word-break: keep-all;
+  }
+
+  .latest-entry {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: clamp(16px, 2.2vw, 32px);
+    align-items: start;
+    padding: 8px 0 clamp(88px, 11vw, 144px);
+  }
+
+  .latest-meta {
+    grid-column: 1 / 3;
+    padding-top: 8px;
+    color: var(--ink-faint);
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 1.6;
+    letter-spacing: 0.06em;
+  }
+
+  .latest-meta p {
+    margin: 10px 0 0;
+  }
+
+  .latest-copy {
+    grid-column: 3 / 10;
+  }
+
+  .latest-copy h3 {
+    max-width: 680px;
+    margin: 0;
+    font-size: clamp(32px, 4vw, 50px);
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    line-height: 1.25;
+    word-break: keep-all;
+  }
+
+  .latest-copy h3 a {
+    text-decoration: none;
+  }
+
+  .latest-copy h3 a:hover {
+    color: var(--accent);
+  }
+
+  .latest-copy > p {
+    max-width: 650px;
+    margin: 22px 0 0;
+    color: var(--ink-soft);
+    font-family: var(--sans);
+    font-size: 14px;
+    line-height: 1.75;
+    word-break: keep-all;
+  }
+
+  .entry-link {
+    grid-column: 11 / 13;
+    justify-self: end;
+  }
+
+  .about {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: clamp(16px, 2.2vw, 32px);
+    align-items: start;
+    padding-top: 28px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .about-label {
+    grid-column: 1 / 3;
+    margin: 4px 0 0;
+    color: var(--accent);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+  }
+
+  .about h2 {
+    grid-column: 3 / 6;
+    margin: 0;
+    font-size: clamp(30px, 3.5vw, 44px);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+  }
+
+  .about-copy {
+    grid-column: 7 / 12;
+    max-width: 480px;
+    margin: 4px 0 0;
+    color: var(--ink-soft);
+    font-size: 15px;
+    line-height: 1.8;
+    word-break: keep-all;
+  }
+
+  @media (max-width: 1024px) {
+    .hero {
+      grid-template-columns: repeat(8, minmax(0, 1fr));
     }
 
-    h1 {
-      font-size: clamp(48px, 5.7vw, 70px);
+    .section-mark {
+      grid-column: 1;
     }
 
-    .dek {
-      margin-top: 18px;
+    .section-mark i {
+      display: none;
     }
 
-    .thesis {
-      margin-top: 16px;
-      padding-top: 14px;
-      font-size: 14px;
+    .hero-heading {
+      grid-column: 2 / 6;
     }
 
+    .hero-note {
+      grid-column: 6 / 9;
+    }
+
+    .latest-meta {
+      grid-column: 1 / 4;
+    }
+
+    .latest-copy {
+      grid-column: 4 / 11;
+    }
+
+    .entry-link {
+      grid-column: 11 / 13;
+    }
   }
 
   @media (max-width: 760px) {
-    :global(body) {
-      overflow: hidden;
+    .hero {
+      display: block;
+      padding: 56px 0 80px;
     }
 
-    .page-shell {
-      width: min(calc(100% - 36px), var(--page));
-    }
-
-    .masthead {
-      height: 58px;
-      padding-top: 21px;
-    }
-
-    .edition {
+    .section-mark {
       display: none;
     }
 
-    .cover {
-      min-height: calc(100svh - 58px);
-    }
-
-    .statement {
-      width: 100%;
-      padding-top: clamp(34px, 6vh, 56px);
-    }
-
-    .kicker {
-      margin-bottom: 15px;
+    .eyebrow {
+      margin-bottom: 18px;
     }
 
     h1 {
-      max-width: 620px;
-      font-size: clamp(43px, 12.8vw, 64px);
+      font-size: clamp(48px, 14vw, 64px);
     }
 
-    .dek {
-      margin-top: 20px;
-      font-size: clamp(17px, 5vw, 22px);
+    .title-tail {
+      font-size: clamp(23px, 7vw, 30px);
     }
 
-    .thesis {
-      width: min(78%, 440px);
-      margin-top: 18px;
-      padding-top: 14px;
-      font-size: 13px;
-      line-height: 1.55;
+    .hero-note {
+      max-width: 100%;
+      margin-top: 56px;
+      padding-top: 20px;
     }
 
-    .connection-field {
-      right: -48%;
-      bottom: -2%;
-      width: 145vw;
-      opacity: 0.38;
-    }
-
-    .colophon {
-      bottom: 18px;
-      gap: 20px;
-      font-size: 9px;
-    }
-  }
-
-  @media (max-width: 420px), (max-height: 650px) {
-    .thesis {
-      max-width: 64%;
-      font-size: 12px;
-    }
-
-    .colophon {
+    .note-lead br {
       display: none;
     }
-  }
 
-  @media (prefers-reduced-motion: reduce) {
-    :global(*) {
-      scroll-behavior: auto !important;
-    }
-  }
-
-  @media print {
-    :global(body) {
-      overflow: visible;
-      background: #fff;
+    .note-copy {
+      max-width: 520px;
     }
 
-    .cover {
-      min-height: 90vh;
+    .section-heading {
+      display: block;
+      padding: 20px 0 32px;
+    }
+
+    .section-heading h2 {
+      margin-top: 8px;
+    }
+
+    .question-grid {
+      grid-template-columns: 1fr;
+      margin-bottom: 80px;
+    }
+
+    .question-grid article {
+      min-height: 0;
+      padding: 24px 0 30px;
+      border-top: 1px solid var(--rule);
+      border-left: 0;
+    }
+
+    .question-grid article:first-child {
+      border-top: 0;
+    }
+
+    .question-number {
+      margin-bottom: 28px;
+    }
+
+    .latest-entry {
+      display: block;
+      padding-bottom: 80px;
+    }
+
+    .latest-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 16px;
+      margin-bottom: 24px;
+    }
+
+    .latest-meta p {
+      margin: 0;
+    }
+
+    .latest-copy h3 {
+      font-size: clamp(29px, 8.7vw, 38px);
+    }
+
+    .entry-link {
+      margin-top: 22px;
+    }
+
+    .about {
+      display: block;
+      padding-top: 24px;
+    }
+
+    .about h2 {
+      margin-top: 28px;
+    }
+
+    .about-copy {
+      margin-top: 20px;
     }
   }
 </style>

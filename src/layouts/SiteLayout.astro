@@ -1,0 +1,283 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  lang?: string;
+  bodyClass?: string;
+  ogType?: "website" | "article";
+}
+
+const {
+  title,
+  description,
+  lang = "ko",
+  bodyClass = "",
+  ogType = "website",
+} = Astro.props;
+
+const base = import.meta.env.BASE_URL;
+const homeUrl = base;
+const blogUrl = `${base}blog/`;
+const isBlog = Astro.url.pathname.includes("/blog");
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#f7f4ee" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={ogType} />
+    <link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700&family=Noto+Serif+KR:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>{title}</title>
+  </head>
+  <body id="top" class={bodyClass}>
+    <a class="skip-link" href="#content">본문으로 건너뛰기</a>
+
+    <header class="site-header page-shell">
+      <a class="wordmark" href={homeUrl} aria-label="Donghyeok Kim home">
+        DONGHYEOK KIM
+      </a>
+
+      <p class="site-context">PERSONAL INDEX <span>/</span> 2026</p>
+
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href={homeUrl} aria-current={!isBlog ? "page" : undefined}>INDEX</a>
+        <a href={blogUrl} aria-current={isBlog ? "page" : undefined}>BLOG</a>
+      </nav>
+    </header>
+
+    <slot />
+
+    <footer class="site-footer page-shell">
+      <p>© 2026 DONGHYEOK KIM</p>
+      <p>NOTES ON AI, RESEARCH &amp; CONNECTIONS.</p>
+      <a href="#top" aria-label="페이지 맨 위로">BACK TO TOP ↑</a>
+    </footer>
+  </body>
+</html>
+
+<style>
+  :global(:root) {
+    --paper: #f7f4ee;
+    --paper-deep: #ece7dd;
+    --ink: #171814;
+    --ink-soft: #4f514a;
+    --ink-faint: #6b6e65;
+    --accent: #a33a30;
+    --rule: #d5d0c6;
+    --page: 1200px;
+    --gutter: clamp(20px, 4vw, 64px);
+    --sans: "Inter", "Apple SD Gothic Neo", "Malgun Gothic", Arial, sans-serif;
+    --serif: "Newsreader", "Noto Serif KR", "Batang", Georgia, serif;
+    color-scheme: light;
+  }
+
+  :global(*) {
+    box-sizing: border-box;
+  }
+
+  :global(html) {
+    background: var(--paper);
+    color: var(--ink);
+    scroll-behavior: smooth;
+  }
+
+  :global(body) {
+    margin: 0;
+    min-width: 320px;
+    min-height: 100svh;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-optical-sizing: auto;
+    text-rendering: optimizeLegibility;
+  }
+
+  :global(a) {
+    color: inherit;
+  }
+
+  :global(a:focus-visible) {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+  }
+
+  :global(img) {
+    display: block;
+    max-width: 100%;
+  }
+
+  :global(.page-shell) {
+    width: min(calc(100% - (var(--gutter) * 2)), var(--page));
+    margin-inline: auto;
+  }
+
+  .skip-link {
+    position: fixed;
+    z-index: 100;
+    top: 8px;
+    left: 8px;
+    padding: 10px 14px;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--sans);
+    font-size: 13px;
+    text-decoration: none;
+    transform: translateY(-160%);
+  }
+
+  .skip-link:focus {
+    transform: translateY(0);
+  }
+
+  .site-header {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 24px;
+    align-items: center;
+    min-height: 76px;
+    border-bottom: 1px solid var(--ink);
+    font-family: var(--sans);
+  }
+
+  .wordmark {
+    justify-self: start;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-decoration: none;
+  }
+
+  .site-context {
+    margin: 0;
+    color: var(--ink-faint);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+  }
+
+  .site-context span {
+    margin-inline: 5px;
+    color: var(--accent);
+  }
+
+  .site-nav {
+    display: flex;
+    justify-self: end;
+    gap: 12px;
+  }
+
+  .site-nav a {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 6px;
+    color: var(--ink-faint);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-decoration: none;
+  }
+
+  .site-nav a:hover,
+  .site-nav a[aria-current="page"] {
+    color: var(--ink);
+  }
+
+  .site-nav a[aria-current="page"]::after {
+    position: absolute;
+    right: 6px;
+    bottom: 5px;
+    left: 6px;
+    height: 2px;
+    background: var(--accent);
+    content: "";
+  }
+
+  .site-footer {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 24px;
+    align-items: center;
+    min-height: 104px;
+    border-top: 1px solid var(--ink);
+    color: var(--ink-faint);
+    font-family: var(--sans);
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+  }
+
+  .site-footer p {
+    margin: 0;
+  }
+
+  .site-footer p:nth-child(2) {
+    text-align: center;
+  }
+
+  .site-footer a {
+    justify-self: end;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    text-decoration: none;
+  }
+
+  .site-footer a:hover {
+    color: var(--ink);
+  }
+
+  @media (max-width: 800px) {
+    .site-header {
+      grid-template-columns: 1fr auto;
+      min-height: 68px;
+    }
+
+    .site-context {
+      display: none;
+    }
+
+    .site-footer {
+      grid-template-columns: 1fr auto;
+      min-height: 92px;
+    }
+
+    .site-footer p:nth-child(2) {
+      display: none;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .wordmark {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+    }
+
+    .site-nav {
+      gap: 2px;
+    }
+
+    .site-nav a {
+      padding-inline: 5px;
+      font-size: 9px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(html) {
+      scroll-behavior: auto;
+    }
+  }
+</style>
