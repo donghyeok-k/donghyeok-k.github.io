@@ -129,11 +129,17 @@ export const archiveItems: ArchiveItem[] = [
     role:
       "총학생회장 때 나주배 공동구매를 기획했다. 대학과 지역이 함께할 수 있는 일을 더 만들고 싶었다.",
     media: {
-      kind: "stat",
-      eyebrow: "LOCAL PARTNERSHIP",
-      value: "129",
-      label: "상자의 나주배 공동구매",
-      note: "지역 농가의 판로와 대학 공동체를 연결한 학생 주도 프로젝트",
+      kind: "image",
+      images: [
+        {
+          src: "images/archive/naju-pear-community.webp",
+          alt: "나주 배 과수원에서 배를 들고 촬영한 KENTECH 학생 4명",
+          local: true,
+        },
+      ],
+      credit: "사진 · KENTECH 보도자료",
+      creditUrl:
+        "https://kentech.ac.kr/detail.do?board_seq=5990&menuurl=ewqEXIJgqdAxm80DGyH78g%3D%3D",
     },
     sources: [
       {
@@ -206,11 +212,17 @@ export const archiveItems: ArchiveItem[] = [
     role:
       "2학년 총학생회장 때 방학에도 학교에 남아 연구하고 활동하던 학생들의 모습을 전했다.",
     media: {
-      kind: "stat",
-      eyebrow: "THE CAMPUS IN SUMMER",
-      value: "84%",
-      label: "방학 중 기숙사 체류 학생",
-      note: "학부연구·계절학기·창업·RC 등 20여 개 프로그램",
+      kind: "image",
+      images: [
+        {
+          src: "images/archive/summer-campus-energyverse.webp",
+          alt: "Energyverse 보드게임을 둘러싸고 활동 중인 KENTECH 구성원들",
+          local: true,
+        },
+      ],
+      credit: "사진 · KENTECH 보도자료",
+      creditUrl:
+        "https://kentech.ac.kr/detail.do?board_seq=5871&menuurl=ewqEXIJgqdAxm80DGyH78g%3D%3D",
     },
     sources: [
       {
@@ -252,11 +264,17 @@ export const archiveItems: ArchiveItem[] = [
     role:
       "황의현 학생과 아침 운동 프로그램을 만들었다. 학생들과 마라톤에 참가하고 플로깅 봉사도 했다.",
     media: {
-      kind: "stat",
-      eyebrow: "RUN · PICK · CONNECT",
-      value: "20+",
-      label: "학생이 함께 달린 플로깅",
-      note: "아침 운동에서 마라톤과 환경 봉사로 이어진 공동체 프로젝트",
+      kind: "image",
+      images: [
+        {
+          src: "images/archive/plogging-marathon.webp",
+          alt: "제9회 나주영산강마라톤대회에 참가한 KENTECH 학생과 교직원",
+          local: true,
+        },
+      ],
+      credit: "사진 · KENTECH 보도자료",
+      creditUrl:
+        "https://kentech.ac.kr/detail.do?board_seq=5598&menuurl=ewqEXIJgqdAxm80DGyH78g%3D%3D",
     },
     sources: [
       {
