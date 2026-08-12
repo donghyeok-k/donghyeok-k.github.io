@@ -36,6 +36,10 @@ const formatDate = (date: Date) =>
   description={post.data.description}
   bodyClass="article-page"
   ogType="article"
+  image={post.data.heroImage}
+  publishedTime={post.data.pubDate}
+  modifiedTime={post.data.updatedDate}
+  tags={post.data.tags}
 >
   <main id="content" class="article page-shell">
     <div class="article-nav">
