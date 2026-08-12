@@ -12,13 +12,5 @@ const base = isGitHubBuild && repository && !isUserSite ? `/${repository}` : "/"
 export default defineConfig({
   site: "https://donghyeok-k.github.io",
   base,
-  integrations: [
-    sitemap({
-      namespaces: {
-        news: false,
-        video: false,
-        xhtml: false,
-      },
-    }),
-  ],
+  integrations: [sitemap()],
 });
