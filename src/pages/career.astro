@@ -1,0 +1,306 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import { archiveItems } from "../data/archive";
+
+const base = import.meta.env.BASE_URL;
+const title = "김동혁 경력 및 활동 | KENTECH · Energy & AI";
+const description =
+  "김동혁(Donghyeok Kim)의 KENTECH 학업, 제2대 총학생회장 경력, 에너지·AI 관심 분야와 주요 활동 기록.";
+
+const timeline = [
+  {
+    period: "2022 — PRESENT",
+    role: "KENTECH 학부생",
+    organization: "한국에너지공과대학교 · 학부 1기",
+    description:
+      "에너지 시스템을 공부하며 실제 문제에 적용할 수 있는 AI 모델과 정량적 분석을 탐구하고 있습니다.",
+  },
+  {
+    period: "2023",
+            role: "KENTECH 제2대 총학생회장",
+    organization: "KENTECH 총학생회",
+    description:
+      "학생 공동체를 대표하며 교류·지역상생·캠퍼스 활동을 기획하고 학교 안팎의 협력을 추진했습니다.",
+  },
+];
+
+const featuredActivities = archiveItems.filter((item) =>
+  ["stadium-2023", "naju-pear-2023", "summer-campus-2023", "energyverse-2023"].includes(
+    item.id,
+  ),
+);
+---
+
+<SiteLayout
+  title={title}
+  description={description}
+  bodyClass="career-page"
+  profilePage={true}
+>
+  <main id="content" class="career page-shell">
+    <header class="career-header">
+      <p class="eyebrow">CAREER / 김동혁</p>
+      <h1>Career &amp;<br />Activities</h1>
+      <p class="intro">
+        한국에너지공과대학교(KENTECH) 1기 · 제2대 총학생회장<br />
+        Energy Systems · Applied AI
+      </p>
+    </header>
+
+    <section class="section" aria-labelledby="career-heading">
+      <div class="section-label">
+        <h2 id="career-heading">Career</h2>
+        <span>01</span>
+      </div>
+      <ol class="timeline">
+        {timeline.map((item) => (
+          <li>
+            <time>{item.period}</time>
+            <div>
+              <h3>{item.role}</h3>
+              <p class="organization">{item.organization}</p>
+              <p>{item.description}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="section" aria-labelledby="activities-heading">
+      <div class="section-label">
+        <h2 id="activities-heading">Selected Activities</h2>
+        <span>02</span>
+      </div>
+      <ol class="activities">
+        {featuredActivities.map((item) => (
+          <li>
+            <time datetime={item.date}>{item.date.slice(0, 4)}</time>
+            <div>
+              <p>{item.category}</p>
+              <h3>{item.title}</h3>
+              <span>{item.summary}</span>
+            </div>
+            <a href={`${base}archive/#${item.id}`} aria-label={`${item.title} 자세히 보기`}>
+              ↗
+            </a>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <nav class="career-links" aria-label="Career links">
+      <a href={`${base}archive/`}>전체 활동 기록 <span aria-hidden="true">→</span></a>
+      <a href="https://github.com/donghyeok-k" rel="me">GitHub <span aria-hidden="true">↗</span></a>
+    </nav>
+  </main>
+</SiteLayout>
+
+<style>
+  .career {
+    min-height: calc(100svh - 180px);
+    padding: clamp(64px, 9vw, 112px) 0 clamp(96px, 12vw, 152px);
+  }
+
+  .career-header,
+  .section,
+  .career-links {
+    width: min(100%, 980px);
+    margin-inline: auto;
+  }
+
+  .eyebrow,
+  .intro,
+  .section,
+  .career-links {
+    font-family: var(--sans);
+  }
+
+  .eyebrow {
+    margin: 0 0 20px;
+    color: var(--accent);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: clamp(58px, 7vw, 88px);
+    font-weight: 600;
+    letter-spacing: -0.055em;
+    line-height: 0.86;
+  }
+
+  .intro {
+    max-width: 560px;
+    margin: 34px 0 0;
+    padding-top: 22px;
+    border-top: 1px solid var(--rule);
+    color: var(--ink-soft);
+    font-size: 14px;
+    line-height: 1.75;
+  }
+
+  .section {
+    margin-top: clamp(78px, 10vw, 128px);
+  }
+
+  .section-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--ink);
+  }
+
+  .section-label h2,
+  .section-label span {
+    margin: 0;
+    color: var(--ink-faint);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .timeline,
+  .activities {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .timeline li {
+    display: grid;
+    grid-template-columns: 170px minmax(0, 1fr);
+    gap: 34px;
+    padding: 32px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .timeline time,
+  .activities time {
+    color: var(--accent);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+  }
+
+  .timeline h3,
+  .activities h3 {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: clamp(22px, 2.5vw, 30px);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+
+  .timeline p {
+    max-width: 660px;
+    margin: 12px 0 0;
+    color: var(--ink-soft);
+    font-family: var(--serif);
+    font-size: 14px;
+    line-height: 1.7;
+    word-break: keep-all;
+  }
+
+  .timeline .organization {
+    margin-top: 7px;
+    color: var(--ink-faint);
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 700;
+  }
+
+  .activities li {
+    display: grid;
+    grid-template-columns: 70px minmax(0, 1fr) 28px;
+    gap: 28px;
+    align-items: start;
+    padding: 26px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .activities p {
+    margin: 0 0 8px;
+    color: var(--ink-faint);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+  }
+
+  .activities div > span {
+    display: block;
+    max-width: 680px;
+    margin-top: 10px;
+    color: var(--ink-soft);
+    font-family: var(--serif);
+    font-size: 13px;
+    line-height: 1.65;
+    word-break: keep-all;
+  }
+
+  .activities a {
+    color: var(--accent);
+    font-size: 16px;
+    text-decoration: none;
+  }
+
+  .career-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 28px;
+    margin-top: 48px;
+  }
+
+  .career-links a {
+    display: inline-flex;
+    gap: 9px;
+    align-items: center;
+    min-height: 44px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+  }
+
+  .career-links a:hover {
+    color: var(--accent);
+  }
+
+  .career-links span {
+    color: var(--accent);
+  }
+
+  @media (max-width: 760px) {
+    .career {
+      min-height: calc(100svh - 160px);
+      padding: 54px 0 96px;
+    }
+
+    h1 {
+      font-size: clamp(58px, 18vw, 78px);
+    }
+
+    .timeline li {
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .activities li {
+      grid-template-columns: 52px minmax(0, 1fr) 20px;
+      gap: 14px;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .activities li {
+      grid-template-columns: 1fr 20px;
+    }
+
+    .activities time {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

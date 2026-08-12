@@ -9,6 +9,7 @@ interface Props {
   publishedTime?: Date;
   modifiedTime?: Date;
   tags?: string[];
+  profilePage?: boolean;
 }
 
 const {
@@ -21,6 +22,7 @@ const {
   publishedTime,
   modifiedTime,
   tags = [],
+  profilePage = false,
 } = Astro.props;
 
 const base = import.meta.env.BASE_URL;
@@ -68,8 +70,32 @@ const structuredData = {
         "Applied artificial intelligence",
         "Quantitative trading",
       ],
+      description:
+        "KENTECH 1기 학생이자 제2대 총학생회장을 역임한 에너지 시스템·응용 AI 연구자 지망생.",
+      hasOccupation: {
+        "@type": "Occupation",
+        name: "Former President of the 2nd KENTECH Student Council",
+        occupationLocation: {
+          "@type": "CollegeOrUniversity",
+          name: "Korea Institute of Energy Technology (KENTECH)",
+        },
+      },
       sameAs: ["https://github.com/donghyeok-k"],
     },
+    ...(profilePage
+      ? [
+          {
+            "@type": "ProfilePage",
+            "@id": `${canonicalUrl.href}#profile-page`,
+            url: canonicalUrl.href,
+            name: title,
+            description,
+            inLanguage: ["ko", "en"],
+            mainEntity: { "@id": personId },
+            isPartOf: { "@id": websiteId },
+          },
+        ]
+      : []),
     ...(ogType === "article" && publishedTime
       ? [
           {
@@ -97,11 +123,13 @@ const structuredDataJson = JSON.stringify(structuredData).replace(
   "\\u003c",
 );
 const homeUrl = base;
+const profileUrl = `${base}career/`;
 const blogUrl = `${base}blog/`;
 const archiveUrl = `${base}archive/`;
+const isProfile = Astro.url.pathname.startsWith(profileUrl);
 const isBlog = Astro.url.pathname.startsWith(blogUrl);
 const isArchive = Astro.url.pathname.startsWith(archiveUrl);
-const isHome = !isBlog && !isArchive;
+const isHome = !isProfile && !isBlog && !isArchive;
 ---
 
 <!doctype html>
@@ -157,7 +185,10 @@ const isHome = !isBlog && !isArchive;
     }
     {tags.map((tag) => <meta property="article:tag" content={tag} />)}
     <script type="application/ld+json" set:html={structuredDataJson} />
+    <link rel="icon" href={`${base}favicon.ico`} sizes="any" />
     <link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml" />
+    <link rel="icon" href={`${base}favicon-512.png`} type="image/png" sizes="512x512" />
+    <link rel="apple-touch-icon" href={`${base}apple-touch-icon.png`} sizes="180x180" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -176,6 +207,7 @@ const isHome = !isBlog && !isArchive;
 
       <nav class="site-nav" aria-label="Primary navigation">
         <a href={homeUrl} aria-current={isHome ? "page" : undefined}>INDEX</a>
+        <a href={profileUrl} aria-current={isProfile ? "page" : undefined}>CAREER</a>
         <a href={blogUrl} aria-current={isBlog ? "page" : undefined}>BLOG</a>
         <a href={archiveUrl} aria-current={isArchive ? "page" : undefined}>ARCHIVE</a>
       </nav>
