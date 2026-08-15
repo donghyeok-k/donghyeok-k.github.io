@@ -126,6 +126,7 @@ const homeUrl = base;
 const profileUrl = `${base}career/`;
 const blogUrl = `${base}blog/`;
 const archiveUrl = `${base}archive/`;
+const contactEmail = "lucaskdh@kentech.ac.kr";
 const isProfile = Astro.url.pathname.startsWith(profileUrl);
 const isBlog = Astro.url.pathname.startsWith(blogUrl);
 const isArchive = Astro.url.pathname.startsWith(archiveUrl);
@@ -216,8 +217,19 @@ const isHome = !isProfile && !isBlog && !isArchive;
     <slot />
 
     <footer class="site-footer page-shell">
-      <p>© 2026 DONGHYEOK KIM</p>
-      <a href="#top" aria-label="페이지 맨 위로">BACK TO TOP ↑</a>
+      <div class="footer-meta">
+        <p>© 2026 DONGHYEOK KIM</p>
+        <a
+          class="footer-email"
+          href={`mailto:${contactEmail}`}
+          aria-label={`Email Donghyeok Kim at ${contactEmail}`}
+        >
+          {contactEmail}
+        </a>
+      </div>
+      <a class="back-to-top" href="#top" aria-label="페이지 맨 위로">
+        BACK TO TOP ↑
+      </a>
     </footer>
   </body>
 </html>
@@ -366,16 +378,40 @@ const isHome = !isProfile && !isBlog && !isArchive;
     margin: 0;
   }
 
+  .footer-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 20px;
+    align-items: center;
+  }
+
   .site-footer a {
-    justify-self: end;
     display: inline-flex;
     align-items: center;
     min-height: 44px;
     text-decoration: none;
   }
 
+  .footer-email {
+    color: var(--ink-soft);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-decoration: underline;
+    text-decoration-color: var(--rule);
+    text-underline-offset: 4px;
+  }
+
+  .back-to-top {
+    justify-self: end;
+  }
+
   .site-footer a:hover {
     color: var(--ink);
+  }
+
+  .footer-email:hover {
+    text-decoration-color: var(--accent);
   }
 
   @media (max-width: 800px) {
@@ -402,6 +438,20 @@ const isHome = !isProfile && !isBlog && !isArchive;
       padding-inline: 5px;
       font-size: 8px;
       letter-spacing: 0.1em;
+    }
+
+    .site-footer {
+      gap: 12px;
+      padding-block: 12px;
+    }
+
+    .footer-meta {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .footer-email {
+      min-height: 32px;
     }
   }
 
