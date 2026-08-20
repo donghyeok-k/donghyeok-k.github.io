@@ -1,0 +1,177 @@
+---
+import { getCollection } from "astro:content";
+import SiteLayout from "../../layouts/SiteLayout.astro";
+
+const notes = (await getCollection("analysis", ({ data }) => !data.draft)).sort(
+  (a, b) => a.data.order - b.data.order || b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+const base = import.meta.env.BASE_URL;
+const formatDate = (date: Date) =>
+  new Intl.DateTimeFormat("ko-KR", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    timeZone: "Asia/Seoul",
+  }).format(date);
+---
+
+<SiteLayout
+  title="Introduction to Analysis — Donghyeok Kim"
+  description="김동혁의 Introduction to Analysis 독학 기록: 정의, 전제, 증명과 반례를 따라가는 해석학 노트."
+  bodyClass="analysis-page"
+>
+  <main id="content" class="analysis page-shell">
+    <div class="analysis-inner">
+      <header class="analysis-header">
+        <p class="eyebrow">STUDY NOTES / {String(notes.length).padStart(2, "0")}</p>
+        <h1>Introduction<br />to Analysis</h1>
+        <p>
+          정의의 전제, 명제의 범위, 그리고 반례를 함께 확인하며 쌓아가는 독학 기록.
+        </p>
+      </header>
+
+      <ol class="note-list">
+        {
+          notes.map((note) => (
+            <li>
+              <a href={`${base}analysis/${note.id}/`}>
+                <p>{String(note.data.order).padStart(2, "0")}</p>
+                <div>
+                  <h2>{note.data.title}</h2>
+                  <span>{note.data.description}</span>
+                  <time datetime={note.data.pubDate.toISOString()}>{formatDate(note.data.pubDate)}</time>
+                </div>
+                <b aria-hidden="true">↗</b>
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </main>
+</SiteLayout>
+
+<style>
+  .analysis {
+    min-height: calc(100svh - 180px);
+    padding: clamp(64px, 8vw, 104px) 0 clamp(96px, 12vw, 152px);
+  }
+
+  .analysis-inner {
+    width: min(100%, 860px);
+    margin-inline: auto;
+  }
+
+  .analysis-header {
+    max-width: 700px;
+    padding-bottom: clamp(48px, 6vw, 72px);
+  }
+
+  .eyebrow,
+  .analysis-header p,
+  .note-list {
+    font-family: var(--sans);
+  }
+
+  .eyebrow {
+    margin: 0 0 20px;
+    color: var(--accent);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: clamp(54px, 7vw, 84px);
+    font-weight: 600;
+    letter-spacing: -0.055em;
+    line-height: 0.88;
+  }
+
+  .analysis-header > p:last-child {
+    max-width: 520px;
+    margin: 30px 0 0;
+    color: var(--ink-soft);
+    font-size: 14px;
+    line-height: 1.75;
+    word-break: keep-all;
+  }
+
+  .note-list {
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--ink);
+    list-style: none;
+  }
+
+  .note-list li {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .note-list a {
+    display: grid;
+    grid-template-columns: 54px minmax(0, 1fr) 24px;
+    gap: 22px;
+    align-items: start;
+    padding: 28px 0;
+    text-decoration: none;
+  }
+
+  .note-list a:hover h2 {
+    color: var(--accent);
+  }
+
+  .note-list p,
+  .note-list h2,
+  .note-list span,
+  .note-list time {
+    margin: 0;
+  }
+
+  .note-list p,
+  .note-list time {
+    color: var(--ink-faint);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+  }
+
+  .note-list h2 {
+    font-family: var(--serif);
+    font-size: clamp(23px, 3vw, 32px);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 1.12;
+    transition: color 160ms ease;
+  }
+
+  .note-list span {
+    display: block;
+    max-width: 640px;
+    margin-top: 10px;
+    color: var(--ink-soft);
+    font-family: var(--serif);
+    font-size: 14px;
+    line-height: 1.65;
+    word-break: keep-all;
+  }
+
+  .note-list time {
+    display: block;
+    margin-top: 14px;
+  }
+
+  .note-list b {
+    color: var(--accent);
+    font-size: 16px;
+  }
+
+  @media (max-width: 560px) {
+    .note-list a {
+      grid-template-columns: 36px minmax(0, 1fr) 18px;
+      gap: 12px;
+    }
+  }
+</style>
