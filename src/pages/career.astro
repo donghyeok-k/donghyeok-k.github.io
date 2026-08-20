@@ -5,7 +5,7 @@ import { archiveItems } from "../data/archive";
 const base = import.meta.env.BASE_URL;
 const title = "김동혁 경력 및 활동 | KENTECH · Energy & AI";
 const description =
-  "김동혁(Donghyeok Kim)의 KENTECH 학업, 제2대 총학생회장 경력, 에너지·AI 관심 분야와 주요 활동 기록.";
+  "김동혁(Donghyeok Kim)의 KENTECH 학업, 제2대 총학생회장 경력, 수상·장학 내역과 에너지·AI 활동 기록.";
 
 const timeline = [
   {
@@ -21,6 +21,33 @@ const timeline = [
     organization: "KENTECH 총학생회",
     description:
       "학생 공동체를 대표하며 교류·지역상생·캠퍼스 활동을 기획하고 학교 안팎의 협력을 추진했습니다.",
+  },
+];
+
+const honors = [
+  {
+    period: "2023",
+    title: "KENTECH 총장 공로상",
+    issuer: "한국에너지공과대학교",
+    detail: "KENTECH Presidential Award for Meritorious Service",
+  },
+  {
+    period: "2023",
+    title: "KENTECH 영상 공모전 2등",
+    issuer: "한국에너지공과대학교 · 학생처장상",
+    detail: "Second Prize, KENTECH Video Contest",
+  },
+  {
+    period: "2022",
+    title: "나주시장 표창",
+    issuer: "나주시",
+    detail: "멘토링 활동 우수 표창",
+  },
+  {
+    period: "2022 — PRESENT",
+    title: "KENTECH 총장 장학금",
+    issuer: "한국에너지공과대학교",
+    detail: "성적 우수 전액 장학",
   },
 ];
 
@@ -66,10 +93,29 @@ const featuredActivities = archiveItems.filter((item) =>
       </ol>
     </section>
 
+    <section class="section" aria-labelledby="honors-heading">
+      <div class="section-label">
+        <h2 id="honors-heading">Honors &amp; Awards</h2>
+        <span>02</span>
+      </div>
+      <ol class="honors">
+        {honors.map((item) => (
+          <li>
+            <time>{item.period}</time>
+            <div>
+              <h3>{item.title}</h3>
+              <p class="honor-issuer">{item.issuer}</p>
+              <p>{item.detail}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+
     <section class="section" aria-labelledby="activities-heading">
       <div class="section-label">
         <h2 id="activities-heading">Selected Activities</h2>
-        <span>02</span>
+        <span>03</span>
       </div>
       <ol class="activities">
         {featuredActivities.map((item) => (
@@ -164,13 +210,15 @@ const featuredActivities = archiveItems.filter((item) =>
   }
 
   .timeline,
+  .honors,
   .activities {
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
-  .timeline li {
+  .timeline li,
+  .honors li {
     display: grid;
     grid-template-columns: 170px minmax(0, 1fr);
     gap: 34px;
@@ -179,6 +227,7 @@ const featuredActivities = archiveItems.filter((item) =>
   }
 
   .timeline time,
+  .honors time,
   .activities time {
     color: var(--accent);
     font-size: 10px;
@@ -187,6 +236,7 @@ const featuredActivities = archiveItems.filter((item) =>
   }
 
   .timeline h3,
+  .honors h3,
   .activities h3 {
     margin: 0;
     font-family: var(--serif);
@@ -207,6 +257,23 @@ const featuredActivities = archiveItems.filter((item) =>
 
   .timeline .organization {
     margin-top: 7px;
+    color: var(--ink-faint);
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 700;
+  }
+
+  .honors p {
+    max-width: 660px;
+    margin: 8px 0 0;
+    color: var(--ink-soft);
+    font-family: var(--serif);
+    font-size: 13px;
+    line-height: 1.6;
+    word-break: keep-all;
+  }
+
+  .honors .honor-issuer {
     color: var(--ink-faint);
     font-family: var(--sans);
     font-size: 10px;
@@ -283,7 +350,8 @@ const featuredActivities = archiveItems.filter((item) =>
       font-size: clamp(58px, 18vw, 78px);
     }
 
-    .timeline li {
+    .timeline li,
+    .honors li {
       grid-template-columns: 1fr;
       gap: 14px;
     }
