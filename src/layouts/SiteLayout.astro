@@ -203,18 +203,20 @@ const isHome = !isProfile && !isBlog && !isAnalysis && !isArchive;
   <body id="top" class={bodyClass}>
     <a class="skip-link" href="#content">본문으로 건너뛰기</a>
 
-    <header class="site-header page-shell">
-      <a class="wordmark" href={homeUrl} aria-label="Donghyeok Kim home">
-        DONGHYEOK KIM
-      </a>
+    <header class="site-header">
+      <div class="site-header-inner page-shell">
+        <a class="wordmark" href={homeUrl} aria-label="Donghyeok Kim home">
+          DONGHYEOK KIM
+        </a>
 
-      <nav class="site-nav" aria-label="Primary navigation">
-        <a href={homeUrl} aria-current={isHome ? "page" : undefined}>INDEX</a>
-        <a href={profileUrl} aria-current={isProfile ? "page" : undefined}>CAREER</a>
-        <a href={blogUrl} aria-current={isBlog ? "page" : undefined}>BLOG</a>
-        <a href={analysisUrl} aria-current={isAnalysis ? "page" : undefined}>ANALYSIS</a>
-        <a href={archiveUrl} aria-current={isArchive ? "page" : undefined}>ARCHIVE</a>
-      </nav>
+        <nav class="site-nav" aria-label="Primary navigation">
+          <a href={homeUrl} aria-current={isHome ? "page" : undefined}>INDEX</a>
+          <a href={profileUrl} aria-current={isProfile ? "page" : undefined}>CAREER</a>
+          <a href={blogUrl} aria-current={isBlog ? "page" : undefined}>BLOG</a>
+          <a href={analysisUrl} aria-current={isAnalysis ? "page" : undefined}>ANALYSIS</a>
+          <a href={archiveUrl} aria-current={isArchive ? "page" : undefined}>ARCHIVE</a>
+        </nav>
+      </div>
     </header>
 
     <slot />
@@ -265,7 +267,7 @@ const isHome = !isProfile && !isBlog && !isAnalysis && !isArchive;
 
   :global(body) {
     margin: 0;
-    min-width: 320px;
+    min-width: 0;
     min-height: 100svh;
     background: var(--paper);
     color: var(--ink);
@@ -312,13 +314,17 @@ const isHome = !isProfile && !isBlog && !isAnalysis && !isArchive;
   }
 
   .site-header {
+    height: 76px;
+    border-bottom: 1px solid var(--ink);
+    font-family: var(--sans);
+  }
+
+  .site-header-inner {
     display: grid;
     grid-template-columns: 1fr auto;
     gap: 24px;
     align-items: center;
-    min-height: 76px;
-    border-bottom: 1px solid var(--ink);
-    font-family: var(--sans);
+    height: 100%;
   }
 
   .wordmark {
@@ -419,7 +425,7 @@ const isHome = !isProfile && !isBlog && !isAnalysis && !isArchive;
 
   @media (max-width: 800px) {
     .site-header {
-      min-height: 68px;
+      height: 68px;
     }
 
     .site-footer {
@@ -428,7 +434,7 @@ const isHome = !isProfile && !isBlog && !isAnalysis && !isArchive;
   }
 
   @media (max-width: 420px) {
-    .site-header {
+    .site-header-inner {
       grid-template-columns: auto minmax(0, 1fr);
       gap: 8px;
     }
