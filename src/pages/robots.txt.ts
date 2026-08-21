@@ -6,7 +6,7 @@ export const GET: APIRoute = ({ site }) => {
   }
 
   const siteRoot = new URL(import.meta.env.BASE_URL, site);
-  const sitemapUrl = new URL("sitemap-index.xml", siteRoot);
+  const sitemapUrl = new URL("sitemap.xml", siteRoot);
   const body = [
     "User-agent: *",
     "Allow: /",
