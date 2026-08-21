@@ -35,7 +35,7 @@ const defaultImageUrl = new URL(
 const imageUrl = image
   ? new URL(image.replace(/^\//, ""), siteRoot)
   : defaultImageUrl;
-const sitemapUrl = new URL("sitemap-index.xml", siteRoot);
+const sitemapUrl = new URL("sitemap.xml", siteRoot);
 const locale = lang === "ko" ? "ko_KR" : "en_US";
 const personId = new URL("#donghyeok-kim", siteRoot).href;
 const websiteId = new URL("#website", siteRoot).href;
