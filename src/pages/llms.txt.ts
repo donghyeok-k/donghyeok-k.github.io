@@ -29,6 +29,7 @@ export const GET: APIRoute = ({ site }) => {
     "",
     "- Personal: research.assistant.dh@gmail.com",
     "- KENTECH: lucaskdh@kentech.ac.kr",
+    "- LinkedIn: https://www.linkedin.com/in/donghyeok-kim-061433279/",
     "- GitHub: https://github.com/donghyeok-k",
     "",
     "This file is a factual navigation aid. The linked public pages are the source of truth.",
