@@ -1,10 +1,33 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
 
-const title = "김동혁 (Donghyeok Kim) | KENTECH · Energy & AI";
+const title =
+  "김동혁 (Donghyeok Kim) | Energy Systems · Carbon Markets · Computational Modeling";
 const description =
-  "김동혁(Donghyeok Kim)은 KENTECH 1기 학생이자 제2대 총학생회장을 역임했으며, 에너지 시스템과 응용 AI를 공부합니다.";
+  "KENTECH 학부연구생 김동혁의 에너지 시스템, 탄소시장, 계산 모델링 연구와 공개 활동 기록.";
 const base = import.meta.env.BASE_URL;
+const siteRoot = Astro.site ?? new URL("https://donghyeok-k.github.io");
+const researchProjects = [
+  "Modeling and Analysis of Cryogenic Conductor Performance",
+  "Global Carbon Allowance Futures Markets: Lessons for Korea",
+  "Numerical Analysis of Nanofluid Systems",
+];
+const additionalGraph = [
+  {
+    "@type": "ItemList",
+    "@id": new URL("#research-in-progress", siteRoot).href,
+    name: "Research in Progress",
+    itemListElement: researchProjects.map((name, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      item: {
+        "@type": "CreativeWork",
+        name,
+        author: { "@id": new URL("#donghyeok-kim", siteRoot).href },
+      },
+    })),
+  },
+];
 ---
 
 <SiteLayout
@@ -12,53 +35,75 @@ const base = import.meta.env.BASE_URL;
   description={description}
   lang="en"
   bodyClass="home-page"
+  additionalGraph={additionalGraph}
 >
-  <main id="content" class="cover page-shell" aria-labelledby="main-title">
-    <img
-      class="connection-field"
-      src={`${base}images/editological-thinking.webp`}
-      width="1536"
-      height="1024"
-      alt=""
-      aria-hidden="true"
-    />
+  <main id="content" class="home" aria-labelledby="main-title">
+    <section class="cover page-shell">
+      <img
+        class="connection-field"
+        src={`${base}images/editological-thinking.webp`}
+        width="1536"
+        height="1024"
+        alt=""
+        aria-hidden="true"
+      />
 
-    <img
-      class="portrait"
-      src={`${base}images/donghyeok-kim-cutout.webp`}
-      width="760"
-      height="785"
-      alt="Donghyeok Kim portrait"
-      fetchpriority="high"
-    />
+      <img
+        class="portrait"
+        src={`${base}images/donghyeok-kim-cutout.webp`}
+        width="760"
+        height="785"
+        alt="Donghyeok Kim portrait"
+        fetchpriority="high"
+      />
 
-    <section class="statement">
-      <p class="kicker">ENERGY ENGINEERING · APPLIED AI</p>
-      <h1 id="main-title">
-        Models for
-        <span>real-world problems.</span>
-      </h1>
-      <p class="dek">
-        KENTECH first cohort and former president of the 2nd Student Council.
-        I study energy systems and applied AI.
-      </p>
-      <p class="thesis">
-        Also exploring quantitative trading, with a focus on NQ futures.
-      </p>
+      <div class="statement">
+        <p class="kicker">ENERGY SYSTEMS · CARBON MARKETS · COMPUTATIONAL MODELING</p>
+        <h1 id="main-title">
+          Models for
+          <span>real-world problems.</span>
+        </h1>
+        <p class="dek">
+          Undergraduate researcher at KENTECH working across energy systems,
+          carbon markets, and computational modeling.
+        </p>
+        <p class="thesis">
+          I use quantitative analysis to make assumptions, evidence, and
+          practical implications explicit.
+        </p>
+      </div>
+
+      <nav class="landing-links" aria-label="Explore">
+        <a href={`${base}blog/`}>
+          <span>01</span>
+          <strong>READ WRITING</strong>
+          <b aria-hidden="true">→</b>
+        </a>
+        <a href={`${base}archive/`}>
+          <span>02</span>
+          <strong>VIEW ARCHIVE</strong>
+          <b aria-hidden="true">→</b>
+        </a>
+      </nav>
     </section>
 
-    <nav class="landing-links" aria-label="Explore">
-      <a href={`${base}blog/`}>
-        <span>01</span>
-        <strong>OPEN BLOG</strong>
-        <b aria-hidden="true">→</b>
-      </a>
-      <a href={`${base}archive/`}>
-        <span>02</span>
-        <strong>VIEW ARCHIVE</strong>
-        <b aria-hidden="true">→</b>
-      </a>
-    </nav>
+    <section class="research page-shell" aria-labelledby="research-heading">
+      <header class="research-header">
+        <p>RESEARCH IN PROGRESS / 03</p>
+        <h2 id="research-heading">Research<br />in Progress</h2>
+      </header>
+
+      <ol class="research-list" role="list">
+        {
+          researchProjects.map((project, index) => (
+            <li>
+              <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+              <h3>{project}</h3>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
   </main>
 </SiteLayout>
 
@@ -216,6 +261,71 @@ const base = import.meta.env.BASE_URL;
     transform: translateX(4px);
   }
 
+  .research {
+    display: grid;
+    grid-template-columns: minmax(200px, 3fr) minmax(0, 9fr);
+    gap: clamp(40px, 7vw, 96px);
+    padding: clamp(80px, 10vw, 112px) 0 clamp(96px, 11vw, 120px);
+    border-top: 1px solid var(--ink);
+  }
+
+  .research-header p,
+  .research-list {
+    font-family: var(--sans);
+  }
+
+  .research-header p {
+    margin: 0 0 20px;
+    color: var(--accent);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+  }
+
+  .research-header h2 {
+    margin: 0;
+    font-size: clamp(42px, 4.7vw, 62px);
+    font-weight: 600;
+    letter-spacing: -0.05em;
+    line-height: 0.94;
+  }
+
+  .research-list {
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--ink);
+    list-style: none;
+  }
+
+  .research-list li {
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr);
+    gap: 18px;
+    align-items: start;
+    padding: clamp(24px, 3vw, 34px) 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .research-list span {
+    padding-top: 6px;
+    color: var(--accent);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+  }
+
+  .research-list h3 {
+    max-width: 720px;
+    margin: 0;
+    font-family: var(--serif);
+    font-size: clamp(24px, 3vw, 36px);
+    font-weight: 500;
+    letter-spacing: -0.035em;
+    line-height: 1.15;
+    text-wrap: balance;
+    overflow-wrap: anywhere;
+  }
+
   @media (max-height: 760px) and (min-width: 761px) {
     .statement {
       padding-top: 38px;
@@ -283,6 +393,16 @@ const base = import.meta.env.BASE_URL;
     .landing-links {
       bottom: 20px;
     }
+
+    .research {
+      grid-template-columns: 1fr;
+      gap: 48px;
+      padding: 80px 0 104px;
+    }
+
+    .research-header h2 br {
+      display: none;
+    }
   }
 
   @media (max-width: 420px) {
@@ -306,6 +426,22 @@ const base = import.meta.env.BASE_URL;
 
     .landing-links a {
       min-width: 158px;
+    }
+
+    .research-list li {
+      grid-template-columns: 34px minmax(0, 1fr);
+      gap: 10px;
+    }
+
+    .research-list h3 {
+      font-size: clamp(23px, 7.6vw, 30px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .landing-links a,
+    .landing-links a b {
+      transition: none;
     }
   }
 </style>

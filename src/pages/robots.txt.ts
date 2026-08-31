@@ -7,11 +7,13 @@ export const GET: APIRoute = ({ site }) => {
 
   const siteRoot = new URL(import.meta.env.BASE_URL, site);
   const sitemapUrl = new URL("sitemap.xml", siteRoot);
+  const textSitemapUrl = new URL("sitemap.txt", siteRoot);
   const body = [
     "User-agent: *",
     "Allow: /",
     "",
     `Sitemap: ${sitemapUrl.href}`,
+    `Sitemap: ${textSitemapUrl.href}`,
     "",
   ].join("\n");
 

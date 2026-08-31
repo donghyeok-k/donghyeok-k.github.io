@@ -3,17 +3,17 @@ import SiteLayout from "../layouts/SiteLayout.astro";
 import { archiveItems } from "../data/archive";
 
 const base = import.meta.env.BASE_URL;
-const title = "김동혁 경력 및 활동 | KENTECH · Energy & AI";
+const title = "김동혁 경력 및 활동 | KENTECH Undergraduate Researcher";
 const description =
-  "김동혁(Donghyeok Kim)의 KENTECH 학업, 제2대 총학생회장 경력, 수상·장학 내역과 에너지·AI 활동 기록.";
+  "KENTECH 학부연구생 김동혁의 학업, 연구 관심 분야, 제2대 총학생회장 경력과 수상·장학·공개 활동 기록.";
 
 const timeline = [
   {
     period: "2022 — PRESENT",
-    role: "KENTECH 학부생",
+    role: "KENTECH 학부생 · 학부연구생",
     organization: "한국에너지공과대학교 · 학부 1기",
     description:
-      "에너지 시스템을 공부하며 실제 문제에 적용할 수 있는 AI 모델과 정량적 분석을 탐구하고 있습니다.",
+      "에너지 시스템, 탄소시장, 계산 모델링을 중심으로 실제 문제를 설명하는 정량적 분석을 탐구하고 있습니다.",
   },
   {
     period: "2023",
@@ -70,7 +70,7 @@ const featuredActivities = archiveItems.filter((item) =>
       <h1>Career &amp;<br />Activities</h1>
       <p class="intro">
         한국에너지공과대학교(KENTECH) 1기 · 제2대 총학생회장<br />
-        Energy Systems · Applied AI
+        Energy Systems · Carbon Markets · Computational Modeling
       </p>
     </header>
 
@@ -143,14 +143,13 @@ const featuredActivities = archiveItems.filter((item) =>
 
 <style>
   .career {
-    min-height: calc(100svh - 180px);
     padding: clamp(64px, 9vw, 112px) 0 clamp(96px, 12vw, 152px);
   }
 
   .career-header,
   .section,
   .career-links {
-    width: min(100%, 980px);
+    width: min(100%, var(--content-wide));
     margin-inline: auto;
   }
 
@@ -309,6 +308,11 @@ const featuredActivities = archiveItems.filter((item) =>
   }
 
   .activities a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    min-height: 44px;
     color: var(--accent);
     font-size: 16px;
     text-decoration: none;
@@ -342,7 +346,6 @@ const featuredActivities = archiveItems.filter((item) =>
 
   @media (max-width: 760px) {
     .career {
-      min-height: calc(100svh - 160px);
       padding: 54px 0 96px;
     }
 

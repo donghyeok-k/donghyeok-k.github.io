@@ -43,12 +43,12 @@ const formatDate = (date: Date) =>
 >
   <main id="content" class="article page-shell">
     <div class="article-nav">
-      <a href={blogUrl}><span aria-hidden="true">←</span> JOURNAL</a>
+      <a href={blogUrl}><span aria-hidden="true">←</span> WRITING</a>
       <p>ENTRY / {post.data.tags[0] ?? "NOTE"}</p>
     </div>
 
     <header class="article-header">
-      <p class="article-index">JOURNAL / ESSAY</p>
+      <p class="article-index">WRITING / ESSAY</p>
 
       <div class="title-group">
         <h1>{post.data.title}</h1>
@@ -112,6 +112,12 @@ const formatDate = (date: Date) =>
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 0.13em;
+  }
+
+  .article-nav,
+  .article-header {
+    width: min(100%, var(--content-wide));
+    margin-inline: auto;
   }
 
   .article-nav a {

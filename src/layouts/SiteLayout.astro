@@ -10,6 +10,7 @@ interface Props {
   modifiedTime?: Date;
   tags?: string[];
   profilePage?: boolean;
+  additionalGraph?: Record<string, unknown>[];
 }
 
 const {
@@ -23,6 +24,7 @@ const {
   modifiedTime,
   tags = [],
   profilePage = false,
+  additionalGraph = [],
 } = Astro.props;
 
 const base = import.meta.env.BASE_URL;
@@ -67,19 +69,15 @@ const structuredData = {
       },
       knowsAbout: [
         "Energy systems",
-        "Applied artificial intelligence",
-        "Quantitative trading",
+        "Carbon allowance markets",
+        "Computational modeling",
+        "Cryogenic conductor performance",
+        "Nanofluid systems",
       ],
       description:
-        "KENTECH 1기 학생이자 제2대 총학생회장을 역임한 에너지 시스템·응용 AI 연구자 지망생.",
-      hasOccupation: {
-        "@type": "Occupation",
-        name: "Former President of the 2nd KENTECH Student Council",
-        occupationLocation: {
-          "@type": "CollegeOrUniversity",
-          name: "Korea Institute of Energy Technology (KENTECH)",
-        },
-      },
+        "KENTECH 학부연구생으로 에너지 시스템, 탄소시장, 계산 모델링을 연구하며 제2대 총학생회장을 역임했습니다.",
+      jobTitle: "Undergraduate Researcher",
+      email: "mailto:research.assistant.dh@gmail.com",
       sameAs: ["https://github.com/donghyeok-k"],
     },
     ...(profilePage
@@ -116,6 +114,7 @@ const structuredData = {
           },
         ]
       : []),
+    ...additionalGraph,
   ],
 };
 const structuredDataJson = JSON.stringify(structuredData).replace(
@@ -125,14 +124,16 @@ const structuredDataJson = JSON.stringify(structuredData).replace(
 const homeUrl = base;
 const profileUrl = `${base}career/`;
 const blogUrl = `${base}blog/`;
-const analysisUrl = `${base}analysis/`;
 const archiveUrl = `${base}archive/`;
 const contactEmail = "lucaskdh@kentech.ac.kr";
+const personalEmail = "research.assistant.dh@gmail.com";
+const skipLabel = lang === "ko" ? "본문으로 건너뛰기" : "Skip to content";
+const primaryNavLabel = lang === "ko" ? "주요 메뉴" : "Primary navigation";
+const backToTopLabel = lang === "ko" ? "페이지 맨 위로" : "Back to top";
 const isProfile = Astro.url.pathname.startsWith(profileUrl);
 const isBlog = Astro.url.pathname.startsWith(blogUrl);
-const isAnalysis = Astro.url.pathname.startsWith(analysisUrl);
 const isArchive = Astro.url.pathname.startsWith(archiveUrl);
-const isHome = !isProfile && !isBlog && !isAnalysis && !isArchive;
+const isHome = !isProfile && !isBlog && !isArchive;
 ---
 
 <!doctype html>
@@ -201,7 +202,7 @@ const isHome = !isProfile && !isBlog && !isAnalysis && !isArchive;
     <title>{title}</title>
   </head>
   <body id="top" class={bodyClass}>
-    <a class="skip-link" href="#content">본문으로 건너뛰기</a>
+    <a class="skip-link" href="#content">{skipLabel}</a>
 
     <header class="site-header">
       <div class="site-header-inner page-shell">
@@ -209,11 +210,10 @@ const isHome = !isProfile && !isBlog && !isAnalysis && !isArchive;
           DONGHYEOK KIM
         </a>
 
-        <nav class="site-nav" aria-label="Primary navigation">
+        <nav class="site-nav" aria-label={primaryNavLabel}>
           <a href={homeUrl} aria-current={isHome ? "page" : undefined}>INDEX</a>
           <a href={profileUrl} aria-current={isProfile ? "page" : undefined}>CAREER</a>
-          <a href={blogUrl} aria-current={isBlog ? "page" : undefined}>BLOG</a>
-          <a href={analysisUrl} aria-current={isAnalysis ? "page" : undefined}>ANALYSIS</a>
+          <a href={blogUrl} aria-current={isBlog ? "page" : undefined}>WRITING</a>
           <a href={archiveUrl} aria-current={isArchive ? "page" : undefined}>ARCHIVE</a>
         </nav>
       </div>
@@ -224,15 +224,24 @@ const isHome = !isProfile && !isBlog && !isAnalysis && !isArchive;
     <footer class="site-footer page-shell">
       <div class="footer-meta">
         <p>© 2026 DONGHYEOK KIM</p>
-        <a
-          class="footer-email"
-          href={`mailto:${contactEmail}`}
-          aria-label={`Email Donghyeok Kim at ${contactEmail}`}
-        >
-          {contactEmail}
-        </a>
+        <address class="footer-contacts">
+          <a
+            class="footer-email"
+            href={`mailto:${personalEmail}`}
+            aria-label={`Email Donghyeok Kim at ${personalEmail}`}
+          >
+            <span>PERSONAL</span>{personalEmail}
+          </a>
+          <a
+            class="footer-email"
+            href={`mailto:${contactEmail}`}
+            aria-label={`Email Donghyeok Kim at ${contactEmail}`}
+          >
+            <span>KENTECH</span>{contactEmail}
+          </a>
+        </address>
       </div>
-      <a class="back-to-top" href="#top" aria-label="페이지 맨 위로">
+      <a class="back-to-top" href="#top" aria-label={backToTopLabel}>
         BACK TO TOP ↑
       </a>
     </footer>
@@ -249,6 +258,7 @@ const isHome = !isProfile && !isBlog && !isAnalysis && !isArchive;
     --accent: #a33a30;
     --rule: #d5d0c6;
     --page: 1200px;
+    --content-wide: 980px;
     --gutter: clamp(20px, 4vw, 64px);
     --sans: "Inter", "Apple SD Gothic Neo", "Malgun Gothic", Arial, sans-serif;
     --serif: "Newsreader", "Noto Serif KR", "Batang", Georgia, serif;
@@ -263,9 +273,12 @@ const isHome = !isProfile && !isBlog && !isAnalysis && !isArchive;
     background: var(--paper);
     color: var(--ink);
     scroll-behavior: smooth;
+    scrollbar-gutter: stable;
   }
 
   :global(body) {
+    display: flex;
+    flex-direction: column;
     margin: 0;
     min-width: 0;
     min-height: 100svh;
@@ -274,6 +287,10 @@ const isHome = !isProfile && !isBlog && !isAnalysis && !isArchive;
     font-family: var(--serif);
     font-optical-sizing: auto;
     text-rendering: optimizeLegibility;
+  }
+
+  :global(main) {
+    flex: 1 0 auto;
   }
 
   :global(a) {
@@ -378,7 +395,8 @@ const isHome = !isProfile && !isBlog && !isAnalysis && !isArchive;
     border-top: 1px solid var(--ink);
     color: var(--ink-faint);
     font-family: var(--sans);
-    font-size: 9px;
+    padding-block: 18px;
+    font-size: 10px;
     font-weight: 600;
     letter-spacing: 0.12em;
   }
@@ -392,6 +410,14 @@ const isHome = !isProfile && !isBlog && !isAnalysis && !isArchive;
     flex-wrap: wrap;
     gap: 0 20px;
     align-items: center;
+  }
+
+  .footer-contacts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 18px;
+    margin: 0;
+    font-style: normal;
   }
 
   .site-footer a {
@@ -409,6 +435,15 @@ const isHome = !isProfile && !isBlog && !isAnalysis && !isArchive;
     text-decoration: underline;
     text-decoration-color: var(--rule);
     text-underline-offset: 4px;
+    overflow-wrap: anywhere;
+  }
+
+  .footer-email span {
+    margin-right: 8px;
+    color: var(--accent);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
   }
 
   .back-to-top {
@@ -433,10 +468,15 @@ const isHome = !isProfile && !isBlog && !isAnalysis && !isArchive;
     }
   }
 
-  @media (max-width: 420px) {
+  @media (max-width: 560px) {
+    .site-header {
+      height: auto;
+    }
+
     .site-header-inner {
-      grid-template-columns: auto minmax(0, 1fr);
-      gap: 8px;
+      grid-template-columns: 1fr;
+      gap: 0;
+      padding-top: 10px;
     }
 
     .wordmark {
@@ -445,18 +485,21 @@ const isHome = !isProfile && !isBlog && !isAnalysis && !isArchive;
     }
 
     .site-nav {
-      justify-content: flex-end;
-      gap: 0;
+      justify-content: space-between;
+      justify-self: stretch;
+      gap: 8px;
+      width: 100%;
     }
 
     .site-nav a {
-      min-height: 40px;
-      padding-inline: 3px;
-      font-size: 7px;
-      letter-spacing: 0.06em;
+      min-height: 44px;
+      padding-inline: 0;
+      font-size: 9px;
+      letter-spacing: 0.08em;
     }
 
     .site-footer {
+      grid-template-columns: 1fr;
       gap: 12px;
       padding-block: 12px;
     }
@@ -466,8 +509,17 @@ const isHome = !isProfile && !isBlog && !isAnalysis && !isArchive;
       align-items: flex-start;
     }
 
+    .footer-contacts {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
     .footer-email {
-      min-height: 32px;
+      min-height: 44px;
+    }
+
+    .back-to-top {
+      justify-self: start;
     }
   }
 

@@ -21,18 +21,4 @@ const blog = defineCollection({
     }),
 });
 
-const analysis = defineCollection({
-  loader: glob({ base: "./src/content/analysis", pattern: "**/*.md" }),
-  schema: z.object({
-    title: z.string(),
-    description: z.string(),
-    pubDate: z.coerce.date(),
-    updatedDate: z.coerce.date().optional(),
-    draft: z.boolean().default(false),
-    tags: z.array(z.string()).default([]),
-    series: z.string().default("Introduction to Analysis"),
-    order: z.number().int().nonnegative().default(0),
-  }),
-});
-
-export const collections = { blog, analysis };
+export const collections = { blog };

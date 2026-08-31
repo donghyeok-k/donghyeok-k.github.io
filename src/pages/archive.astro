@@ -287,12 +287,11 @@ const localImageUrl = (image: ArchiveImage) =>
 
 <style>
   .archive-page-main {
-    min-height: calc(100svh - 180px);
     padding: clamp(64px, 8vw, 104px) 0 clamp(96px, 12vw, 152px);
   }
 
   .archive-inner {
-    width: min(100%, 1000px);
+    width: min(100%, var(--content-wide));
     margin-inline: auto;
   }
 
@@ -600,7 +599,7 @@ const localImageUrl = (image: ArchiveImage) =>
   }
 
   .media-switcher button {
-    min-height: 34px;
+    min-height: 44px;
     padding: 0 10px;
     border: 1px solid var(--rule);
     background: transparent;
@@ -751,7 +750,7 @@ const localImageUrl = (image: ArchiveImage) =>
     grid-template-columns: 72px minmax(0, 1fr) 16px;
     gap: 10px;
     align-items: center;
-    min-height: 42px;
+    min-height: 44px;
     border-bottom: 1px solid var(--rule);
     color: var(--ink-soft);
     font: 600 9px/1.3 var(--sans);
@@ -800,7 +799,6 @@ const localImageUrl = (image: ArchiveImage) =>
 
   @media (max-width: 640px) {
     .archive-page-main {
-      min-height: calc(100svh - 160px);
       padding: 54px 0 96px;
     }
 

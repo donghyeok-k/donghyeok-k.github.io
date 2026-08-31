@@ -159,12 +159,11 @@ const formatShortDate = (date: Date) =>
 
 <style>
   .journal {
-    min-height: calc(100svh - 180px);
     padding: clamp(64px, 8vw, 104px) 0 clamp(96px, 12vw, 152px);
   }
 
   .journal-inner {
-    width: min(100%, 860px);
+    width: min(100%, var(--content-wide));
     margin-inline: auto;
   }
 
@@ -239,8 +238,10 @@ const formatShortDate = (date: Date) =>
     font: 14px/1 var(--sans);
   }
 
-  .search-field input:focus {
+  .search-field input:focus-visible {
     border-color: var(--accent);
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
   }
 
   .search-field span {
@@ -427,7 +428,6 @@ const formatShortDate = (date: Date) =>
 
   @media (max-width: 640px) {
     .journal {
-      min-height: calc(100svh - 160px);
       padding: 54px 0 96px;
     }
 
