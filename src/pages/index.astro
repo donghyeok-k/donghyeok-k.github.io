@@ -1,5 +1,6 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
+import { researchProjects, researchUpdated } from "../data/research";
 
 const title =
   "김동혁 (Donghyeok Kim) | Energy Systems · Carbon Markets · Computational Modeling";
@@ -7,23 +8,21 @@ const description =
   "KENTECH 학부연구생 김동혁의 에너지 시스템, 탄소시장, 계산 모델링 연구와 공개 활동 기록.";
 const base = import.meta.env.BASE_URL;
 const siteRoot = Astro.site ?? new URL("https://donghyeok-k.github.io");
-const researchProjects = [
-  "Modeling and Analysis of Cryogenic Conductor Performance",
-  "Global Carbon Allowance Futures Markets: Lessons for Korea",
-  "Numerical Analysis of Nanofluid Systems",
-];
 const additionalGraph = [
   {
     "@type": "ItemList",
     "@id": new URL("#research-in-progress", siteRoot).href,
-    name: "Research in Progress",
-    itemListElement: researchProjects.map((name, index) => ({
+    name: "Selected Research",
+    itemListElement: researchProjects.map((project, index) => ({
       "@type": "ListItem",
       position: index + 1,
       item: {
         "@type": "CreativeWork",
-        name,
-        author: { "@id": new URL("#donghyeok-kim", siteRoot).href },
+        name: project.title,
+        description: `${project.status}. ${project.summary} ${project.detail}`,
+        author: project.authors.map((name) => name === "Donghyeok Kim"
+          ? { "@id": new URL("#donghyeok-kim", siteRoot).href }
+          : { "@type": "Person", name }),
       },
     })),
   },
@@ -89,16 +88,23 @@ const additionalGraph = [
 
     <section class="research page-shell" aria-labelledby="research-heading">
       <header class="research-header">
-        <p>RESEARCH IN PROGRESS / 03</p>
-        <h2 id="research-heading">Research<br />in Progress</h2>
+        <p>SELECTED RESEARCH / {String(researchProjects.length).padStart(2, "0")}</p>
+        <h2 id="research-heading">Selected<br />Research</h2>
+        <p class="research-updated">Updated <time datetime={researchUpdated}>September 2026</time></p>
       </header>
 
       <ol class="research-list" role="list">
         {
           researchProjects.map((project, index) => (
             <li>
-              <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
-              <h3>{project}</h3>
+              <span class="research-number" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+              <div>
+                <p class="research-status">{project.status}</p>
+                <h3>{project.title}</h3>
+                <p class="research-summary">{project.summary}</p>
+                {project.url && <p class="research-note">November 2026 · Planned presenter: Prof. Peter Y. Jang</p>}
+                <a class="research-details" href={`${base}career/#${project.id}`}>Research details <b aria-hidden="true">↗</b></a>
+              </div>
             </li>
           ))
         }
@@ -306,7 +312,7 @@ const additionalGraph = [
     border-bottom: 1px solid var(--rule);
   }
 
-  .research-list span {
+  .research-number {
     padding-top: 6px;
     color: var(--accent);
     font-size: 9px;
@@ -324,6 +330,45 @@ const additionalGraph = [
     line-height: 1.15;
     text-wrap: balance;
     overflow-wrap: anywhere;
+  }
+
+  .research-status {
+    margin: 0 0 12px;
+    color: var(--accent);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .research-summary,
+  .research-note {
+    max-width: 620px;
+    margin: 16px 0 0;
+    color: var(--ink-soft);
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  .research-note { margin-top: 8px; }
+
+  .research-details {
+    display: inline-flex;
+    gap: 14px;
+    align-items: center;
+    min-height: 44px;
+    margin-top: 8px;
+    color: var(--accent);
+    font-size: 12px;
+    text-underline-offset: 4px;
+  }
+
+  .research-header .research-updated {
+    margin-top: 24px;
+    color: var(--ink-soft);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.04em;
   }
 
   @media (max-height: 760px) and (min-width: 761px) {

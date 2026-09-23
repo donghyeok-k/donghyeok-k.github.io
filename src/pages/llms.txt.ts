@@ -1,4 +1,5 @@
 import type { APIRoute } from "astro";
+import { researchProjects, researchUpdated } from "../data/research";
 
 export const GET: APIRoute = ({ site }) => {
   if (!site) {
@@ -12,11 +13,9 @@ export const GET: APIRoute = ({ site }) => {
     "",
     "> Official personal website of a KENTECH undergraduate researcher working across energy systems, carbon markets, and computational modeling.",
     "",
-    "## Research in Progress",
+    `## Selected Research (updated ${researchUpdated})`,
     "",
-    "- Modeling and Analysis of Cryogenic Conductor Performance",
-    "- Global Carbon Allowance Futures Markets: Lessons for Korea",
-    "- Numerical Analysis of Nanofluid Systems",
+    ...researchProjects.map((project) => `- ${project.title}. ${project.status}. ${project.summary} ${project.detail}`),
     "",
     "## Canonical Pages",
     "",

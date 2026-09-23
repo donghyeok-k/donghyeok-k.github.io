@@ -1,6 +1,7 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
 import { archiveItems } from "../data/archive";
+import { researchProjects } from "../data/research";
 
 const base = import.meta.env.BASE_URL;
 const title = "김동혁 경력 및 활동 | KENTECH Undergraduate Researcher";
@@ -10,7 +11,7 @@ const description =
 const timeline = [
   {
     period: "2022 — PRESENT",
-    role: "KENTECH 학부생 · 학부연구생",
+    role: "KENTECH 학부생",
     organization: "한국에너지공과대학교 · 학부 1기",
     description:
       "에너지 시스템, 탄소시장, 계산 모델링을 중심으로 실제 문제를 설명하는 정량적 분석을 탐구하고 있습니다.",
@@ -69,7 +70,7 @@ const featuredActivities = archiveItems.filter((item) =>
       <p class="eyebrow">CAREER / 김동혁</p>
       <h1>Career &amp;<br />Activities</h1>
       <p class="intro">
-        한국에너지공과대학교(KENTECH) 1기 · 제2대 총학생회장<br />
+        한국에너지공과대학교(KENTECH) 4학년 · 학부연구생<br />
         Energy Systems · Carbon Markets · Computational Modeling
       </p>
     </header>
@@ -93,10 +94,31 @@ const featuredActivities = archiveItems.filter((item) =>
       </ol>
     </section>
 
+    <section class="section" aria-labelledby="research-heading">
+      <div class="section-label">
+        <h2 id="research-heading">Research &amp; Conference Papers</h2>
+        <span>02</span>
+      </div>
+      <ol class="honors research-records">
+        {researchProjects.map((project) => (
+          <li id={project.id}>
+            <time>2026</time>
+            <div>
+              <p class="honor-issuer" lang="en">{project.status}</p>
+              <h3 lang="en">{project.title}</h3>
+              {project.url && <p lang="en">{project.authors.join(" · ")}</p>}
+              <p>{project.detailKo}</p>
+              {project.url && <a class="conference-link" href={project.url}>학회 안내 <span aria-hidden="true">↗</span></a>}
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+
     <section class="section" aria-labelledby="honors-heading">
       <div class="section-label">
         <h2 id="honors-heading">Honors &amp; Awards</h2>
-        <span>02</span>
+        <span>03</span>
       </div>
       <ol class="honors">
         {honors.map((item) => (
@@ -115,7 +137,7 @@ const featuredActivities = archiveItems.filter((item) =>
     <section class="section" aria-labelledby="activities-heading">
       <div class="section-label">
         <h2 id="activities-heading">Selected Activities</h2>
-        <span>03</span>
+        <span>04</span>
       </div>
       <ol class="activities">
         {featuredActivities.map((item) => (
@@ -145,6 +167,17 @@ const featuredActivities = archiveItems.filter((item) =>
 </SiteLayout>
 
 <style>
+  .research-records li { scroll-margin-top: 100px; }
+  .conference-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+    color: var(--accent);
+    font-size: 13px;
+    text-underline-offset: 4px;
+  }
+
   .career {
     padding: clamp(64px, 9vw, 112px) 0 clamp(96px, 12vw, 152px);
   }
