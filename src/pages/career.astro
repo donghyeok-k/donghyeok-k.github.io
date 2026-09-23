@@ -96,7 +96,7 @@ const featuredActivities = archiveItems.filter((item) =>
 
     <section class="section" aria-labelledby="research-heading">
       <div class="section-label">
-        <h2 id="research-heading">Research &amp; Conference Papers</h2>
+        <h2 id="research-heading">Selected Research</h2>
         <span>02</span>
       </div>
       <ol class="honors research-records">
@@ -104,11 +104,7 @@ const featuredActivities = archiveItems.filter((item) =>
           <li id={project.id}>
             <time>2026</time>
             <div>
-              <p class="honor-issuer" lang="en">{project.status}</p>
               <h3 lang="en">{project.title}</h3>
-              {project.url && <p lang="en">{project.authors.join(" · ")}</p>}
-              <p>{project.detailKo}</p>
-              {project.url && <a class="conference-link" href={project.url}>학회 안내 <span aria-hidden="true">↗</span></a>}
             </div>
           </li>
         ))}
@@ -168,16 +164,6 @@ const featuredActivities = archiveItems.filter((item) =>
 
 <style>
   .research-records li { scroll-margin-top: 100px; }
-  .conference-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    min-height: 44px;
-    color: var(--accent);
-    font-size: 13px;
-    text-underline-offset: 4px;
-  }
-
   .career {
     padding: clamp(64px, 9vw, 112px) 0 clamp(96px, 12vw, 152px);
   }

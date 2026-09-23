@@ -15,7 +15,7 @@ export const GET: APIRoute = ({ site }) => {
     "",
     `## Selected Research (updated ${researchUpdated})`,
     "",
-    ...researchProjects.map((project) => `- ${project.title}. ${project.status}. ${project.summary} ${project.detail}`),
+    ...researchProjects.map((project) => `- ${project.title}`),
     "",
     "## Canonical Pages",
     "",

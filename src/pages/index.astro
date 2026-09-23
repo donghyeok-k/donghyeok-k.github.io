@@ -19,10 +19,6 @@ const additionalGraph = [
       item: {
         "@type": "CreativeWork",
         name: project.title,
-        description: `${project.status}. ${project.summary} ${project.detail}`,
-        author: project.authors.map((name) => name === "Donghyeok Kim"
-          ? { "@id": new URL("#donghyeok-kim", siteRoot).href }
-          : { "@type": "Person", name }),
       },
     })),
   },
@@ -99,11 +95,7 @@ const additionalGraph = [
             <li>
               <span class="research-number" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
               <div>
-                <p class="research-status">{project.status}</p>
                 <h3>{project.title}</h3>
-                <p class="research-summary">{project.summary}</p>
-                {project.url && <p class="research-note">November 2026 · Planned presenter: Prof. Peter Y. Jang</p>}
-                <a class="research-details" href={`${base}career/#${project.id}`}>Research details <b aria-hidden="true">↗</b></a>
               </div>
             </li>
           ))
@@ -330,37 +322,6 @@ const additionalGraph = [
     line-height: 1.15;
     text-wrap: balance;
     overflow-wrap: anywhere;
-  }
-
-  .research-status {
-    margin: 0 0 12px;
-    color: var(--accent);
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .research-summary,
-  .research-note {
-    max-width: 620px;
-    margin: 16px 0 0;
-    color: var(--ink-soft);
-    font-size: 13px;
-    line-height: 1.7;
-  }
-
-  .research-note { margin-top: 8px; }
-
-  .research-details {
-    display: inline-flex;
-    gap: 14px;
-    align-items: center;
-    min-height: 44px;
-    margin-top: 8px;
-    color: var(--accent);
-    font-size: 12px;
-    text-underline-offset: 4px;
   }
 
   .research-header .research-updated {
