@@ -10,8 +10,8 @@ export const getSitemapEntries = async (): Promise<SitemapEntry[]> => {
   const posts = await getCollection("blog", ({ data }) => !data.draft);
 
   return [
-    { path: "", lastModified: new Date(researchUpdated) },
-    { path: "career/", lastModified: new Date(researchUpdated) },
+    { path: "", lastModified: new Date(`${researchUpdated}T00:00:00+09:00`) },
+    { path: "career/", lastModified: new Date(`${researchUpdated}T00:00:00+09:00`) },
     { path: "archive/" },
     { path: "blog/" },
     ...posts.map((post) => ({
