@@ -185,17 +185,17 @@ const featuredActivities = archiveItems.filter((item) =>
   .eyebrow {
     margin: 0 0 20px;
     color: var(--accent);
-    font-size: 10px;
+    font-size: var(--font-label);
     font-weight: 700;
-    letter-spacing: 0.18em;
+    letter-spacing: var(--tracking-label);
   }
 
   h1 {
     margin: 0;
     font-size: clamp(58px, 7vw, 88px);
     font-weight: 600;
-    letter-spacing: -0.055em;
-    line-height: 0.86;
+    letter-spacing: -0.035em;
+    line-height: 1.06;
   }
 
   .intro {
@@ -204,8 +204,8 @@ const featuredActivities = archiveItems.filter((item) =>
     padding-top: 22px;
     border-top: 1px solid var(--rule);
     color: var(--ink-soft);
-    font-size: 14px;
-    line-height: 1.75;
+    font-size: var(--font-copy);
+    line-height: var(--leading-copy);
   }
 
   .section {
@@ -216,6 +216,7 @@ const featuredActivities = archiveItems.filter((item) =>
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 16px;
     padding-bottom: 16px;
     border-bottom: 1px solid var(--ink);
   }
@@ -224,9 +225,9 @@ const featuredActivities = archiveItems.filter((item) =>
   .section-label span {
     margin: 0;
     color: var(--ink-faint);
-    font-size: 10px;
+    font-size: var(--font-label);
     font-weight: 700;
-    letter-spacing: 0.16em;
+    letter-spacing: var(--tracking-label);
     text-transform: uppercase;
   }
 
@@ -251,9 +252,10 @@ const featuredActivities = archiveItems.filter((item) =>
   .honors time,
   .activities time {
     color: var(--accent);
-    font-size: 10px;
+    font-size: var(--font-caption);
     font-weight: 700;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.02em;
+    padding-top: 5px;
   }
 
   .timeline h3,
@@ -263,7 +265,9 @@ const featuredActivities = archiveItems.filter((item) =>
     font-family: var(--serif);
     font-size: clamp(22px, 2.5vw, 30px);
     font-weight: 600;
-    letter-spacing: -0.03em;
+    letter-spacing: var(--tracking-title);
+    line-height: var(--leading-heading);
+    text-wrap: balance;
   }
 
   .timeline p {
@@ -271,8 +275,8 @@ const featuredActivities = archiveItems.filter((item) =>
     margin: 12px 0 0;
     color: var(--ink-soft);
     font-family: var(--serif);
-    font-size: 14px;
-    line-height: 1.7;
+    font-size: var(--font-copy);
+    line-height: var(--leading-copy);
     word-break: keep-all;
   }
 
@@ -280,7 +284,7 @@ const featuredActivities = archiveItems.filter((item) =>
     margin-top: 7px;
     color: var(--ink-faint);
     font-family: var(--sans);
-    font-size: 10px;
+    font-size: var(--font-caption);
     font-weight: 700;
   }
 
@@ -289,21 +293,21 @@ const featuredActivities = archiveItems.filter((item) =>
     margin: 8px 0 0;
     color: var(--ink-soft);
     font-family: var(--serif);
-    font-size: 13px;
-    line-height: 1.6;
+    font-size: var(--font-copy);
+    line-height: var(--leading-copy);
     word-break: keep-all;
   }
 
   .honors .honor-issuer {
     color: var(--ink-faint);
     font-family: var(--sans);
-    font-size: 10px;
+    font-size: var(--font-caption);
     font-weight: 700;
   }
 
   .activities li {
     display: grid;
-    grid-template-columns: 70px minmax(0, 1fr) 28px;
+    grid-template-columns: 70px minmax(0, 1fr) 44px;
     gap: 28px;
     align-items: start;
     padding: 26px 0;
@@ -313,9 +317,9 @@ const featuredActivities = archiveItems.filter((item) =>
   .activities p {
     margin: 0 0 8px;
     color: var(--ink-faint);
-    font-size: 8px;
+    font-size: var(--font-label);
     font-weight: 700;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.05em;
   }
 
   .activities div > span {
@@ -324,8 +328,8 @@ const featuredActivities = archiveItems.filter((item) =>
     margin-top: 10px;
     color: var(--ink-soft);
     font-family: var(--serif);
-    font-size: 13px;
-    line-height: 1.65;
+    font-size: var(--font-copy);
+    line-height: var(--leading-copy);
     word-break: keep-all;
   }
 
@@ -352,9 +356,9 @@ const featuredActivities = archiveItems.filter((item) =>
     gap: 9px;
     align-items: center;
     min-height: 44px;
-    font-size: 10px;
+    font-size: var(--font-caption);
     font-weight: 700;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.02em;
     text-decoration: none;
   }
 
@@ -382,14 +386,14 @@ const featuredActivities = archiveItems.filter((item) =>
     }
 
     .activities li {
-      grid-template-columns: 52px minmax(0, 1fr) 20px;
+      grid-template-columns: 52px minmax(0, 1fr) 44px;
       gap: 14px;
     }
   }
 
   @media (max-width: 420px) {
     .activities li {
-      grid-template-columns: 1fr 20px;
+      grid-template-columns: 1fr 44px;
     }
 
     .activities time {

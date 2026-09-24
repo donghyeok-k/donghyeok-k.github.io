@@ -85,7 +85,7 @@ const additionalGraph = [
     <section class="research page-shell" aria-labelledby="research-heading">
       <header class="research-header">
         <p>SELECTED RESEARCH / {String(researchProjects.length).padStart(2, "0")}</p>
-        <h2 id="research-heading">Selected<br />Research</h2>
+        <h2 id="research-heading">Selected <br />Research</h2>
         <p class="research-updated">Updated <time datetime={researchUpdated}>September 2026</time></p>
       </header>
 
@@ -132,9 +132,11 @@ const additionalGraph = [
   .kicker {
     margin: 0 0 clamp(16px, 2.4vh, 24px);
     color: var(--accent);
-    font-size: 10px;
+    font-size: var(--font-label);
     font-weight: 700;
-    letter-spacing: 0.24em;
+    letter-spacing: var(--tracking-label);
+    line-height: 1.8;
+    text-wrap: balance;
   }
 
   h1 {
@@ -142,7 +144,7 @@ const additionalGraph = [
     font-size: clamp(52px, 6.2vw, 84px);
     font-weight: 700;
     letter-spacing: -0.027em;
-    line-height: 0.92;
+    line-height: 1.02;
   }
 
   h1 span {
@@ -151,13 +153,15 @@ const additionalGraph = [
     font-size: 0.72em;
     font-weight: 400;
     letter-spacing: -0.018em;
+    line-height: 1.08;
   }
 
   .dek {
     margin: clamp(22px, 3.4vh, 34px) 0 0;
     color: var(--ink-soft);
     font-size: clamp(19px, 1.8vw, 25px);
-    line-height: 1.45;
+    line-height: 1.55;
+    text-wrap: pretty;
   }
 
   .thesis {
@@ -166,8 +170,9 @@ const additionalGraph = [
     padding-top: clamp(16px, 2.2vh, 22px);
     border-top: 1px solid var(--rule);
     color: var(--ink-soft);
-    font-size: clamp(14px, 1.2vw, 17px);
-    line-height: 1.62;
+    font-size: clamp(15px, 1.2vw, 17px);
+    line-height: 1.75;
+    text-wrap: pretty;
   }
 
   .thesis::before {
@@ -220,7 +225,7 @@ const additionalGraph = [
     padding: 8px 4px;
     border-top: 1px solid var(--rule);
     color: var(--ink-faint);
-    font-size: 9px;
+    font-size: var(--font-label);
     letter-spacing: 0.12em;
     text-decoration: none;
     transition:
@@ -275,17 +280,17 @@ const additionalGraph = [
   .research-header p {
     margin: 0 0 20px;
     color: var(--accent);
-    font-size: 10px;
+    font-size: var(--font-label);
     font-weight: 700;
-    letter-spacing: 0.18em;
+    letter-spacing: var(--tracking-label);
   }
 
   .research-header h2 {
     margin: 0;
     font-size: clamp(42px, 4.7vw, 62px);
     font-weight: 600;
-    letter-spacing: -0.05em;
-    line-height: 0.94;
+    letter-spacing: -0.035em;
+    line-height: 1.08;
   }
 
   .research-list {
@@ -307,7 +312,7 @@ const additionalGraph = [
   .research-number {
     padding-top: 6px;
     color: var(--accent);
-    font-size: 9px;
+    font-size: var(--font-label);
     font-weight: 700;
     letter-spacing: 0.12em;
   }
@@ -318,8 +323,8 @@ const additionalGraph = [
     font-family: var(--serif);
     font-size: clamp(24px, 3vw, 36px);
     font-weight: 500;
-    letter-spacing: -0.035em;
-    line-height: 1.15;
+    letter-spacing: var(--tracking-title);
+    line-height: 1.25;
     text-wrap: balance;
     overflow-wrap: anywhere;
   }
@@ -327,9 +332,9 @@ const additionalGraph = [
   .research-header .research-updated {
     margin-top: 24px;
     color: var(--ink-soft);
-    font-size: 10px;
+    font-size: var(--font-caption);
     font-weight: 400;
-    letter-spacing: 0.04em;
+    letter-spacing: 0;
   }
 
   @media (max-height: 760px) and (min-width: 761px) {
@@ -348,7 +353,7 @@ const additionalGraph = [
     .thesis {
       margin-top: 16px;
       padding-top: 14px;
-      font-size: 14px;
+      font-size: 15px;
     }
   }
 
@@ -377,11 +382,11 @@ const additionalGraph = [
     }
 
     .thesis {
-      width: min(76%, 440px);
+      width: min(100%, 440px);
       margin-top: 18px;
       padding-top: 14px;
-      font-size: 13px;
-      line-height: 1.55;
+      font-size: 15px;
+      line-height: 1.75;
     }
 
     .connection-field {
@@ -401,7 +406,7 @@ const additionalGraph = [
     }
 
     .research {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
       gap: 48px;
       padding: 80px 0 104px;
     }
@@ -421,8 +426,7 @@ const additionalGraph = [
     }
 
     .thesis {
-      max-width: 68%;
-      font-size: 12px;
+      max-width: 100%;
     }
 
     .portrait {
