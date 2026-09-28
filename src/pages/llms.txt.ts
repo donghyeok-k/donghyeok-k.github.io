@@ -13,7 +13,7 @@ export const GET: APIRoute = ({ site }) => {
     "",
     "> Official personal website of a KENTECH undergraduate researcher working across energy systems, carbon markets, and computational modeling.",
     "",
-    `## Selected Research (updated ${researchUpdated})`,
+    `## Research in Progress (updated ${researchUpdated})`,
     "",
     ...researchProjects.map((project) => `- ${project.title}`),
     "",

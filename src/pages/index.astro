@@ -12,7 +12,7 @@ const additionalGraph = [
   {
     "@type": "ItemList",
     "@id": new URL("#research-in-progress", siteRoot).href,
-    name: "Selected Research",
+    name: "Research in Progress",
     itemListElement: researchProjects.map((project, index) => ({
       "@type": "ListItem",
       position: index + 1,
@@ -84,8 +84,8 @@ const additionalGraph = [
 
     <section class="research page-shell" aria-labelledby="research-heading">
       <header class="research-header">
-        <p>SELECTED RESEARCH / {String(researchProjects.length).padStart(2, "0")}</p>
-        <h2 id="research-heading">Selected <br />Research</h2>
+        <p>RESEARCH IN PROGRESS / {String(researchProjects.length).padStart(2, "0")}</p>
+        <h2 id="research-heading">Research <br />in Progress</h2>
         <p class="research-updated">Updated <time datetime={researchUpdated}>September 2026</time></p>
       </header>
 
