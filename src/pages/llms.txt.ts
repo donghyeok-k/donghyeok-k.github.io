@@ -1,5 +1,6 @@
 import type { APIRoute } from "astro";
 import { researchProjects, researchUpdated } from "../data/research";
+import { projects } from "../data/projects";
 
 export const GET: APIRoute = ({ site }) => {
   if (!site) {
@@ -16,6 +17,10 @@ export const GET: APIRoute = ({ site }) => {
     `## Research in Progress (updated ${researchUpdated})`,
     "",
     ...researchProjects.map((project) => `- ${project.title}`),
+    "",
+    "## Projects",
+    "",
+    ...projects.map((project) => `- [${project.name}](${project.url}): ${project.description}`),
     "",
     "## Canonical Pages",
     "",

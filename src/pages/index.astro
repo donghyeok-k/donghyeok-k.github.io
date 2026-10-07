@@ -1,11 +1,12 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
 import { researchProjects, researchUpdated } from "../data/research";
+import { projects } from "../data/projects";
 
 const title =
   "김동혁 (Donghyeok Kim) | Energy Systems · Carbon Markets · Computational Modeling";
 const description =
-  "KENTECH 학부연구생 김동혁의 에너지 시스템, 탄소시장, 계산 모델링 연구와 공개 활동 기록.";
+  "KENTECH 학부연구생 김동혁의 에너지 시스템, 탄소시장, 계산 모델링 연구와 SEED 프로젝트, 공개 활동 기록.";
 const base = import.meta.env.BASE_URL;
 const siteRoot = Astro.site ?? new URL("https://donghyeok-k.github.io");
 const additionalGraph = [
@@ -19,6 +20,21 @@ const additionalGraph = [
       item: {
         "@type": "CreativeWork",
         name: project.title,
+      },
+    })),
+  },
+  {
+    "@type": "ItemList",
+    "@id": new URL("#projects", siteRoot).href,
+    name: "Projects",
+    itemListElement: projects.map((project, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      item: {
+        "@type": "CreativeWork",
+        name: project.name,
+        description: project.description,
+        url: project.url,
       },
     })),
   },
@@ -100,6 +116,25 @@ const additionalGraph = [
             </li>
           ))
         }
+      </ol>
+    </section>
+
+    <section id="projects" class="projects page-shell" aria-labelledby="projects-heading">
+      <header class="research-header">
+        <p>PROJECTS / {String(projects.length).padStart(2, "0")}</p>
+        <h2 id="projects-heading">Projects</h2>
+      </header>
+      <ol class="research-list" role="list">
+        {projects.map((project, index) => (
+          <li id={project.id}>
+            <span class="research-number" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+            <div>
+              <h3>{project.name}</h3>
+              <p class="project-description">{project.description}</p>
+              <a class="project-link" href={project.url}>Explore {project.name} <span aria-hidden="true">↗</span></a>
+            </div>
+          </li>
+        ))}
       </ol>
     </section>
   </main>
@@ -264,7 +299,8 @@ const additionalGraph = [
     transform: translateX(4px);
   }
 
-  .research {
+  .research,
+  .projects {
     display: grid;
     grid-template-columns: minmax(200px, 3fr) minmax(0, 9fr);
     gap: clamp(40px, 7vw, 96px);
@@ -337,6 +373,29 @@ const additionalGraph = [
     letter-spacing: 0;
   }
 
+  .projects { scroll-margin-top: 32px; }
+
+  .project-description {
+    max-width: 38rem;
+    margin: 16px 0 0;
+    color: var(--ink-soft);
+    font-size: var(--font-copy);
+    line-height: var(--leading-copy);
+    text-wrap: pretty;
+  }
+
+  .project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+    margin-top: 16px;
+    color: var(--accent);
+    font-size: var(--font-caption);
+    font-weight: 600;
+    text-underline-offset: 4px;
+  }
+
   @media (max-height: 760px) and (min-width: 761px) {
     .statement {
       padding-top: 38px;
@@ -405,7 +464,8 @@ const additionalGraph = [
       bottom: 20px;
     }
 
-    .research {
+    .research,
+    .projects {
       grid-template-columns: minmax(0, 1fr);
       gap: 48px;
       padding: 80px 0 104px;

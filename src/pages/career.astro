@@ -2,11 +2,12 @@
 import SiteLayout from "../layouts/SiteLayout.astro";
 import { archiveItems } from "../data/archive";
 import { researchProjects } from "../data/research";
+import { projects } from "../data/projects";
 
 const base = import.meta.env.BASE_URL;
 const title = "김동혁 경력 및 활동 | KENTECH Undergraduate Researcher";
 const description =
-  "KENTECH 학부연구생 김동혁의 학업, 연구 관심 분야, 제2대 총학생회장 경력과 수상·장학·공개 활동 기록.";
+  "KENTECH 학부연구생 김동혁의 학업, 연구 관심 분야, SEED 프로젝트, 제2대 총학생회장 경력과 수상·장학·공개 활동 기록.";
 
 const timeline = [
   {
@@ -94,10 +95,29 @@ const featuredActivities = archiveItems.filter((item) =>
       </ol>
     </section>
 
+    <section class="section" aria-labelledby="projects-heading">
+      <div class="section-label">
+        <h2 id="projects-heading">Projects</h2>
+        <span>02</span>
+      </div>
+      <ol class="timeline">
+        {projects.map((project) => (
+          <li id={project.id}>
+            <time>{project.period}</time>
+            <div>
+              <h3 lang="en">{project.name}</h3>
+              <p>{project.descriptionKo}</p>
+              <a class="project-link" href={project.url}>{project.name} 둘러보기 <span aria-hidden="true">↗</span></a>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+
     <section class="section" aria-labelledby="research-heading">
       <div class="section-label">
         <h2 id="research-heading">Research in Progress</h2>
-        <span>02</span>
+        <span>03</span>
       </div>
       <ol class="honors research-records">
         {researchProjects.map((project) => (
@@ -114,7 +134,7 @@ const featuredActivities = archiveItems.filter((item) =>
     <section class="section" aria-labelledby="honors-heading">
       <div class="section-label">
         <h2 id="honors-heading">Honors &amp; Awards</h2>
-        <span>03</span>
+        <span>04</span>
       </div>
       <ol class="honors">
         {honors.map((item) => (
@@ -133,7 +153,7 @@ const featuredActivities = archiveItems.filter((item) =>
     <section class="section" aria-labelledby="activities-heading">
       <div class="section-label">
         <h2 id="activities-heading">Selected Activities</h2>
-        <span>04</span>
+        <span>05</span>
       </div>
       <ol class="activities">
         {featuredActivities.map((item) => (
@@ -164,6 +184,20 @@ const featuredActivities = archiveItems.filter((item) =>
 
 <style>
   .research-records li { scroll-margin-top: 100px; }
+  #seed { scroll-margin-top: 32px; }
+
+  .project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+    margin-top: 12px;
+    color: var(--accent);
+    font-size: var(--font-caption);
+    font-weight: 600;
+    text-underline-offset: 4px;
+  }
+
   .career {
     padding: clamp(64px, 9vw, 112px) 0 clamp(96px, 12vw, 152px);
   }
