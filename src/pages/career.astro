@@ -1,5 +1,6 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
+import SeedBrand from "../components/SeedBrand.astro";
 import { archiveItems } from "../data/archive";
 import { researchProjects } from "../data/research";
 import { projects } from "../data/projects";
@@ -7,7 +8,7 @@ import { projects } from "../data/projects";
 const base = import.meta.env.BASE_URL;
 const title = "김동혁 경력 및 활동 | KENTECH Undergraduate Researcher";
 const description =
-  "KENTECH 학부연구생 김동혁의 학업, 연구 관심 분야, SEED 프로젝트, 제2대 총학생회장 경력과 수상·장학·공개 활동 기록.";
+  "KENTECH 학부연구생이자 SEED 창업자 김동혁의 학업, 연구 관심 분야, 프로젝트와 수상·장학·공개 활동 기록.";
 
 const timeline = [
   {
@@ -72,7 +73,8 @@ const featuredActivities = archiveItems.filter((item) =>
       <h1>Career &amp;<br />Activities</h1>
       <p class="intro">
         한국에너지공과대학교(KENTECH) 4학년 · 학부연구생<br />
-        Energy Systems · Carbon Markets · Computational Modeling
+        Energy Systems · Carbon Markets · Computational Modeling<br />
+        SEED 창업자 · Founder
       </p>
     </header>
 
@@ -105,7 +107,8 @@ const featuredActivities = archiveItems.filter((item) =>
           <li id={project.id}>
             <time>{project.period}</time>
             <div>
-              <h3 lang="en">{project.name}</h3>
+              <h3 lang="en">{project.id === "seed" ? <SeedBrand /> : project.name}</h3>
+              <p class="organization">{project.roleKo}</p>
               <p>{project.descriptionKo}</p>
               <a class="project-link" href={project.url}>{project.name} 둘러보기 <span aria-hidden="true">↗</span></a>
             </div>

@@ -5,6 +5,8 @@ export const projects = [
   {
     id: "seed",
     name: "SEED",
+    role: "Founder",
+    roleKo: "창업자 / Founder",
     period: "2026 — PRESENT",
     description:
       "A platform for sharing expert methods and applying them with the AI tools you already use.",

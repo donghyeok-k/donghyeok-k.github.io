@@ -1,0 +1,28 @@
+---
+const base = import.meta.env.BASE_URL;
+---
+
+<span class="seed-brand" role="img" aria-label="SEED">
+  <img src={`${base}images/seed-mark.svg`} width="31" height="31" alt="" />
+  <span class="seed-wordmark" aria-hidden="true">seed<span>.</span></span>
+</span>
+
+<style>
+  .seed-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    vertical-align: middle;
+  }
+
+  .seed-brand img { flex-shrink: 0; }
+
+  .seed-wordmark {
+    color: #202124;
+    font: 700 31px/1 Arial, sans-serif;
+    letter-spacing: -1.8px;
+  }
+
+  .seed-wordmark > span { color: #3b5bdb; }
+</style>

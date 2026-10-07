@@ -12,7 +12,7 @@ export const GET: APIRoute = ({ site }) => {
   const body = [
     "# Donghyeok Kim (김동혁)",
     "",
-    "> Official personal website of a KENTECH undergraduate researcher working across energy systems, carbon markets, and computational modeling.",
+    "> Official personal website of Donghyeok Kim, a KENTECH undergraduate researcher and founder of SEED, working across energy systems, carbon markets, and computational modeling.",
     "",
     `## Research in Progress (updated ${researchUpdated})`,
     "",
@@ -20,7 +20,7 @@ export const GET: APIRoute = ({ site }) => {
     "",
     "## Projects",
     "",
-    ...projects.map((project) => `- [${project.name}](${project.url}): ${project.description}`),
+    ...projects.map((project) => `- [${project.name}](${project.url}) — ${project.role}: ${project.description}`),
     "",
     "## Canonical Pages",
     "",
