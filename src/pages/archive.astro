@@ -12,14 +12,17 @@ for (const item of archiveItems) {
   itemsByYear.set(year, group);
 }
 
-const formatDate = (date: string) => date.slice(5).replace("-", ".");
+const formatDate = (date: string) =>
+  new Intl.DateTimeFormat("en", { month: "short", day: "numeric", timeZone: "UTC" }).format(
+    new Date(`${date}T00:00:00Z`),
+  );
 const localImageUrl = (image: ArchiveImage) =>
   image.local ? `${base}${image.src.replace(/^\//, "")}` : image.src;
 ---
 
 <SiteLayout
   title="Archive — Donghyeok Kim"
-  description="김동혁이 참여하고 기획하고 말한 장면을 기사, 영상, 프로젝트 기록으로 모은 공개 아카이브."
+  description="A public archive of articles, videos and project records on what Donghyeok Kim took part in, organized, and said."
   bodyClass="archive-page"
 >
   <main id="content" class="archive-page-main page-shell">
@@ -28,7 +31,7 @@ const localImageUrl = (image: ArchiveImage) =>
         <p class="eyebrow">PUBLIC RECORD / {String(archiveItems.length).padStart(2, "0")}</p>
         <h1>Archive</h1>
         <p class="archive-description">
-          제가 나온 기사와 영상을 모아두었습니다.
+          Articles and videos I have appeared in.
         </p>
       </header>
 
@@ -113,11 +116,11 @@ const localImageUrl = (image: ArchiveImage) =>
                       </summary>
 
                       <div class="record-body">
-                        <section class="record-media" aria-label={`${item.title} 미디어`}>
+                        <section class="record-media" aria-label={`${item.title} media`}>
                           {item.media.kind === "youtube" && (
                             <div class="video-player" data-video-player>
                               {item.media.videos.length > 1 && (
-                                <div class="media-switcher" aria-label="영상 선택">
+                                <div class="media-switcher" aria-label="Choose a video">
                                   {item.media.videos.map((video, videoIndex) => (
                                     <button
                                       type="button"
@@ -133,7 +136,7 @@ const localImageUrl = (image: ArchiveImage) =>
                               )}
                               <div class="video-frame">
                                 <iframe
-                                  title={`${item.title} 영상`}
+                                  title={`${item.title} video`}
                                   data-video-frame
                                   data-video-id={item.media.videos[0].id}
                                   data-video-start={item.media.videos[0].start ?? 0}
@@ -141,9 +144,9 @@ const localImageUrl = (image: ArchiveImage) =>
                                   allowfullscreen
                                 />
                               </div>
-                              <p class="media-credit">영상 · {item.media.credit}</p>
+                              <p class="media-credit">Video · {item.media.credit}</p>
                               <noscript>
-                                <a href={primarySource.url}>영상 원문 열기</a>
+                                <a href={primarySource.url}>Open the original video</a>
                               </noscript>
                             </div>
                           )}
@@ -205,16 +208,16 @@ const localImageUrl = (image: ArchiveImage) =>
                           )}
                         </section>
 
-                        <section class="record-narrative" aria-label={`${item.title} 요약`}>
-                          <p class="section-label">제가 한 일</p>
+                        <section class="record-narrative" aria-label={`${item.title} summary`}>
+                          <p class="section-label">What I did</p>
                           <p class="role-statement">
                             <strong>{item.roleLead}</strong>{roleRest}
                           </p>
 
-                          <p class="section-label context-label">기록 요약</p>
+                          <p class="section-label context-label">Summary</p>
                           <p class="record-summary">{item.summary}</p>
 
-                          <div class="source-list" aria-label="원문과 관련 보도">
+                          <div class="source-list" aria-label="Source and coverage">
                             {item.sources.map((source) => (
                               <a href={source.url} target="_blank" rel="noreferrer">
                                 <span>{source.label}</span>

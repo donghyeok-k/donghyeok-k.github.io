@@ -1,12 +1,13 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
+import WikiDriveLogo from "../components/WikiDriveLogo.astro";
 import { researchProjects, researchUpdated } from "../data/research";
 import { projects } from "../data/projects";
 
 const title =
-  "김동혁 (Donghyeok Kim) | Energy Systems · Carbon Markets · Computational Modeling";
+  "Donghyeok Kim (김동혁) | Energy Systems · Carbon Markets · Computational Modeling";
 const description =
-  "KENTECH 학부연구생이자 WikiDrive 대표 김동혁의 에너지 시스템, 탄소시장, 계산 모델링 연구와 프로젝트, 공개 활동 기록.";
+  "Donghyeok Kim — undergraduate researcher at KENTECH and CEO of WikiDrive. Research on energy systems, carbon markets and computational modeling, projects, and public record.";
 const leadProject = projects[0];
 const projectHost = (url: string) => new URL(url).host;
 const base = import.meta.env.BASE_URL;
@@ -90,7 +91,11 @@ const additionalGraph = [
             href={`#${leadProject.id}`}
             aria-label={`${leadProject.role}, ${leadProject.name} — view project`}
           >
-            <span class="founder-brand">{leadProject.name}</span>
+            {leadProject.id === "wikidrive" ? (
+              <WikiDriveLogo />
+            ) : (
+              <span class="founder-brand">{leadProject.name}</span>
+            )}
             <span class="founder-title">{leadProject.role}</span>
             <span class="founder-arrow" aria-hidden="true">↓</span>
           </a>
@@ -142,8 +147,9 @@ const additionalGraph = [
           <li id={project.id}>
             <span class="research-number" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
             <div>
-              <h3>{project.name}</h3>
+              <h3>{project.id === "wikidrive" ? <WikiDriveLogo size="lg" /> : project.name}</h3>
               <p class="project-role">{project.role}</p>
+              {project.tagline && <p class="project-tagline">{project.tagline}</p>}
               <p class="project-description">{project.description}</p>
               <a class="project-link" href={project.url}>Visit {projectHost(project.url)} <span aria-hidden="true">↗</span></a>
             </div>
@@ -426,6 +432,16 @@ const additionalGraph = [
     font-size: var(--font-copy);
     line-height: var(--leading-copy);
     text-wrap: pretty;
+  }
+
+  .project-tagline {
+    max-width: 38rem;
+    margin: 18px 0 0;
+    font-family: var(--serif);
+    font-size: clamp(20px, 2vw, 24px);
+    letter-spacing: -0.015em;
+    line-height: 1.4;
+    text-wrap: balance;
   }
 
   .project-role {

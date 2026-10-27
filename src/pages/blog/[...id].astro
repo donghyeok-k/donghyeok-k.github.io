@@ -23,12 +23,17 @@ const imageUrl = post.data.heroImage
   ? `${base}${post.data.heroImage.replace(/^\//, "")}`
   : undefined;
 const formatDate = (date: Date) =>
-  new Intl.DateTimeFormat("ko-KR", {
+  new Intl.DateTimeFormat("en", {
     year: "numeric",
     month: "long",
     day: "numeric",
     timeZone: "Asia/Seoul",
   }).format(date);
+const updatedDate =
+  post.data.updatedDate &&
+  formatDate(post.data.updatedDate) !== formatDate(post.data.pubDate)
+    ? post.data.updatedDate
+    : undefined;
 ---
 
 <SiteLayout
@@ -60,7 +65,15 @@ const formatDate = (date: Date) =>
         <time datetime={post.data.pubDate.toISOString()}>
           {formatDate(post.data.pubDate)}
         </time>
-        <ul aria-label="태그">
+        {
+          updatedDate && (
+            <p class="updated">
+              Updated{" "}
+              <time datetime={updatedDate.toISOString()}>{formatDate(updatedDate)}</time>
+            </p>
+          )
+        }
+        <ul aria-label="Tags">
           {post.data.tags.map((tag) => <li>{tag}</li>)}
         </ul>
       </div>
@@ -84,8 +97,8 @@ const formatDate = (date: Date) =>
     </article>
 
     <footer class="article-footer">
-      <p>끝까지 남겨진 것의 이유를 묻습니다.</p>
-      <a href={blogUrl}>다른 기록 보기 <span aria-hidden="true">→</span></a>
+      <p>Asking why what remains, remains.</p>
+      <a href={blogUrl}>More writing <span aria-hidden="true">→</span></a>
     </footer>
   </main>
 </SiteLayout>
@@ -199,6 +212,14 @@ const formatDate = (date: Date) =>
     font-size: var(--font-label);
     font-weight: 700;
     letter-spacing: var(--tracking-label);
+  }
+
+  .article-meta .updated {
+    margin: 2px 0 0;
+    color: var(--ink-faint);
+    font-size: var(--font-caption);
+    font-weight: 500;
+    letter-spacing: 0;
   }
 
   .article-meta ul {

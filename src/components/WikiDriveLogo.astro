@@ -1,0 +1,46 @@
+---
+// WikiDrive brand lockup: the mark and wordmark as used on wikidrive.app.
+interface Props {
+  size?: "sm" | "lg";
+}
+
+const { size = "sm" } = Astro.props;
+---
+
+<span class:list={["wikidrive-logo", `is-${size}`]} role="img" aria-label="WikiDrive">
+  <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+    <path
+      d="M4 12 20 22v33L4 45Z M24 8l16 10v37L24 45Z M44 22l16-10v33L44 55Z"
+      fill="#5146C7"
+    />
+  </svg>
+  <span class="wordmark" aria-hidden="true">WikiDrive</span>
+</span>
+
+<style>
+  .wikidrive-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.32em;
+    color: var(--ink);
+    font-family: var(--sans);
+    font-weight: 650;
+    letter-spacing: -0.035em;
+    line-height: 1;
+    vertical-align: middle;
+  }
+
+  .is-sm {
+    font-size: 22px;
+  }
+
+  .is-lg {
+    font-size: clamp(28px, 3vw, 36px);
+  }
+
+  svg {
+    flex-shrink: 0;
+    width: 1.15em;
+    height: 1.15em;
+  }
+</style>

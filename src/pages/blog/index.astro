@@ -21,18 +21,16 @@ for (const post of posts) {
 const base = import.meta.env.BASE_URL;
 const showSearch = posts.length >= 8;
 const formatShortDate = (date: Date) =>
-  new Intl.DateTimeFormat("ko-KR", {
-    month: "2-digit",
-    day: "2-digit",
+  new Intl.DateTimeFormat("en", {
+    month: "short",
+    day: "numeric",
     timeZone: "Asia/Seoul",
-  })
-    .format(date)
-    .replace(/\s/g, "");
+  }).format(date);
 ---
 
 <SiteLayout
   title="Writing — Donghyeok Kim"
-  description="AI, 연구, 사고법을 편집하고 연결하는 김동혁의 글."
+  description="Short essays by Donghyeok Kim on AI, research, and ways of thinking."
   bodyClass="journal-page"
 >
   <main id="content" class="journal page-shell">
@@ -41,19 +39,19 @@ const formatShortDate = (date: Date) =>
         <p class="eyebrow">WRITING / {String(posts.length).padStart(2, "0")}</p>
         <h1>Writing</h1>
         <p class="journal-description">
-          AI, 연구, 그리고 서로 다른 지식을 연결하는 방법에 관한 기록.
+          Notes on AI, research, and connecting different kinds of knowledge.
         </p>
       </header>
 
       {
         showSearch && (
           <div class="archive-tools">
-            <label for="post-search">글 찾기</label>
+            <label for="post-search">SEARCH</label>
             <div class="search-field">
               <input
                 id="post-search"
                 type="search"
-                placeholder="제목이나 주제 검색"
+                placeholder="Search titles and topics"
                 autocomplete="off"
                 data-post-search
               />
@@ -79,7 +77,7 @@ const formatShortDate = (date: Date) =>
                     ...post.data.tags,
                   ]
                     .join(" ")
-                    .toLocaleLowerCase("ko");
+                    .toLocaleLowerCase("en");
 
                   return (
                     <li class="post-item" data-post-row data-search={searchableText}>
@@ -116,7 +114,7 @@ const formatShortDate = (date: Date) =>
       </div>
 
       <p class="empty-state" hidden data-empty-state>
-        일치하는 글이 없습니다.
+        No matching posts.
       </p>
     </div>
   </main>
@@ -132,7 +130,7 @@ const formatShortDate = (date: Date) =>
     const emptyState = document.querySelector("[data-empty-state]");
 
     searchInput.addEventListener("input", () => {
-      const query = searchInput.value.trim().toLocaleLowerCase("ko");
+      const query = searchInput.value.trim().toLocaleLowerCase("en");
       let visibleCount = 0;
 
       for (const row of rows) {
@@ -148,7 +146,9 @@ const formatShortDate = (date: Date) =>
       }
 
       if (status) {
-        status.textContent = query ? `${visibleCount}개의 글` : "";
+        status.textContent = query
+          ? `${visibleCount} ${visibleCount === 1 ? "post" : "posts"}`
+          : "";
       }
       if (emptyState instanceof HTMLElement) {
         emptyState.hidden = visibleCount !== 0;

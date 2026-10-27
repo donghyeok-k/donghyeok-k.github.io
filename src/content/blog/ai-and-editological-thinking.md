@@ -1,22 +1,22 @@
 ---
-title: "AI 시대, 생각은 생성보다 편집에 가깝다"
-description: "AI가 써준 문장을 고치다 보면, 내가 무슨 말을 하고 싶었는지부터 다시 생각하게 된다."
+title: "In the Age of AI, Thinking Is Closer to Editing Than Generating"
+description: "Fixing sentences an AI wrote, I end up rethinking what I wanted to say in the first place."
 pubDate: 2026-08-09
 updatedDate: 2026-10-28T00:00:00+09:00
 draft: false
 tags:
   - AI
-  - 편집학
-  - 사고법
-  - 연구
+  - Editing
+  - Thinking
+  - Research
 ---
 
-AI가 써준 글은 말끔하다. 그런데 읽고 나면 정작 내가 하고 싶었던 말이 잘 보이지 않을 때가 있다.
+AI writes clean prose. Yet after reading it, I sometimes can't find what I actually wanted to say.
 
-고치려면 표현보다 먼저 물어야 한다. 이 문장을 왜 넣었는지, 정말 이만큼 확신하는지. 그렇게 지우고 옮기다 보면, 다듬던 것이 문장이 아니라 아직 정리되지 않은 내 생각이었음을 알게 된다.
+Fixing it starts before the wording. Why is this sentence here? Am I really this sure? As I cut and rearrange, I realize I wasn't polishing sentences. I was sorting out thoughts I hadn't finished.
 
-그래서 나는 이 과정을 편집에 가깝다고 느낀다. 보기 좋게 다듬는 일이 아니라, 어디까지 받아들이고 어디서부터 의심할지 정하는 일이다.
+That is why this feels closer to editing to me. Not making things look good, but deciding how much to accept and where to start doubting.
 
-특히 조심할 것은 빠진 전제다. 결론이 맞아도 그 결론이 성립하는 조건이 빠지면 설명은 틀릴 수 있다. 요약이 짧고 명쾌할수록 무엇이 생략됐는지는 오히려 보이지 않는다.
+The thing to watch most is a missing premise. Even when a conclusion is right, the explanation can be wrong if the conditions that make it hold are left out. The shorter and clearer the summary, the harder it is to see what was dropped.
 
-초안이 빨리 나온다고 이해하는 시간까지 줄지는 않는다. 남의 설명을 읽는 것과, 그 설명 없이 내 말로 다시 할 수 있는 것은 다르다. AI와 함께 쓸 때는 답을 받아든 다음부터가 진짜 일이다.
+A fast draft does not shorten the time it takes to understand. Reading someone's explanation is different from being able to say it again in your own words. When writing with AI, the real work begins after the answer arrives.

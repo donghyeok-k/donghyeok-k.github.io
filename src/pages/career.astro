@@ -1,56 +1,55 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
+import WikiDriveLogo from "../components/WikiDriveLogo.astro";
 import { archiveItems } from "../data/archive";
 import { researchProjects } from "../data/research";
 import { projects } from "../data/projects";
 
 const base = import.meta.env.BASE_URL;
-const title = "김동혁 경력 및 활동 | KENTECH Undergraduate Researcher";
+const title = "Career & Activities — Donghyeok Kim";
 const description =
-  "KENTECH 학부연구생이자 WikiDrive 대표 김동혁의 학업, 연구 관심 분야, 프로젝트와 수상·장학·공개 활동 기록.";
+  "Donghyeok Kim's education, research interests, projects, honors and public activities — undergraduate researcher at KENTECH and CEO of WikiDrive.";
 const projectHost = (url: string) => new URL(url).host;
 
 const timeline = [
   {
     period: "2022 — PRESENT",
-    role: "KENTECH 학부생",
-    organization: "한국에너지공과대학교 · 학부 1기",
+    role: "Undergraduate, KENTECH",
+    organization: "Korea Institute of Energy Technology · Inaugural class",
     description:
-      "에너지 시스템, 탄소시장, 계산 모델링을 중심으로 실제 문제를 설명하는 정량적 분석을 탐구하고 있습니다.",
+      "Studying quantitative analysis that explains real problems, centered on energy systems, carbon markets and computational modeling.",
   },
   {
     period: "2023 — 2024",
-    role: "KENTECH 제2대 총학생회장",
-    organization: "KENTECH 총학생회",
+    role: "President, 2nd KENTECH Student Council",
+    organization: "KENTECH Student Council",
     description:
-      "학생 공동체를 대표하며 교류·지역상생·캠퍼스 활동을 기획하고 학교 안팎의 협력을 추진했습니다.",
+      "Represented the student body and organized exchanges, community partnerships and campus programs, building collaboration on and off campus.",
   },
 ];
 
 const honors = [
   {
     period: "2023",
-    title: "KENTECH 총장 공로상",
-    issuer: "한국에너지공과대학교",
-    detail: "KENTECH Presidential Award for Meritorious Service",
+    title: "Presidential Award for Meritorious Service",
+    issuer: "KENTECH",
   },
   {
     period: "2023",
-    title: "KENTECH 영상 공모전 2등",
-    issuer: "한국에너지공과대학교 · 학생처장상",
-    detail: "Second Prize, KENTECH Video Contest",
+    title: "Second Prize, KENTECH Video Contest",
+    issuer: "KENTECH · Dean of Student Affairs Award",
   },
   {
     period: "2022",
-    title: "나주시장 표창",
-    issuer: "나주시",
-    detail: "멘토링 활동 우수 표창",
+    title: "Commendation from the Mayor of Naju",
+    issuer: "Naju City",
+    detail: "For outstanding mentoring",
   },
   {
     period: "2022 — PRESENT",
-    title: "KENTECH 총장 장학금",
-    issuer: "한국에너지공과대학교",
-    detail: "성적 우수 전액 장학",
+    title: "KENTECH Presidential Scholarship",
+    issuer: "KENTECH",
+    detail: "Full scholarship for academic excellence",
   },
 ];
 
@@ -69,12 +68,12 @@ const featuredActivities = archiveItems.filter((item) =>
 >
   <main id="content" class="career page-shell">
     <header class="career-header">
-      <p class="eyebrow">CAREER / 김동혁</p>
+      <p class="eyebrow">CAREER / DONGHYEOK KIM</p>
       <h1>Career &amp;<br />Activities</h1>
       <p class="intro">
-        한국에너지공과대학교(KENTECH) 4학년 · 학부연구생<br />
+        Fourth-year undergraduate researcher, KENTECH<br />
         Energy Systems · Carbon Markets · Computational Modeling<br />
-        WikiDrive 대표 · CEO
+        CEO, WikiDrive
       </p>
     </header>
 
@@ -107,10 +106,10 @@ const featuredActivities = archiveItems.filter((item) =>
           <li id={project.id}>
             <time>{project.period}</time>
             <div>
-              <h3 lang="en">{project.name}</h3>
-              <p class="organization">{project.roleKo}</p>
-              <p>{project.descriptionKo}</p>
-              <a class="project-link" href={project.url}>{projectHost(project.url)} 바로가기 <span aria-hidden="true">↗</span></a>
+              <h3>{project.id === "wikidrive" ? <WikiDriveLogo /> : project.name}</h3>
+              <p class="organization">{project.role}</p>
+              <p>{project.tagline} {project.description}</p>
+              <a class="project-link" href={project.url}>Visit {projectHost(project.url)} <span aria-hidden="true">↗</span></a>
             </div>
           </li>
         ))}
@@ -127,7 +126,7 @@ const featuredActivities = archiveItems.filter((item) =>
           <li id={project.id}>
             <time>2026</time>
             <div>
-              <h3 lang="en">{project.title}</h3>
+              <h3>{project.title}</h3>
             </div>
           </li>
         ))}
@@ -146,7 +145,7 @@ const featuredActivities = archiveItems.filter((item) =>
             <div>
               <h3>{item.title}</h3>
               <p class="honor-issuer">{item.issuer}</p>
-              <p>{item.detail}</p>
+              {item.detail && <p>{item.detail}</p>}
             </div>
           </li>
         ))}
@@ -167,7 +166,7 @@ const featuredActivities = archiveItems.filter((item) =>
               <h3>{item.title}</h3>
               <span>{item.summary}</span>
             </div>
-            <a href={`${base}archive/#${item.id}`} aria-label={`${item.title} 자세히 보기`}>
+            <a href={`${base}archive/#${item.id}`} aria-label={`View ${item.title}`}>
               ↗
             </a>
           </li>
@@ -176,7 +175,7 @@ const featuredActivities = archiveItems.filter((item) =>
     </section>
 
     <nav class="career-links" aria-label="Career links">
-      <a href={`${base}archive/`}>전체 활동 기록 <span aria-hidden="true">→</span></a>
+      <a href={`${base}archive/`}>Full archive <span aria-hidden="true">→</span></a>
       <a href="https://www.linkedin.com/in/donghyeok-kim-061433279/" rel="me">
         LinkedIn <span aria-hidden="true">↗</span>
       </a>

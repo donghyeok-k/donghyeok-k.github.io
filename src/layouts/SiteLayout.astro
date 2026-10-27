@@ -16,7 +16,7 @@ interface Props {
 const {
   title,
   description,
-  lang = "ko",
+  lang = "en",
   bodyClass = "",
   ogType = "website",
   image,
@@ -41,7 +41,7 @@ const imageUrl = image
   : shareCardUrl;
 const imageAlt = image
   ? title
-  : "김동혁 (Donghyeok Kim) — KENTECH 학부연구생, WikiDrive 대표";
+  : "Donghyeok Kim (김동혁) — undergraduate researcher at KENTECH, CEO of WikiDrive";
 const sitemapUrl = new URL("sitemap.xml", siteRoot);
 const locale = lang === "ko" ? "ko_KR" : "en_US";
 const personId = new URL("#donghyeok-kim", siteRoot).href;
@@ -56,7 +56,7 @@ const structuredData = {
       url: siteRoot.href,
       name: "Donghyeok Kim",
       alternateName: "김동혁",
-      inLanguage: ["ko", "en"],
+      inLanguage: "en",
       publisher: { "@id": personId },
     },
     {
@@ -85,7 +85,7 @@ const structuredData = {
         url: "https://wikidrive.app/",
       },
       description:
-        "KENTECH 학부연구생이자 WikiDrive 대표로, 에너지 시스템, 탄소시장, 계산 모델링을 연구하며 제2대 총학생회장을 역임했습니다.",
+        "Undergraduate researcher at KENTECH and CEO of WikiDrive, working on energy systems, carbon markets and computational modeling. Former president of the 2nd KENTECH Student Council.",
       jobTitle: ["Undergraduate Researcher", "CEO, WikiDrive"],
       email: "mailto:research.assistant.dh@gmail.com",
       sameAs: [
@@ -101,7 +101,7 @@ const structuredData = {
             url: canonicalUrl.href,
             name: title,
             description,
-            inLanguage: ["ko", "en"],
+            inLanguage: "en",
             mainEntity: { "@id": personId },
             isPartOf: { "@id": websiteId },
           },

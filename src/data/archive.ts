@@ -57,23 +57,23 @@ export const archiveItems: ArchiveItem[] = [
     id: "stadium-2023",
     date: "2023-11-18",
     category: "LEADERSHIP",
-    title: "STadium 참관과 정식 참여 준비",
+    title: "STadium: from visit to full participation",
     summary:
-      "다섯 과학기술특성화대가 모인 체육 교류전 STadium을 KENTECH 총학생회와 학생 20여 명이 참관했다. 이 방문을 계기로 정식 참여를 준비했다.",
-    roleLead: "제2대 총학생회장 때",
+      "KENTECH's student council and about 20 students visited STadium, the sports exchange among Korea's five science and technology universities. The visit led to preparations for KENTECH to join formally.",
+    roleLead: "As student council president,",
     role:
-      "제2대 총학생회장 때 STadium 현장을 찾았다. 2024년부터 KENTECH가 정식으로 참여할 수 있도록 준비했다.",
+      "As student council president, I led the visit to STadium and prepared for KENTECH to take part officially from 2024.",
     // Keep this image unmodified and non-commercial under CC BY-NC-ND 4.0.
     media: {
       kind: "image",
       images: [
         {
           src: "images/archive/stadium-donghyeok-kim.jpg",
-          alt: "STadium 행사장에서 촬영된 김동혁 KENTECH 제2대 총학생회장",
+          alt: "Donghyeok Kim, president of the 2nd KENTECH Student Council, at STadium",
           local: true,
         },
       ],
-      credit: "사진 권대현 기자 · DGIST신문 DNA",
+      credit: "Photo: Kwon Dae-hyun · DGIST DNA",
       creditUrl: "https://dgistdna.com/763",
       license: "CC BY-NC-ND 4.0",
       licenseUrl: "https://creativecommons.org/licenses/by-nc-nd/4.0/",
@@ -81,8 +81,8 @@ export const archiveItems: ArchiveItem[] = [
     },
     sources: [
       {
-        label: "원문 기사",
-        publisher: "DGIST신문 DNA",
+        label: "Article",
+        publisher: "DGIST DNA",
         url: "https://dgistdna.com/763",
         primary: true,
       },
@@ -92,26 +92,26 @@ export const archiveItems: ArchiveItem[] = [
     id: "renew-art-2023",
     date: "2023-09-26",
     category: "ART",
-    title: "Renew ART 벽화 프로젝트",
+    title: "Renew ART mural project",
     summary:
-      "교수·학생·작가가 테슬라커뮤니티센터 지하 벙커에 ‘Energyverse Timepiece’ 벽화를 함께 만들었다. 에너지 연구 분야와 협업의 의미를 담은 작업이다.",
-    roleLead: "학부 1기 때",
+      "Faculty, students and artists painted the “Energyverse Timepiece” mural together in the underground bunker of the Tesla Community Center, capturing KENTECH's research fields and the spirit of collaboration.",
+    roleLead: "As a member of the first class,",
     role:
-      "학부 1기 때 교수·학생·작가와 벽화를 함께 만들었다. KENTECH의 다섯 연구 트랙과 학교의 시작을 공간에 담았다.",
+      "As a member of the first class, I made the mural with faculty, students and artists, putting KENTECH's five research tracks and the school's beginning into the space.",
     media: {
       kind: "youtube",
       videos: [
         {
           id: "i4jjT7s1qW4",
-          label: "Renew ART 프로젝트",
+          label: "Renew ART project",
           start: 186,
         },
       ],
-      credit: "한국에너지공과대학교 KENTECH",
+      credit: "KENTECH",
     },
     sources: [
       {
-        label: "공식 영상",
+        label: "Video",
         publisher: "KENTECH",
         url: "https://www.youtube.com/watch?v=i4jjT7s1qW4",
         primary: true,
@@ -122,44 +122,44 @@ export const archiveItems: ArchiveItem[] = [
     id: "naju-pear-2023",
     date: "2023-09-25",
     category: "LEADERSHIP",
-    title: "나주배 129상자 공동구매",
+    title: "129 boxes of Naju pears",
     summary:
-      "KENTECH 제2대 총학생회가 나주배 129상자를 공동구매해 지역 농가의 판로를 도왔다.",
-    roleLead: "총학생회장 때",
+      "KENTECH's 2nd student council organized a group purchase of 129 boxes of Naju pears, helping local farms find buyers.",
+    roleLead: "As student council president,",
     role:
-      "총학생회장 때 나주배 공동구매를 기획했다. 대학과 지역이 함께할 수 있는 일을 더 만들고 싶었다.",
+      "As student council president, I planned the group purchase. I wanted to create more ways for the university and the region to work together.",
     media: {
       kind: "image",
       images: [
         {
           src: "images/archive/naju-pear-community.webp",
-          alt: "나주 배 과수원에서 배를 들고 촬영한 KENTECH 학생 4명",
+          alt: "Four KENTECH students holding pears in a Naju pear orchard",
           local: true,
         },
       ],
-      credit: "사진 · KENTECH 보도자료",
+      credit: "Photo: KENTECH press release",
       creditUrl:
         "https://kentech.ac.kr/detail.do?board_seq=5990&menuurl=ewqEXIJgqdAxm80DGyH78g%3D%3D",
     },
     sources: [
       {
-        label: "공식 보도자료",
+        label: "Press release",
         publisher: "KENTECH",
         url: "https://kentech.ac.kr/detail.do?board_seq=5990&menuurl=ewqEXIJgqdAxm80DGyH78g%3D%3D",
         primary: true,
       },
       {
-        label: "관련 보도",
-        publisher: "에너지경제",
+        label: "Coverage",
+        publisher: "Energy Economic News",
         url: "https://m.ekn.kr/view.php?key=20230925010007252",
       },
       {
-        label: "배포 사진 1",
+        label: "Photo 1",
         publisher: "KENTECH",
         url: "https://kentech.ac.kr/file/imageSrc.do?sfn=20230925110534224_%EB%B3%B4%EB%8F%84%EC%9E%90%EB%A3%8C%EB%B0%B0%ED%8F%AC%EC%82%AC%EC%A7%841.jpg&contentType=image/jpeg&ofn=%EB%B3%B4%EB%8F%84%EC%9E%90%EB%A3%8C%EB%B0%B0%ED%8F%AC%EC%82%AC%EC%A7%841.jpg",
       },
       {
-        label: "배포 사진 2",
+        label: "Photo 2",
         publisher: "KENTECH",
         url: "https://kentech.ac.kr/file/imageSrc.do?sfn=20230925110549547_%EB%B3%B4%EB%8F%84%EC%9E%90%EB%A3%8C%EB%B0%B0%ED%8F%AC%EC%82%AC%EC%A7%842.jpg&contentType=image/jpeg&ofn=%EB%B3%B4%EB%8F%84%EC%9E%90%EB%A3%8C%EB%B0%B0%ED%8F%AC%EC%82%AC%EC%A7%842.jpg",
       },
@@ -169,18 +169,18 @@ export const archiveItems: ArchiveItem[] = [
     id: "specialized-university-interview-2023",
     date: "2023-09-13",
     category: "PROFILE",
-    title: "KENTECH를 선택한 이유와 앞으로의 계획",
+    title: "Why I chose KENTECH, and what's next",
     summary:
-      "과학기술특성화대 재학생들이 대학을 선택한 이유, 입시 경험, 수업과 앞으로의 진로에 관해 답한 인터뷰다.",
-    roleLead: "KENTECH 1기로",
+      "An interview with students at Korea's science and technology universities on why they chose their school, admissions, classes, and future plans.",
+    roleLead: "As a member of the first class,",
     role:
-      "KENTECH 1기로 학교를 선택한 이유와 면접 경험, 전력망 프로젝트, 앞으로 해보고 싶은 환경·에너지 창업 이야기를 나눴다.",
+      "As a member of the first class, I talked about why I chose KENTECH, my admissions interview, a power grid project, and the environment and energy startup I hoped to build.",
     media: {
       kind: "image",
       images: [
         {
           src: "images/donghyeok-kim-cutout.webp",
-          alt: "김동혁 인물 사진",
+          alt: "Portrait of Donghyeok Kim",
           local: true,
         },
       ],
@@ -189,13 +189,13 @@ export const archiveItems: ArchiveItem[] = [
     },
     sources: [
       {
-        label: "인터뷰 원문",
-        publisher: "내일신문·내일교육",
+        label: "Interview",
+        publisher: "Naeil News · Naeil Education",
         url: "https://www.naeil.com/news/read/473516",
         primary: true,
       },
       {
-        label: "공식 보도 색인",
+        label: "Press index",
         publisher: "KENTECH",
         url: "https://kentech.ac.kr/submenu.do?boardid=77&categoryid=203&menuurl=O3k95AMLmcQ0%2BynBFWcOnQ%3D%3D&pageNo=1&searchNo=1&searchtext=%EA%B9%80%EB%8F%99%ED%98%81&siteName=AD",
       },
@@ -205,50 +205,50 @@ export const archiveItems: ArchiveItem[] = [
     id: "summer-campus-2023",
     date: "2023-08-29",
     category: "LEADERSHIP",
-    title: "여름방학, 학생 84%가 학교에 남았다",
+    title: "Summer break, and 84% of students stayed",
     summary:
-      "여름방학에도 학생 84%가 기숙사에 머물렀다. 학생들은 학부연구·계절학기·창업·RC 등 20여 개 프로그램에 참여했다.",
-    roleLead: "2학년 총학생회장 때",
+      "Even over summer break, 84% of students stayed in the dorms, joining some 20 programs including undergraduate research, summer session, startups and residential college.",
+    roleLead: "As student council president in my second year,",
     role:
-      "2학년 총학생회장 때 방학에도 학교에 남아 연구하고 활동하던 학생들의 모습을 전했다.",
+      "As student council president in my second year, I shared how students stayed on campus over the break to do research and take part in programs.",
     media: {
       kind: "image",
       images: [
         {
           src: "images/archive/summer-campus-energyverse.webp",
-          alt: "Energyverse 보드게임을 둘러싸고 활동 중인 KENTECH 구성원들",
+          alt: "KENTECH members gathered around the Energyverse board game",
           local: true,
         },
       ],
-      credit: "사진 · KENTECH 보도자료",
+      credit: "Photo: KENTECH press release",
       creditUrl:
         "https://kentech.ac.kr/detail.do?board_seq=5871&menuurl=ewqEXIJgqdAxm80DGyH78g%3D%3D",
     },
     sources: [
       {
-        label: "공식 보도자료",
+        label: "Press release",
         publisher: "KENTECH",
         url: "https://kentech.ac.kr/detail.do?board_seq=5871&menuurl=ewqEXIJgqdAxm80DGyH78g%3D%3D",
         primary: true,
       },
       {
-        label: "관련 보도",
-        publisher: "머니투데이",
+        label: "Coverage",
+        publisher: "Money Today",
         url: "https://www.mt.co.kr/policy/2023/08/29/2023082914035359949",
       },
       {
-        label: "관련 보도",
-        publisher: "베리타스알파",
+        label: "Coverage",
+        publisher: "Veritas Alpha",
         url: "https://www.veritas-a.com/news/articleView.html?idxno=470401",
       },
       {
-        label: "관련 보도",
-        publisher: "화순글로벌뉴스",
+        label: "Coverage",
+        publisher: "Hwasun Global News",
         url: "https://m.hsgnews.kr/article.php?aid=310321794",
       },
       {
-        label: "관련 보도",
-        publisher: "네이트",
+        label: "Coverage",
+        publisher: "Nate News",
         url: "https://news.nate.com/view/20230829n21464",
       },
     ],
@@ -257,34 +257,34 @@ export const archiveItems: ArchiveItem[] = [
     id: "plogging-marathon-2023",
     date: "2023-04-04",
     category: "COMMUNITY",
-    title: "아침 운동에서 플로깅 마라톤까지",
+    title: "From morning workouts to a plogging marathon",
     summary:
-      "KENTECH 학생 20여 명이 나주영산강마라톤에 참가했다. 달리면서 쓰레기를 줍는 플로깅 봉사도 함께했다.",
-    roleLead: "황의현 학생과",
+      "About 20 KENTECH students ran the Naju Yeongsan River Marathon, picking up litter along the course as plogging volunteers.",
+    roleLead: "With fellow student Hwang Eui-hyun,",
     role:
-      "황의현 학생과 아침 운동 프로그램을 만들었다. 학생들과 마라톤에 참가하고 플로깅 봉사도 했다.",
+      "With fellow student Hwang Eui-hyun, I started a morning exercise program. We ran the marathon with other students and volunteered as ploggers.",
     media: {
       kind: "image",
       images: [
         {
           src: "images/archive/plogging-marathon.webp",
-          alt: "제9회 나주영산강마라톤대회에 참가한 KENTECH 학생과 교직원",
+          alt: "KENTECH students and staff at the 9th Naju Yeongsan River Marathon",
           local: true,
         },
       ],
-      credit: "사진 · KENTECH 보도자료",
+      credit: "Photo: KENTECH press release",
       creditUrl:
         "https://kentech.ac.kr/detail.do?board_seq=5598&menuurl=ewqEXIJgqdAxm80DGyH78g%3D%3D",
     },
     sources: [
       {
-        label: "공식 보도자료",
+        label: "Press release",
         publisher: "KENTECH",
         url: "https://kentech.ac.kr/detail.do?board_seq=5598&menuurl=ewqEXIJgqdAxm80DGyH78g%3D%3D",
         primary: true,
       },
       {
-        label: "배포 사진",
+        label: "Photo",
         publisher: "KENTECH",
         url: "https://kentech.ac.kr/file/imageSrc.do?sfn=20230404093326089_%EB%B3%B4%EB%8F%84%EC%9E%90%EB%A3%8C+%EB%B0%B0%ED%8F%AC%EC%82%AC%EC%A7%84+%28111.jpg&contentType=image/jpeg&ofn=%EB%B3%B4%EB%8F%84%EC%9E%90%EB%A3%8C+%EB%B0%B0%ED%8F%AC%EC%82%AC%EC%A7%84+%28111.jpg",
       },
@@ -294,12 +294,12 @@ export const archiveItems: ArchiveItem[] = [
     id: "energyverse-2023",
     date: "2023-01-16",
     category: "EDUCATION",
-    title: "Energyverse 1.0에서 2.0까지",
+    title: "Energyverse, from 1.0 to 2.0",
     summary:
-      "에너지 5개 트랙과 기술의 연결을 보드게임으로 배우는 KENTECH 수업 프로젝트다. 1기 학생들이 버전 1.5와 2.0을 만들며 내용을 보완했다.",
-    roleLead: "1기 학생 6명과",
+      "A KENTECH course project that teaches how five energy tracks and their technologies connect, through a board game. First-class students improved it into versions 1.5 and 2.0.",
+    roleLead: "With six classmates from the first class,",
     role:
-      "1기 학생 6명과 Energyverse 1.0을 고쳤다. 특히 없던 스토리를 새로 만들었고, 프로젝트는 2.0까지 이어졌다.",
+      "With six classmates from the first class, I revised Energyverse 1.0 — above all, writing the story it didn't have. The project went on to 2.0.",
     media: {
       kind: "youtube",
       videos: [
@@ -314,18 +314,18 @@ export const archiveItems: ArchiveItem[] = [
           start: 288,
         },
       ],
-      credit: "한국에너지공과대학교 KENTECH",
+      credit: "KENTECH",
     },
     sources: [
       {
-        label: "공식 영상",
-        publisher: "KENTECH · ver.1.5",
+        label: "Video",
+        publisher: "KENTECH · ver. 1.5",
         url: "https://www.youtube.com/watch?v=-MUbpHzbKB8",
         primary: true,
       },
       {
-        label: "후속 영상",
-        publisher: "KENTECH · ver.2.0",
+        label: "Follow-up",
+        publisher: "KENTECH · ver. 2.0",
         url: "https://www.youtube.com/watch?v=9hCGDjEOShM",
       },
     ],
@@ -334,33 +334,33 @@ export const archiveItems: ArchiveItem[] = [
     id: "kentech-opening-2022",
     date: "2022-03-03",
     category: "INTERVIEW",
-    title: "KENTECH 1기 신입생 인터뷰",
+    title: "Interview as a KENTECH freshman",
     summary:
-      "한국에너지공대가 문을 연 날, 1기 신입생의 기대와 대학이 풀어야 할 과제를 함께 담은 연합뉴스TV 보도다.",
-    roleLead: "1기 신입생으로",
+      "Yonhap News TV's report from KENTECH's opening day, covering the first freshmen's hopes and the challenges ahead for the new university.",
+    roleLead: "As a freshman in the first class,",
     role:
-      "1기 신입생으로 인터뷰에 참여해 에너지 산업의 미래와 학생들이 함께 만들어갈 학교에 대한 기대를 이야기했다.",
+      "As a freshman in the first class, I spoke about the future of the energy industry and the school we would build together.",
     media: {
       kind: "youtube",
       videos: [
         {
           id: "v_R2ziY8GtI",
-          label: "연합뉴스TV 인터뷰",
+          label: "Yonhap News TV interview",
           start: 62,
         },
       ],
-      credit: "연합뉴스TV",
+      credit: "Yonhap News TV",
     },
     sources: [
       {
-        label: "영상 원문",
-        publisher: "연합뉴스TV",
+        label: "Video",
+        publisher: "Yonhap News TV",
         url: "https://www.youtube.com/watch?v=v_R2ziY8GtI",
         primary: true,
       },
       {
-        label: "기사 전문",
-        publisher: "네이트 뉴스",
+        label: "Article",
+        publisher: "Nate News",
         url: "https://news.nate.com/view/20220303n10334",
       },
     ],

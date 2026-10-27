@@ -1,26 +1,26 @@
 ---
-title: "수학과 공학과 창업"
-description: "만들 수 있다는 것과 누군가 그것을 선택한다는 것 사이. 수학을 공부하고 공학을 하면서, 창업을 생각하는 이유."
+title: "Mathematics, Engineering, and Startups"
+description: "Between being able to build something and someone choosing it — why math and engineering led me to think about startups."
 pubDate: 2026-10-07T00:00:00+09:00
 updatedDate: 2026-10-28T00:00:00+09:00
 draft: false
 tags:
-  - 수학
-  - 공학
-  - 창업
+  - Mathematics
+  - Engineering
+  - Startups
   - AI
 ---
 
-수학은 공학보다 100년 앞서 있다는 말이 있다. 종이 위에서 성립하는 것과 현실에서 작동하는 것 사이에 긴 시간이 놓일 수 있다는 뜻이다. 그렇다면 공학 다음에는 무엇이 올까. 나는 창업이라고 생각한다.
+There is a saying that mathematics is a hundred years ahead of engineering. I read it as: a long time can pass between what holds on paper and what works in the world. Then what comes after engineering? I think it is starting a company.
 
-부울은 [1847년과 1854년](https://georgeboole.com/boole/work/boolebibliography/)에 논리를 대수로 다뤘고, 섀넌은 [1938년](https://www.cs.virginia.edu/~evans/greatworks/shannon38.pdf)에야 그 논리대수로 릴레이·스위칭 회로를 설계했다. 수학이 먼저 있었다고 회로가 저절로 설계되지는 않았다.
+Boole treated logic as algebra in [1847 and 1854](https://georgeboole.com/boole/work/boolebibliography/); only in [1938](https://www.cs.virginia.edu/~evans/greatworks/shannon38.pdf) did Shannon use that algebra to design relay and switching circuits. Having the mathematics first did not design the circuits by itself.
 
-CT도 그렇다. 내부를 복원하는 수학은 1917년 라돈이 이미 다뤘지만, 하운스필드의 초기 장치는 한 번 스캔하는 데 [9일](https://www.nobelprize.org/uploads/2018/06/hounsfield-lecture.pdf)이 걸렸다. 공학은 수학을 옮겨 적는 일이 아니라, 현실이 허락하는 조건을 하나씩 확인하는 일이다.
+CT is similar. Radon had worked out the mathematics of reconstructing an object's interior in 1917, yet Hounsfield's early prototype needed [nine days](https://www.nobelprize.org/uploads/2018/06/hounsfield-lecture.pdf) for a single scan. Engineering is not transcribing mathematics; it is checking, one by one, the conditions reality allows.
 
-잘 작동해도 끝이 아니다. 구글은 [좋은 검색](https://research.google/pubs/the-anatomy-of-a-large-scale-hypertextual-web-search-engine/)만으로 돈을 벌지 않았다. 광고주가 직접 광고를 만들고 예산을 통제할 수 있는 [애드워즈](https://googlepress.blogspot.com/2000/10/google-launches-self-service.html)가 필요했다. 쓰는 사람과 돈을 내는 사람이 다를 수 있기 때문이다.
+Working is not the end, either. Google did not make money from [good search](https://research.google/pubs/the-anatomy-of-a-large-scale-hypertextual-web-search-engine/) alone. It needed [AdWords](https://googlepress.blogspot.com/2000/10/google-launches-self-service.html), which let advertisers create their own ads and control their budgets — because the people who use a product and the people who pay for it can be different.
 
-‘이 기능이 있으면 쓸 것이다’라는 문장에는 발견하고, 이해하고, 믿고, 다른 대안보다 낫다고 판단할 것이라는 전제가 숨어 있다. 그래서 내게는 돈이 논문보다 무겁게 느껴진다. 논문이 가볍다는 뜻은 아니다. 남의 돈을 요구하는 순간, 설명만으로는 넘길 수 없는 부담이 생긴다는 뜻이다.
+“People will use it if it has this feature” hides many assumptions: that they will find it, understand it, trust me, and judge it better than the alternatives. That is why money feels heavier to me than a paper. Not because papers are light, but because the moment you ask for someone else's money, explanation alone is no longer enough.
 
-AI가 구현을 도울수록 이 질문은 더 중요해진다. 정해진 구현 과제에서 완료 시간이 [55.8% 줄었다](https://arxiv.org/abs/2302.06590)는 실험도, 2025년 숙련 개발자의 실제 작업에서는 오히려 [19% 늘었다](https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/)는 실험도 있다. [결과는 조건마다 다르지만](https://metr.org/blog/2026-02-24-uplift-update/), 만들기 쉬워질수록 남도 쉽게 만든다. 남는 것은 무엇이 필요한지 알아보고, 고르고, 반응에 맞춰 고치는 일이다.
+The more AI helps with building, the more this question matters. One experiment found AI [cut completion time by 55.8%](https://arxiv.org/abs/2302.06590) on a well-defined coding task; a 2025 study found experienced developers [took 19% longer](https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/) on real work. [Results depend on the conditions](https://metr.org/blog/2026-02-24-uplift-update/), but as building gets easier, it gets easier for everyone. What remains is noticing what is needed, choosing, and revising based on how people respond.
 
-수학에서는 전제를 묻는 습관을, 공학에서는 실제로 되는지 확인하는 습관을 배웠다. 창업에서는 내가 정한 문제를 다른 사람도 풀고 싶어 하는지부터 물어야 한다. 지금 WikiDrive를 운영하며 확인하고 있는 것도 결국 그것이다.
+Mathematics taught me to question premises; engineering, to check that things actually work. In a startup, the first question is whether others want to solve the problem I have defined. That is what I am testing now with WikiDrive.
