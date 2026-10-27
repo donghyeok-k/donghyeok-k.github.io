@@ -1,17 +1,17 @@
 // Public project summaries only; internal plans and operating data stay private.
-export const projectsUpdated = "2026-10-07";
+export const projectsUpdated = "2026-10-28";
 
 export const projects = [
   {
-    id: "seed",
-    name: "SEED",
-    role: "Founder",
-    roleKo: "창업자 / Founder",
+    id: "wikidrive",
+    name: "WikiDrive",
+    role: "CEO",
+    roleKo: "대표 / CEO",
     period: "2026 — PRESENT",
     description:
-      "A platform for sharing expert methods and applying them with the AI tools you already use.",
+      "A cloud LLM wiki for prompts and working rules. Keep your know-how in one place and use it with ChatGPT and Claude.",
     descriptionKo:
-      "전문가의 작업 방법을 글과 프롬프트로 공유하고, 평소 쓰는 AI로 활용할 수 있는 플랫폼을 만들고 있습니다.",
-    url: "https://seed-methods.pages.dev/",
+      "프롬프트와 작업 기준을 클라우드에 모아 두고, ChatGPT·Claude 같은 AI에서 바로 불러 쓰는 LLM 위키 서비스입니다.",
+    url: "https://wikidrive.app/",
   },
 ];

@@ -30,13 +30,18 @@ const {
 const base = import.meta.env.BASE_URL;
 const siteRoot = new URL(base, Astro.site);
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
-const defaultImageUrl = new URL(
+const portraitUrl = new URL(
   `${base}images/donghyeok-kim-cutout.webp`,
   Astro.site,
 );
+// JPEG share card: link previews (KakaoTalk, mail, LinkedIn) render it reliably.
+const shareCardUrl = new URL(`${base}images/og-card.jpg`, Astro.site);
 const imageUrl = image
   ? new URL(image.replace(/^\//, ""), siteRoot)
-  : defaultImageUrl;
+  : shareCardUrl;
+const imageAlt = image
+  ? title
+  : "김동혁 (Donghyeok Kim) — KENTECH 학부연구생, WikiDrive 대표";
 const sitemapUrl = new URL("sitemap.xml", siteRoot);
 const locale = lang === "ko" ? "ko_KR" : "en_US";
 const personId = new URL("#donghyeok-kim", siteRoot).href;
@@ -60,7 +65,7 @@ const structuredData = {
       name: "Donghyeok Kim",
       alternateName: "김동혁",
       url: siteRoot.href,
-      image: defaultImageUrl.href,
+      image: portraitUrl.href,
       affiliation: {
         "@type": "CollegeOrUniversity",
         name: "Korea Institute of Energy Technology (KENTECH)",
@@ -74,9 +79,14 @@ const structuredData = {
         "Superconducting conductor mechanics",
         "Emissions trading system design",
       ],
+      worksFor: {
+        "@type": "Organization",
+        name: "WikiDrive",
+        url: "https://wikidrive.app/",
+      },
       description:
-        "KENTECH 학부연구생이자 SEED 창업자로, 에너지 시스템, 탄소시장, 계산 모델링을 연구하며 제2대 총학생회장을 역임했습니다.",
-      jobTitle: ["Undergraduate Researcher", "Founder, SEED"],
+        "KENTECH 학부연구생이자 WikiDrive 대표로, 에너지 시스템, 탄소시장, 계산 모델링을 연구하며 제2대 총학생회장을 역임했습니다.",
+      jobTitle: ["Undergraduate Researcher", "CEO, WikiDrive"],
       email: "mailto:research.assistant.dh@gmail.com",
       sameAs: [
         "https://github.com/donghyeok-k",
@@ -168,12 +178,22 @@ const isHome = !isProfile && !isBlog && !isArchive;
     <meta property="og:type" content={ogType} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content={imageUrl} />
-    <meta property="og:image:alt" content="Donghyeok Kim" />
+    <meta property="og:image:alt" content={imageAlt} />
+    {
+      !image && (
+        <Fragment>
+          <meta property="og:image:type" content="image/jpeg" />
+          <meta property="og:image:width" content="1200" />
+          <meta property="og:image:height" content="630" />
+        </Fragment>
+      )
+    }
     <meta property="og:locale" content={locale} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={imageUrl} />
+    <meta name="twitter:image:alt" content={imageAlt} />
     {
       publishedTime && (
         <meta
